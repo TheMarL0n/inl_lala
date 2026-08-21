@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme {
+  --font-custom: var(--font-mi-fuente);
+}
+
+body {
+  font-family: var(--font-mi-fuente), Arial, Helvetica, sans-serif;
+}
+
+.videoSwiper .swiper-button-prev,
+.videoSwiper .swiper-button-next {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.mitosSwiper .swiper-button-prev,
+.mitosSwiper .swiper-button-next {
+  color: #15428c !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 767px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    position: relative !important;
+  }
+  .swiper-button-next {
+    margin-top: -45px !important;
+    margin-left: auto !important;
+  }
+  .videoSwiper .swiper-button-prev,
+  .videoSwiper .swiper-button-next {
+    color: #15428c !important;
+  }
+}

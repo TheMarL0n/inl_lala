@@ -1,0 +1,15 @@
+const HomeJumbotron = () => {
+    return (
+        <section className="relative min-h-screen bg-[url(/images/home_bkg.png)] bg-no-repeat bg-cover bg-center flex flex-col items-center sm:justify-center">
+            <div className="absolute hidden sm:block z-2 w-full h-full bg-[url(/images/home_bkg_auxiliar.png)] bg-no-repeat bg-cover bg-center"></div>
+            <div className="max-w-7xl mx-auto space-y-20 sm:space-y-4 mt-40 sm:mt-20">
+                <h1 className="text-white text-[30px] sm:text-[70px] font-black uppercase flex flex-col gap-2 sm:gap-0 sm:flex-row items-start">
+                    <span className="bg-[#15428C] sm:pr-40 px-3">Lo que comes</span> 
+                    <span className="text-[50px] sm:text-[135px] ml-auto sm:ml-0 bg-[#15428C] px-3">importa</span>
+                </h1>
+                <h2 className="relative z-2 px-4 bg-[#009638] text-[26px] sm:text-[46px] text-white font-medium w-fit ml-auto">Entenderlo también</h2>
+            </div>
+        </section>
+    )
+}
+export default HomeJumbotron
