@@ -2,19 +2,15 @@ import PagesJumbotron from "@/app/components/PagesJumbotron";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import { paginas } from "@/app/utils/Copies";
-import BuscadorDudas from "@/app/components/Dudas/BuscadorDudas";
-import CategoriasDudas from "@/app/components/Dudas/CategoriasDudas";
-import FooterDudas from "@/app/components/Dudas/FooterDudas";
+import CategoriasEtapas from "@/app/components/Etapas/CategoriasEtapas";
 
-export default function Dudas() {
-    const data = paginas.find((pagina) => pagina.slug === "dudas");
+export default function Etapas() {
+    const data = paginas.find((pagina) => pagina.slug === "etapas");
     return (
         <main>
             <Header />
             <PagesJumbotron titulo={data.titulo} subtitulo={data.subtitulo} background={data.imagen_principal} titulo_descripcion={data.titulo_descripcion} descripcion={data.descripcion} />
-            <BuscadorDudas />
-            <CategoriasDudas />
-            <FooterDudas imagen_footer={data.imagen_footer} />
+            <CategoriasEtapas />
             <Footer />
         </main>
     );
