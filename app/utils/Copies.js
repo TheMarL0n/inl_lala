@@ -1,6 +1,6 @@
 export const menuI_tems = [
     {
-        name: "Home",
+        name: "Inicio",
         url: "/",
     },
     {
@@ -21,15 +21,15 @@ export const menuI_tems = [
     },
     {
         name: "Para profesionales",
-        url: "#",
+        url: "/paginas/profesionales",
     },
     {
         name: "Sobre el Instituto",
-        url: "#",
+        url: "/paginas/somos",
     },
     {
         name: "Sala de prensa",
-        url: "#"
+        url: "/paginas/sala_prensa"
     },
 ]
 
@@ -59,6 +59,29 @@ export const paginas = [
         descripcion: "Explora contenidos sobre nutrición y leche y lácteos adaptados a cada etapa de la vida.",
         imagen_principal: "/images/etapas/etapas_bkg.png",
     },
+    {
+        slug: "profesionales",
+        titulo: "para",
+        subtitulo: "profesionales",
+        titulo_descripcion: "",
+        descripcion: "Lo último de la ciencia de la leche y lácteos,  validado por autoridades científicas, lo encontrarás en esta sección.",
+        imagen_principal: "/images/profesionales/profesionales_bkg.png",
+        imagen_tema_destacado: "/images/profesionales/destacado_bkg.png",
+        imagen_footer: "/images/profesionales/footer_bkg.png",
+        titulo_tema_destacado: "Lo más reciente en ",
+        subtitulo_tema_destacado: "nutrición",
+        descripcion_tema_destacado: "Mantente al día con los contenidos más recientes sobre la ciencia de los lácteos.",
+        enlace_tema_destacado: "#",
+    },
+    {
+        slug: "sala_prensa",
+        titulo: "Sala de ",
+        subtitulo: "Prensa",
+        titulo_descripcion: "",
+        descripcion: "Encuentra comunicados, materiales institucionales, recursos visuales e información oficial del Instituto de Nutrición Lala.",
+        imagen_principal: "/images/sala_prensa/sala_prensa_bkg.png",
+        imagen_footer: "/images/sala_prensa/footer_bkg.png",
+    }
 ]
 
 export const categorias_dudas = [
@@ -161,32 +184,32 @@ export const categorias_etapas = [
     {
         id: 1,
         titulo: "Embarazo y lactancia",
-        imagen_principal: "/images/dudas/dudas_categoria_1.png"
+        imagen_principal: "/images/etapas/etapa_1.png"
     },
     {
         id: 2,
         titulo: "0-5 años",
-        imagen_principal: "/images/nutricion/nutricion_categoria_2.png"
+        imagen_principal: "/images/etapas/etapa_1.png"
     },
     {
         id: 3,
         titulo: "6-12 años",
-        imagen_principal: "/images/nutricion/nutricion_categoria_3.png"
+        imagen_principal: "/images/etapas/etapa_1.png"
     },
     {
         id: 4,
         titulo: "Adolescencia",
-        imagen_principal: "/images/nutricion/nutricion_categoria_4.png"
+        imagen_principal: "/images/etapas/etapa_1.png"
     },
     {
         id: 5,
         titulo: "Adultez",
-        imagen_principal: "/images/nutricion/nutricion_categoria_5.png"
+        imagen_principal: "/images/etapas/etapa_1.png"
     },
     {
         id: 5,
         titulo: "Adultos mayores",
-        imagen_principal: "/images/nutricion/nutricion_categoria_5.png"
+        imagen_principal: "/images/etapas/etapa_1.png"
     },
 ]
 
@@ -200,5 +223,191 @@ export const etapas = [
         categoria_id: 2,
         tema: "Preguntas frecuentes sobre primera infancia",
         contenido: "Encuentra respuestas claras a las dudas más comunes sobre alimentación, nutrición y cuidados durante esta etapa."
+    }
+]
+
+export const herramientas_materiales = [
+    {
+        id: 1,
+        titulo: "Infografías",
+        imagen_principal: "/images/profesionales/infografia.png"
+    },
+    {
+        id: 2,
+        titulo: "Materiales educativos",
+        imagen_principal: "/images/profesionales/materiales.png"
+    },
+    {
+        id: 3,
+        titulo: "Guías para pacientes",
+        imagen_principal: "/images/profesionales/guias.png"
+    },
+    {
+        id: 4,
+        titulo: "Recursos de consulta",
+        imagen_principal: "/images/profesionales/recursos.png"
+    }
+]
+
+export const colaboradores = [
+    {
+        nombre: "",
+        logo: ""
+    },
+    {
+        nombre: "",
+        logo: ""
+    },
+    {
+        nombre: "",
+        logo: ""
+    },
+    {
+        nombre: "",
+        logo: ""
+    },
+    {
+        nombre: "",
+        logo: ""
+    },
+    {
+        nombre: "",
+        logo: ""
+    },
+    {
+        nombre: "",
+        logo: ""
+    },
+    {
+        nombre: "",
+        logo: ""
+    },
+    {
+        nombre: "",
+        logo: ""
+    },
+    {
+        nombre: "",
+        logo: ""
+    },
+]
+
+export const noticias = [
+    {
+        id:"1",
+        tipo:"nota",
+        destacada: true,
+        titulo: "Cómo construir una alimentación equilibrada", 
+        descripcion: "Conoce los principios básicos para construir una alimentación equilibrada en tu día a día.", 
+        fecha: "21/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"2",
+        tipo:"nota",
+        destacada: true,
+        titulo: "Grupos de alimentos", 
+        descripcion: "Descubre cómo se clasifican los alimentos y la función que cumplen en una alimentación saludable.", 
+        fecha: "22/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"3",
+        tipo:"nota",
+        destacada: true,
+        titulo: "Hábitos saludables", 
+        descripcion: "Conoce los hábitos que pueden ayudarte a cuidar tu alimentación y bienestar todos los días.", 
+        fecha: "23/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"4",
+        tipo:"nota",
+        destacada: true,
+        titulo: "El papel de los lácteos en una alimentación equilibrada", 
+        descripcion: "Entiende cómo la leche y los lácteos pueden formar parte de una alimentación equilibrada.", 
+        fecha: "24/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"5",
+        tipo:"recurso",
+        destacada: true,
+        titulo: "Grupos de alimentos", 
+        descripcion: "Descubre cómo se clasifican los alimentos y la función que cumplen en una alimentación saludable.", 
+        fecha: "22/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"6",
+        tipo:"recurso",
+        destacada: true,
+        titulo: "Hábitos saludables", 
+        descripcion: "Conoce los hábitos que pueden ayudarte a cuidar tu alimentación y bienestar todos los días.", 
+        fecha: "23/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"7",
+        tipo:"recurso",
+        destacada: true,
+        titulo: "El papel de los lácteos en una alimentación equilibrada", 
+        descripcion: "Entiende cómo la leche y los lácteos pueden formar parte de una alimentación equilibrada.", 
+        fecha: "24/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"8",
+        tipo:"recurso",
+        destacada: true,
+        titulo: "El papel de los lácteos en una alimentación equilibrada", 
+        descripcion: "Entiende cómo la leche y los lácteos pueden formar parte de una alimentación equilibrada.", 
+        fecha: "24/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"9",
+        tipo:"evento",
+        destacada: true,
+        titulo: "Grupos de alimentos", 
+        descripcion: "Descubre cómo se clasifican los alimentos y la función que cumplen en una alimentación saludable.", 
+        fecha: "22/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"10",
+        tipo:"conferencia",
+        destacada: true,
+        titulo: "Hábitos saludables", 
+        descripcion: "Conoce los hábitos que pueden ayudarte a cuidar tu alimentación y bienestar todos los días.", 
+        fecha: "23/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"11",
+        tipo:"evento",
+        destacada: true,
+        titulo: "El papel de los lácteos en una alimentación equilibrada", 
+        descripcion: "Entiende cómo la leche y los lácteos pueden formar parte de una alimentación equilibrada.", 
+        fecha: "24/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"12",
+        tipo:"conferencia",
+        destacada: true,
+        titulo: "Hábitos saludables", 
+        descripcion: "Conoce los hábitos que pueden ayudarte a cuidar tu alimentación y bienestar todos los días.", 
+        fecha: "23/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
+    },
+    {
+        id:"13",
+        tipo:"evento",
+        destacada: true,
+        titulo: "El papel de los lácteos en una alimentación equilibrada", 
+        descripcion: "Entiende cómo la leche y los lácteos pueden formar parte de una alimentación equilibrada.", 
+        fecha: "24/07/2026", 
+        imagen_principal: "/images/sala_prensa/noticia_foto.png", 
     }
 ]

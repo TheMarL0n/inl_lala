@@ -40,11 +40,20 @@ const swiper_items = [
     }
 ]
 
-const Aprende = () => {
+const Aprende = ({ fromPage }) => {
     return (
         <section className="pt-20 sm:pt-0">
             <div className="max-w-7xl mx-auto px-4 sm:px-0">
-                <h3 className={`${encabezado_h3} bg-[#0B75B9]`}>Aprende en minutos</h3>
+                {
+                    fromPage ?
+                        <>
+                            <h3 className={`${encabezado_h3} bg-[#164190] hidden sm:block sm:text-[46px]!`}>Formación  y</h3>
+                            <h3 className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>Actualización</h3>
+                        </>
+                        :
+                        <h3 className={`${encabezado_h3} bg-[#0B75B9]`}>Aprende en minutos</h3>
+                }
+
             </div>
 
             <div className="py-14">

@@ -9,7 +9,7 @@ const Profesionales = () => {
             <div className="bg-[#15428C] px-8 py-16 space-y-8">
                 <h3 className={`${encabezado_h3} bg-[#0B75B9]`}>Para profesionales</h3>
                 <p className={`${parrafo_normal} text-white max-w-113 mt-4`}>Encuentra herramientas y lo más reciente en evidencia científica en temas de nutrición, salud, leche y productos lácteos, y fortalecer tu práctica profesional.</p>
-                <button className={WhiteButton}>conocer más</button>
+                <a href="/paginas/profesionales" className={`${WhiteButton} w-fit`}>conocer más</a>
             </div>
         </section>
     )

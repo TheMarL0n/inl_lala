@@ -16,10 +16,13 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [showNavbar, setShowNavbar] = useState(true)
     const [lastScrollY, setLastScrollY] = useState(0)
+    const [isAtTop, setIsAtTop] = useState(true)
 
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY
+
+            setIsAtTop(currentScrollY === 0)
 
             // Si scrolleamos hacia abajo y ya pasamos los 80px (para evitar que se oculte al mínimo roce arriba)
             if (currentScrollY > lastScrollY && currentScrollY > 80) {
@@ -41,7 +44,11 @@ export default function Header() {
 
     return (
         <header
-            className={`bg-transparent fixed z-3 w-full transition-transform duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
+            className={`fixed z-3 w-full transition-all duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
+                } ${
+                isAtTop
+                    ? 'bg-transparent shadow-none'
+                    : 'bg-white/70 backdrop-blur-md shadow-sm'
                 }`}
         >
             <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
@@ -83,13 +90,13 @@ export default function Header() {
                     </div>
                     <div className="mt-6 flow-root">
                         <div className="-my-6 divide-y divide-gray-500/10">
-                            <div className="py-6 text-center space-y-3">
+                            <div className="py-6 text-center space-y-3 max-w-85 mx-auto">
                                 {
                                     menuI_tems.map((item, idx) => (
                                         <a
                                             key={idx}
                                             href={item.url}
-                                            className="-mx-3 block rounded-lg px-3 py-2 uppercase text-[40px] leading-12 font-medium text-white hover:underline duration-400"
+                                            className="nav-item relative block rounded-lg px-3 py-2 uppercase text-[40px] leading-12 font-medium text-white duration-400"
                                         >
                                             {item.name}
                                         </a>
