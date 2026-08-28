@@ -1,5 +1,3 @@
-import HtmlParser from "react-html-parser"
-
 const PagesJumbotron = ({ titulo, subtitulo, background, titulo_descripcion, descripcion }) => {
     return (
         <section className="relative">
