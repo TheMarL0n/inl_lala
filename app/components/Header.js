@@ -45,10 +45,9 @@ export default function Header() {
     return (
         <header
             className={`fixed z-3 w-full transition-all duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
-                } ${
-                isAtTop
-                    ? 'bg-transparent shadow-none'
-                    : 'bg-white/70 backdrop-blur-md shadow-sm'
+                } ${isAtTop
+                    ? 'bg-transparent shadow-none duration-300'
+                    : 'bg-white/70 backdrop-blur-md shadow-sm duration-300'
                 }`}
         >
             <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
@@ -90,15 +89,16 @@ export default function Header() {
                     </div>
                     <div className="mt-6 flow-root">
                         <div className="-my-6 divide-y divide-gray-500/10">
-                            <div className="py-6 text-center space-y-3 max-w-85 mx-auto">
+                            <div className="py-6 text-center space-y-3">
                                 {
                                     menuI_tems.map((item, idx) => (
                                         <a
                                             key={idx}
                                             href={item.url}
-                                            className="nav-item relative block rounded-lg px-3 py-2 uppercase text-[40px] leading-12 font-medium text-white duration-400"
+                                            className="nav-item relative group block mx-auto w-fit rounded-lg px-3 py-2 uppercase text-[30px] leading-12 font-medium text-white duration-400"
                                         >
-                                            {item.name}
+                                            <span>{item.name}</span>
+                                            <span className="absolute bottom-2 left-0 w-0 h-1 bg-white transition-all duration-300 group-hover:w-full"></span>
                                         </a>
                                     ))
                                 }

@@ -35,17 +35,6 @@ body {
     opacity: 1 !important;
 }
 
-a.nav-item:after {
-  display:block;
-  content: '';
-  width: inherit;
-  border-bottom: solid 4px white;  
-  transform: scaleX(0);  
-  transition: transform 250ms ease-in-out;
-}
-
-a.nav-item:hover:after { transform: scaleX(1); }
-
 @media (max-width: 767px) {
   .swiper-button-prev,
   .swiper-button-next {
