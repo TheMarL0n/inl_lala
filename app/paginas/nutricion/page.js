@@ -3,6 +3,7 @@ import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import { paginas } from "@/app/utils/Copies";
 import CategoriasNutricion from "@/app/components/Nutricion/CategoriasNutricion";
+import { Suspense } from "react";
 
 export default function Nutricion() {
     const data = paginas.find((pagina) => pagina.slug === "nutricion");
@@ -10,7 +11,9 @@ export default function Nutricion() {
         <main>
             <Header />
             <PagesJumbotron titulo={data.titulo} subtitulo={data.subtitulo} background={data.imagen_principal} titulo_descripcion={data.titulo_descripcion} descripcion={data.descripcion} />
-            <CategoriasNutricion/>
+            <Suspense fallback={<div>Cargando categorías...</div>}>
+                <CategoriasNutricion />
+            </Suspense>
             <Footer />
         </main>
     );
