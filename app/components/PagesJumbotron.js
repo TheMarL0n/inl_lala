@@ -3,7 +3,7 @@ const PagesJumbotron = ({ titulo, subtitulo, background, titulo_descripcion, des
         <section className="relative">
             <div
                 style={{ backgroundImage: `url(${background})` }}
-                className={`relative min-h-screen bg-no-repeat bg-cover bg-center flex flex-col sm:justify-center`}>
+                className={`relative h-screen min-h-150 max-h-225 2xl:max-h-200 bg-no-repeat bg-cover bg-center flex flex-col sm:justify-center`}>
                 <div className="max-w-7xl sm:w-7xl mx-auto space-y-20 sm:space-y-4 mt-40 sm:mt-20">
                     <h1 className="text-white text-[30px] sm:text-[70px] font-black uppercase flex flex-col sm:gap-2 items-start">
                         <span className="bg-[#15428C] px-3">{titulo}</span>

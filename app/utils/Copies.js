@@ -138,7 +138,7 @@ export const categorias_nutricion = [
     {
         id: 1,
         titulo: "Controlar mi peso",
-        imagen_principal: "/images/dudas/dudas_categoria_1.png"
+        imagen_principal: "/images/nutricion/nutricion_categoria_1.png"
     },
     {
         id: 2,

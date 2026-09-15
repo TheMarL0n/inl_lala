@@ -48,7 +48,7 @@ const Dudas = () => {
                 </form>
 
                 {/* Resultados de la Búsqueda o Listado de Categorías por Defecto */}
-                <div className="space-y-8 mt-26">
+                <div className="space-y-8 mt-26 max-w-[580px]">
                     {
                         busquedaActiva && criterio.trim() !== "" ? (
                             // Muestra los resultados si se realizó una búsqueda

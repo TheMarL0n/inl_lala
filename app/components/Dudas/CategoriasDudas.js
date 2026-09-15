@@ -31,12 +31,20 @@ const CategoriasDudas = () => {
         }
     }, [catUrl])
 
+    const handleCategoriaClick = (id) => {
+        setCategoriaSeleccionada(id)
+        const elemento = document.getElementById("dudas_at_top")
+        if (elemento) {
+            elemento.scrollIntoView({ behavior: "smooth" })
+        }
+    }
+
     const dudasFiltradas = categoriaSeleccionada
         ? dudas.filter(duda => duda.categoria_id === categoriaSeleccionada)
         : dudas
 
     return (
-        <section className="pb-20 px-4">
+        <section id="dudas_at_top" className="pb-20 px-4">
             <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {
                     categorias_dudas.map((item, idx) => {
@@ -45,7 +53,7 @@ const CategoriasDudas = () => {
                         return (
                             <div
                                 key={idx}
-                                onClick={() => setCategoriaSeleccionada(item.id)}
+                                onClick={() => handleCategoriaClick(item.id)}
                                 className="space-y-4 group cursor-pointer"
                             >
                                 <div className="relative min-h-60 sm:min-h-72">

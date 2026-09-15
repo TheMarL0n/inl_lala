@@ -31,12 +31,20 @@ const CategoriasNutricion = () => {
         }
     }, [catUrl])
 
+    const handleCategoriaClick = (id) => {
+        setCategoriaSeleccionada(id)
+        const elemento = document.getElementById("quiero_at_top")
+        if (elemento) {
+            elemento.scrollIntoView({ behavior: "smooth" })
+        }
+    }
+
     const nutricionFiltradas = categoriaSeleccionada
         ? nutricion.filter(nutri => nutri.categoria_id === categoriaSeleccionada)
         : nutricion
 
     return (
-        <section className="pb-20 px-4">
+        <section id="quiero_at_top" className="pb-20 px-4">
             <h2 className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-center text-[120px] sm:text-[200px] sm:leading-55 uppercase`}>Quiero:</h2>
             <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-5 gap-4">
                 {
@@ -46,7 +54,7 @@ const CategoriasNutricion = () => {
                         return (
                             <div
                                 key={idx}
-                                onClick={() => setCategoriaSeleccionada(item.id)}
+                                onClick={() => handleCategoriaClick(item.id)}
                                 className="space-y-4 group cursor-pointer"
                             >
                                 <div className="relative min-h-60 sm:min-h-72">

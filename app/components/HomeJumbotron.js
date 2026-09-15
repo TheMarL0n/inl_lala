@@ -17,7 +17,7 @@ const HomeJumbotron = () => {
     return (
         <section
             ref={ref}
-            className="relative min-h-screen overflow-hidden flex flex-col items-center sm:justify-center"
+            className="relative h-screen min-h-150 max-h-225 2xl:max-h-200 overflow-hidden flex flex-col items-center sm:justify-center"
         >
             <motion.div
                 style={{ y: backgroundY }}
@@ -31,10 +31,10 @@ const HomeJumbotron = () => {
             <div className="relative z-1 max-w-7xl mx-auto space-y-20 sm:space-y-4 mt-40 sm:mt-20">
                 <motion.h1
                     style={{ y: textY }}
-                    className="text-white text-[30px] sm:text-[70px] font-black uppercase flex flex-col gap-2 sm:gap-0 sm:flex-row items-start"
+                    className="text-white text-[30px] sm:text-[70px] font-black uppercase flex flex-col gap-2 sm:gap-12 sm:flex-row items-start"
                 >
-                    <span className="bg-[#15428C] sm:pr-40 px-3">Lo que comes</span>
-                    <span className="text-[50px] sm:text-[135px] ml-auto sm:ml-0 bg-[#15428C] px-3">importa</span>
+                    <span className="bg-[#15428C] sm:pr-14 px-3">Lo que comes</span>
+                    <span className="text-[50px] sm:text-[135px] sm:pl-14 ml-auto sm:ml-0 bg-[#15428C] px-3">importa</span>
                 </motion.h1>
                 <h2 className="relative z-2 px-4 bg-[#009638] text-[26px] sm:text-[46px] text-white font-medium w-fit ml-auto">Entenderlo también</h2>
             </div>
