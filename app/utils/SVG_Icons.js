@@ -24,3 +24,11 @@ export const Comillas = ({ className = "" }) => (
     </svg>
 );
 
+export const ChevronDown = ({ className = "" }) => (
+    <svg className={className} width="43" height="23" viewBox="0 0 43 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line y1="-0.5" x2="29.4169" y2="-0.5" transform="matrix(0.707107 -0.707107 -0.707107 -0.707107 0 21.5078)" stroke="#164190" />
+        <line y1="-0.5" x2="29.4169" y2="-0.5" transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 41.6016 21.5078)" stroke="#164190" />
+    </svg>
+
+);
+

@@ -1,4 +1,6 @@
-const PagesJumbotron = ({ titulo, subtitulo, background, titulo_descripcion, descripcion }) => {
+import { parrafo_normal } from "../utils/CSS_clases"
+
+const PagesJumbotron = ({ titulo, subtitulo, background, titulo_descripcion, descripcion, detalles }) => {
     return (
         <section className="relative">
             <div
@@ -23,6 +25,14 @@ const PagesJumbotron = ({ titulo, subtitulo, background, titulo_descripcion, des
                     }
                     {descripcion}
                 </h3>
+            </div>
+            <div className="page_descripcion max-w-4xl mx-4 sm:mx-auto bg-white p-4 relative z-2 min-h-37.5">
+                {
+                    detalles ?
+                        <p className={`${parrafo_normal} text-[38px]! leading-11! text-[#164190]`}>{detalles}</p>
+                        :
+                        ""
+                }
             </div>
         </section>
     )

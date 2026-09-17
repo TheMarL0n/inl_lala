@@ -1,11 +1,6 @@
 import localFont from "next/font/local"
 import "./globals.css";
 
-export const metadata = {
-  title: "Instituto de Nutrición Lala",
-  description: "Lo que comes importa, entenderlo también",
-};
-
 const miFuente = localFont({
   src: [
     {
@@ -31,6 +26,31 @@ const miFuente = localFont({
   ],
   variable: "--font-mi-fuente",
 });
+
+export const metadata = {
+  metadataBase: new URL('https://www.institutolala.com.mx/'),
+  title: {
+    default: "Instituto de Nutrición Lala",
+    template: "%s | Lala",
+  },
+  description: "Lo que comes importa, entenderlo también",
+  openGraph: {
+    title: "Instituto de Nutrición Lala",
+    description: "Lo que comes importa, entenderlo también",
+    url: 'https://www.institutolala.com.mx/',
+    siteName: 'Lala',
+    images: [
+      {
+        url: '/logo.svg',
+        width: 158,
+        height: 81,
+        alt: 'Lala - Lo que comes importa, entenderlo también',
+      },
+    ],
+    locale: 'es_ES',
+    type: 'website',
+  },
+};
 
 export default function RootLayout({ children }) {
   return (
