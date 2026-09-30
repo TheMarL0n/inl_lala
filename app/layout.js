@@ -30,15 +30,15 @@ const miFuente = localFont({
 export const metadata = {
   metadataBase: new URL('https://www.institutolala.com.mx'),
   title: {
-    default: "Lala | Instituto de Nutrición Lala",
-    template: "%s | Lala",
+    default: "Instituto de Nutrición Lala | Lo que comes importa",
+    template: "%s | Instituto de Nutrición Lala",
   },
   description: "Lo que comes importa, entenderlo también. Instituto de Nutrición en México especializado en educación nutricional, investigación y salud alimentaria.",
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: "Lala | Instituto de Nutrición Lala",
+    title: "Instituto de Nutrición Lala | Lo que comes importa",
     description: "Lo que comes importa, entenderlo también",
     url: 'https://www.institutolala.com.mx',
     siteName: 'Instituto de Nutrición Lala',
@@ -47,7 +47,7 @@ export const metadata = {
         url: '/logo.svg',
         width: 158,
         height: 81,
-        alt: 'Lala - Lo que comes importa, entenderlo también',
+        alt: 'Instituto de Nutrición Lala - Lo que comes importa, entenderlo también',
       },
     ],
     locale: 'es_MX',

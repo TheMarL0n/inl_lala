@@ -44,7 +44,7 @@ export default function Header() {
 
     return (
         <header
-            className={`fixed z-3 w-full transition-all duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
+            className={`fixed z-30 w-full transition-all duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
                 } ${isAtTop
                     ? 'bg-transparent shadow-none'
                     : 'bg-white/70 backdrop-blur-md shadow-sm'
