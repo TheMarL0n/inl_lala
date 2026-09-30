@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { categorias_dudas, dudas } from "@/app/utils/Copies"
 import { encabezado_h3, parrafo_normal, WhiteButton } from "@/app/utils/CSS_clases"
+import Image from 'next/image'
 
 const Dudas = () => {
     const [criterio, setCriterio] = useState("")
@@ -22,15 +23,23 @@ const Dudas = () => {
     return (
         <section className="sm:py-20 grid grid-cols-1 sm:grid-cols-2">
             <div className="sm:sticky sm:top-0 h-fit">
-                <img src="/images/girl_eating.png" alt="persona comiendo" />
+                <div className="relative w-full h-[500px] sm:h-[800px]"> {/* Ajusta la altura según tu diseño original */}
+                    <Image
+                        src="/images/girl_eating.png"
+                        alt="Joven disfrutando de una alimentación saludable y equilibrada"
+                        fill
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                        className="object-cover object-center"
+                    />
+                </div>
             </div>
             <div className="bg-[#15428C] p-8">
                 <h2>
                     <span className={`${encabezado_h3} bg-[#0B75B9]`}>Resuelve tus</span>
-                    <br/>
+                    <br />
                     <span className="uppercase text-[120px] sm:text-[200px] sm:leading-55 text-[#0B75B9] font-medium">Dudas</span>
                 </h2>
-                
+
                 <p className={`${parrafo_normal} text-white max-w-113 mt-4`}>
                     Explora contenidos para aprender sobre nutrición, salud y alimentación desde una perspectiva científica, práctica y fácil de entender.
                 </p>

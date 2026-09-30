@@ -1,6 +1,7 @@
 'use client'
 import { encabezado_h3 } from "@/app/utils/CSS_clases"
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -23,7 +24,6 @@ const Aprende = ({ fromPage }) => {
                         :
                         <h2 className={`${encabezado_h3} bg-[#0B75B9]`}>Aprende en minutos</h2>
                 }
-
             </div>
 
             <div className="py-14">
@@ -58,11 +58,21 @@ const Aprende = ({ fromPage }) => {
                                 <div
                                     onClick={() => setSelectedVideo(item)}
                                     className="relative h-95 overflow-hidden cursor-pointer flex flex-col items-center justify-center">
+                                    
                                     <div className="relative z-3 w-42.5 h-42.5 rounded-full border border-white flex flex-col items-center justify-center bg-black/19 backdrop-blur-sm opacity-100 sm:opacity-0 group-hover:opacity-100 duration-400">
                                         <PlusSymbol />
                                     </div>
+                                    
                                     <div className="bg-[#15428C]/70 absolute z-2 h-full w-full object-cover left-0 top-0 opacity-0 sm:opacity-100 group-hover:opacity-0 duration-400"></div>
-                                    <img src={item.background} className="absolute z-1 h-full w-full object-cover left-0 top-0 group-hover:scale-110 duration-400" alt="Miniatura de Video" />
+                                    
+                                    {/* Imagen optimizada con Next.js */}
+                                    <Image 
+                                        src={item.background} 
+                                        alt={`Miniatura del video: ${item.title}`}
+                                        fill
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        className="absolute z-1 h-full w-full object-cover left-0 top-0 group-hover:scale-110 transition-transform duration-400" 
+                                    />
                                 </div>
                                 <p
                                     onClick={() => setSelectedVideo(item)}

@@ -1,5 +1,6 @@
 'use client'
 import React from 'react';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -41,9 +42,18 @@ const Mitos = ({ alternative, currentSlug }) => {
                 {filteredMitos.map((item, idx) => (
                     <SwiperSlide key={idx}>
                         <div className="relative overflow-hidden z-2 flex flex-col sm:flex-row w-full">
-                            <div className="w-full sm:w-1/2 relative overflow-hidden">
-                                <img src={item.imagen_principal} className="w-full object-cover absolute max-h-129 top-0 left-0" alt="Foto de mito o realidad" />
+                            
+                            {/* Contenedor de la imagen optimizada */}
+                            <div className="w-full sm:w-1/2 relative overflow-hidden h-96 sm:h-129">
+                                <Image 
+                                    src={item.imagen_principal} 
+                                    alt={`Ilustración del mito: ${item.titulo}`}
+                                    fill
+                                    sizes="(max-width: 640px) 100vw, 50vw"
+                                    className="object-cover absolute top-0 left-0" 
+                                />
                             </div>
+
                             <div className="w-full sm:w-1/2 flex flex-col items-start sm:bg-white p-8 sm:-ml-30 sm:mt-40 z-3">
                                 <div className="space-y-12 max-w-125">
                                     <h3 className="text-[#15428C] font-black text-[50px] leading-12 sm:text-[60px] sm:leading-14">
