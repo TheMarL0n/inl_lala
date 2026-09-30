@@ -16,7 +16,7 @@ const miFuente = localFont({
     {
       path: "../public/fonts/Program_Nar_OT_Medium.otf",
       weight: "500",
-      
+
     },
     {
       path: "../public/fonts/Program_Nar_OT_Black.otf",
@@ -33,12 +33,15 @@ export const metadata = {
     default: "Lala | Instituto de Nutrición Lala",
     template: "%s | Lala",
   },
-  description: "Lo que comes importa, entenderlo también",
+  description: "Lo que comes importa, entenderlo también. Instituto de Nutrición en México especializado en educación nutricional, investigación y salud alimentaria.",
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: "Lala | Instituto de Nutrición Lala",
     description: "Lo que comes importa, entenderlo también",
     url: 'https://www.institutolala.com.mx',
-    siteName: 'Lala',
+    siteName: 'Instituto de Nutrición Lala',
     images: [
       {
         url: '/logo.svg',
@@ -47,15 +50,26 @@ export const metadata = {
         alt: 'Lala - Lo que comes importa, entenderlo también',
       },
     ],
-    locale: 'es_ES',
+    locale: 'es_MX',
     type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${miFuente.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
