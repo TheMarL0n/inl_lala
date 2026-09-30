@@ -7,6 +7,11 @@ import NotasList from "@/app/components/Noticias/Notas";
 import RecursosList from "@/app/components/Noticias/Recursos";
 import EventosList from "@/app/components/Noticias/Eventos";
 
+export const metadata = {
+  title: "Sala de Prensa",
+  description: "Comunicados, materiales institucionales, recursos visuales e información oficial del Instituto de Nutrición Lala.",
+};
+
 export default function SalaPrensa() {
     const data = paginas.find((pagina) => pagina.slug === "sala_prensa");
     return (

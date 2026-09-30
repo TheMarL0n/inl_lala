@@ -5,10 +5,11 @@ const Preguntas = () => {
     return (
         <section className="bg-[#15428C] py-20 px-4 space-y-20 sm:space-y-40">
             <div className="max-w-7xl mx-auto gap-8 grid grid-cols-1 sm:grid-cols-2">
-                <div>
-                    <h3 className={`${encabezado_h3} bg-[#0B75B9]`}>¿Qué te gustaría cuidar hoy?</h3>
-                    <h2 className={`${stroke_text} [-webkit-text-stroke-color:white] text-[120px] sm:text-[200px] sm:leading-55 uppercase`}>Quiero:</h2>
-                </div>
+                <h2>
+                    <span className={`${encabezado_h3} bg-[#0B75B9]`}>¿Qué te gustaría cuidar hoy?</span>
+                    <br/>
+                    <span className={`${stroke_text} [-webkit-text-stroke-color:white] text-[120px] sm:text-[200px] sm:leading-55 uppercase`}>Quiero:</span>
+                </h2>
                 <div className="sm:pt-40">
                     {
                         categorias_nutricion.map((item, idx) => (

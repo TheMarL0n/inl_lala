@@ -45,7 +45,7 @@ const CategoriasNutricion = () => {
 
     return (
         <section id="quiero_at_top" className="pb-20 px-4">
-            <h2 className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-center text-[120px] sm:text-[200px] sm:leading-55 uppercase`}>Quiero:</h2>
+            <h3 className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-center text-[120px] sm:text-[200px] sm:leading-55 uppercase`}>Quiero:</h3>
             <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-5 gap-4">
                 {
                     categorias_nutricion.map((item, idx) => {
@@ -73,14 +73,22 @@ const CategoriasNutricion = () => {
                 {
                     nutricionFiltradas.length > 0 ? (
                         nutricionFiltradas.map((item, idx) => (
-                            <div key={idx} className="border-b border-[#164190] pb-8 gap-4 grid grid-cols-3 sm:grid-cols-4">
-                                <p className={`${parrafo_normal} text-[#164190] col-span-2 sm:col-span-3`}>
-                                    <strong>{item.tema}</strong>
-                                    <br />
-                                    {item.contenido}
-                                </p>
-                                <button className={`${BlueButton} w-fit ml-auto`}>Ver más</button>
-                            </div>
+                            <article key={idx} className="border-b border-[#164190] pb-8 gap-4 grid grid-cols-3 sm:grid-cols-4 items-center">
+                                <div className="col-span-2 sm:col-span-3">
+                                    <h3>
+                                        <a href={`/paginas/nutricion/${item.slug}`} className={`${parrafo_normal} text-[#164190] font-bold`}>
+                                            {item.tema}
+                                        </a>
+                                    </h3>
+                                    <p className={`${parrafo_normal} text-[#164190]`}>
+                                        {item.contenido}
+                                    </p>
+                                </div>
+                                <a href={`/paginas/nutricion/${item.slug}`} className={`${BlueButton} w-fit ml-auto`}>
+                                    Ver más
+                                    <span className="sr-only">{item.contenido}</span>
+                                </a>
+                            </article>
                         ))
                     ) : (
                         <p className="text-center text-gray-500 col-span-full">

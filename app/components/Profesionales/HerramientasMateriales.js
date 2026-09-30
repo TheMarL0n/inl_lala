@@ -5,11 +5,15 @@ const HerramientasMateriales = () => {
     return (
         <section className="py-20 px-4">
             <div className="max-w-7xl mx-auto">
-                <h3 className={`${encabezado_h3} bg-[#164190] hidden sm:block sm:text-[46px]!`}>Herramientas y</h3>
-                <h3 className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>Materiales</h3>
+                <h2>
+                    <span className={`${encabezado_h3} bg-[#164190] hidden sm:inline sm:text-[46px]!`}>Herramientas y</span>
+                    <br />
+                    <span className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>Materiales</span>
+                </h2>
+
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-20">
                     {
-                        herramientas_materiales.map((item, idx)=>(
+                        herramientas_materiales.map((item, idx) => (
                             <a
                                 key={idx}
                                 href="#"

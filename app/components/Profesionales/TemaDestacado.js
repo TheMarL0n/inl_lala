@@ -14,9 +14,14 @@ const TemaDestacado = ({
         >
             <div className="max-w-7xl mx-auto">
                 <div className="relative z-3 max-w-7xl sm:w-7xl mx-auto py-4 px-4">
-                    <div>
-                        <h3 className={`${encabezado_h3} bg-[#164190] sm:text-[46px]!`}>{titulo_tema_destacado}</h3>
-                        <h3 className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>{subtitulo_tema_destacado}</h3>
+                    <article>
+                        <h2>
+                            <a href={`${enlace_tema_destacado}`}>
+                                <span className={`${encabezado_h3} bg-[#164190] sm:text-[46px]!`}>{titulo_tema_destacado}</span>
+                                <br />
+                                <span className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>{subtitulo_tema_destacado}</span>
+                            </a>
+                        </h2>
                         <p className={`${parrafo_normal} text-white font-medium text-[34px]! leading-9 max-w-md sm:ml-26 mt-6`}>
                             {descripcion_tema_destacado}
                         </p>
@@ -26,8 +31,9 @@ const TemaDestacado = ({
                             className={`${BlueButton} w-fit sm:ml-26 mt-6`}
                         >
                             Ver más
+                            <span className="sr-only">{descripcion_tema_destacado}</span>
                         </a>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>

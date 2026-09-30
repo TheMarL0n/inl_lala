@@ -13,8 +13,10 @@ const RecursosList = () => {
     return (
         <section className="py-20 px-4">
             <div className="max-w-7xl mx-auto">
-                <h3 className={`${encabezado_h3} bg-[#164190] hidden sm:block sm:text-[46px]!`}>recursos para</h3>
-                <h3 className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>medios</h3>
+                <h2>
+                    <span className={`${encabezado_h3} bg-[#164190] hidden sm:block sm:text-[46px]!`}>recursos para</span>
+                    <span className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>medios</span>
+                </h2>
             </div>
             <div className="max-w-7xl mx-auto mt-20">
                 <Swiper
@@ -33,10 +35,13 @@ const RecursosList = () => {
                     {
                         recursos.map((item, idx) => (
                             <SwiperSlide key={idx} className="group">
-                                <div className="space-y-4 overflow-hidden">
+                                <article className="space-y-4 overflow-hidden">
                                     <img src={item.imagen_principal} className="h-60 w-full object-cover" alt="Imagen de recurso" />
-                                    <button className={`${BlueButton} w-fit ml-auto`}>Ver más</button>
-                                </div>
+                                    <a href="" className={`${BlueButton} w-fit ml-auto`}>
+                                        Ver más
+                                        <span className="sr-only">{item.descripcion}</span>
+                                        </a>
+                                </article>
                             </SwiperSlide>
                         ))
                     }

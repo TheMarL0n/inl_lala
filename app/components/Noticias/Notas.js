@@ -22,8 +22,10 @@ const NotasList = () => {
     return (
         <section className="py-20 px-4">
             <div className="max-w-7xl mx-auto">
-                <h3 className={`${encabezado_h3} bg-[#164190] hidden sm:block sm:text-[46px]!`}>Notas</h3>
-                <h3 className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>destacadas</h3>
+                <h2>
+                    <span className={`${encabezado_h3} bg-[#164190] hidden sm:block sm:text-[46px]!`}>Notas</span>
+                    <span className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>destacadas</span>
+                </h2>
             </div>
             <div className="max-w-7xl mx-auto space-y-8 mt-16">
                 <Swiper
@@ -41,14 +43,19 @@ const NotasList = () => {
                                 <div className="space-y-8">
                                     {
                                         grupo.map((nota, index) => (
-                                            <div key={index} className="border-b border-[#164190] pb-8 gap-4 grid grid-cols-3 sm:grid-cols-4">
-                                                <p className={`${parrafo_normal} text-[#164190] col-span-2 sm:col-span-3`}>
-                                                    <strong>{nota.titulo}</strong>
-                                                    <br />
-                                                    {nota.descripcion}
-                                                </p>
-                                                <button className={`${BlueButton} w-fit ml-auto`}>Ver más</button>
-                                            </div>
+                                            <article key={index} className="border-b border-[#164190] pb-8 gap-4 grid grid-cols-3 sm:grid-cols-4">
+                                                <h3 className="col-span-2 sm:col-span-3">
+                                                    <a href="" className={`${parrafo_normal} text-[#164190]`}>
+                                                        <strong>{nota.titulo}</strong>
+                                                        <br />
+                                                        {nota.descripcion}
+                                                    </a>
+                                                </h3>
+                                                <a href="" className={`${BlueButton} w-fit ml-auto`}>
+                                                    Ver más
+                                                    <span className="sr-only">{nota.descripcion}</span>
+                                                </a>
+                                            </article>
                                         ))
                                     }
                                 </div>

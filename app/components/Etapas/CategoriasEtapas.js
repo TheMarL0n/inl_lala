@@ -47,14 +47,22 @@ const CategoriasEtapas = () => {
                 {
                     etapasFiltradas.length > 0 ? (
                         etapasFiltradas.map((item, idx) => (
-                            <div key={idx} className="border-b border-[#164190] pb-8 gap-4 grid grid-cols-3 sm:grid-cols-4">
-                                <p className={`${parrafo_normal} text-[#164190] col-span-2 sm:col-span-3`}>
-                                    <strong>{item.tema}</strong>
-                                    <br />
-                                    {item.contenido}
-                                </p>
-                                <button className={`${BlueButton} w-fit ml-auto`}>Ver más</button>
-                            </div>
+                            <article key={idx} className="border-b border-[#164190] pb-8 gap-4 grid grid-cols-3 sm:grid-cols-4 items-center">
+                                <div className="col-span-2 sm:col-span-3">
+                                    <h3>
+                                        <a href={`/paginas/etapas/${item.slug}`} className={`${parrafo_normal} text-[#164190] font-bold`}>
+                                            {item.tema}
+                                        </a>
+                                    </h3>
+                                    <p className={`${parrafo_normal} text-[#164190]`}>
+                                        {item.contenido}
+                                    </p>
+                                </div>
+                                <a href={`/paginas/etapas/${item.slug}`} className={`${BlueButton} w-fit ml-auto`}>
+                                    Ver más
+                                    <span className="sr-only">{item.contenido}</span>
+                                </a>
+                            </article>
                         ))
                     ) : (
                         <p className="text-center text-gray-500 col-span-full">

@@ -7,7 +7,7 @@ const BuscadorMitos = () => {
         <section className="px-4 py-10">
             <div className="max-w-7xl mx-auto pb-20 px-4 space-y-20">
                 <div className="text-center flex flex-col items-center space-y-4">
-                    <h2 className={`${encabezado_h2} text-[#15428C]! text-[40px]! m-0!`}>¿No encontraste la respuesta que buscabas?</h2>
+                    <h3 className={`${encabezado_h2} text-[#15428C]! text-[40px]! m-0!`}>¿No encontraste la respuesta que buscabas?</h3>
                     <p className={`${parrafo_normal} text-[#15428C] text-[40px]! leading-11.5!`}>Déjanos tu pregunta sobre nutrición y lácteos.
                         Revisaremos las dudas más frecuentes para responder
                         las dudas más frecuentes con información clara y

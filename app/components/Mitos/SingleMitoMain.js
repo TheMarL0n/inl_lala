@@ -9,11 +9,11 @@ const SingleMitoMain = ({ image, title, reality }) => {
                 <div className="w-full sm:w-1/2 flex flex-col items-end">
                     <div className="space-y-12  max-w-155 sm:bg-white p-8 sm:mt-10">
                         <span><Comillas className="rotate-180 sm:-mt-12 sm:-ml-12" /></span>
-                        <h2 className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-[120px] sm:text-[130px] sm:leading-32 uppercase m-0`}>Mito</h2>
+                        <h4 className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-[120px] sm:text-[130px] sm:leading-32 uppercase m-0`}>Mito</h4>
                         <h1 className="text-[#15428C] font-black text-[32px] leading-9 m-0">
                             {title}
                         </h1>
-                        <h2 className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-[120px] sm:text-[130px] sm:leading-32 uppercase m-0`}>Realidad</h2>
+                        <h4 className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-[120px] sm:text-[130px] sm:leading-32 uppercase m-0`}>Realidad</h4>
                         <div className={`${parrafo_normal} text-[#15428C] m-0`}>{parse(reality)}</div>
                         <span><Comillas className="ml-auto block" /></span>
                     </div>

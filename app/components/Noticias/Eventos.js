@@ -14,8 +14,10 @@ const EventosList = () => {
     return (
         <section className="py-20 px-4">
             <div className="max-w-7xl mx-auto">
-                <h3 className={`${encabezado_h3} bg-[#164190] hidden sm:block sm:text-[46px]!`}>Próximos</h3>
-                <h3 className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>eventos</h3>
+                <h2>
+                    <span className={`${encabezado_h3} bg-[#164190] hidden sm:block sm:text-[46px]!`}>Próximos</span>
+                    <span className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-18!`}>eventos</span>
+                </h2>
             </div>
             <div className="max-w-7xl mx-auto mt-16">
                 <Swiper
@@ -46,11 +48,11 @@ const EventosList = () => {
                     {
                         eventos.map((item, idx) => (
                             <SwiperSlide key={idx} className="group">
-                                <div key={idx} className="space-y-1 overflow-hidden px-18">
+                                <article key={idx} className="space-y-1 overflow-hidden px-18">
                                     <FechaCalendario fechaStr={item.fecha} />
                                     <h4 className="text-[20px] font-bold text-[#0B75B9] uppercase">{item.tipo}</h4>
-                                    <p className={`${parrafo_normal} text-[#164190]`}>{item.descripcion}</p>
-                                </div>
+                                    <a href="" className={`${parrafo_normal} text-[#164190]`}>{item.descripcion}</a>
+                                </article>
                             </SwiperSlide>
                         ))
                     }

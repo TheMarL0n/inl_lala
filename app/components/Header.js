@@ -46,8 +46,8 @@ export default function Header() {
         <header
             className={`fixed z-3 w-full transition-all duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
                 } ${isAtTop
-                    ? 'bg-transparent shadow-none duration-300'
-                    : 'bg-white/70 backdrop-blur-md shadow-sm duration-300'
+                    ? 'bg-transparent shadow-none'
+                    : 'bg-white/70 backdrop-blur-md shadow-sm'
                 }`}
         >
             <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">

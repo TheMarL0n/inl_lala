@@ -25,8 +25,12 @@ const Dudas = () => {
                 <img src="/images/girl_eating.png" alt="persona comiendo" />
             </div>
             <div className="bg-[#15428C] p-8">
-                <h3 className={`${encabezado_h3} bg-[#0B75B9]`}>Resuelve tus</h3>
-                <h2 className="uppercase text-[120px] sm:text-[200px] sm:leading-55 text-[#0B75B9] font-medium">Dudas</h2>
+                <h2>
+                    <span className={`${encabezado_h3} bg-[#0B75B9]`}>Resuelve tus</span>
+                    <br/>
+                    <span className="uppercase text-[120px] sm:text-[200px] sm:leading-55 text-[#0B75B9] font-medium">Dudas</span>
+                </h2>
+                
                 <p className={`${parrafo_normal} text-white max-w-113 mt-4`}>
                     Explora contenidos para aprender sobre nutrición, salud y alimentación desde una perspectiva científica, práctica y fácil de entender.
                 </p>

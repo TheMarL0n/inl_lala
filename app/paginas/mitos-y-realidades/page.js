@@ -4,6 +4,11 @@ import Header from "@/app/components/Header";
 import { paginas } from "@/app/utils/Copies";
 import MitosGrid from "@/app/components/Mitos/MitosGrid";
 
+export const metadata = {
+  title: "Mitos y realidades",
+  description: "Aclarando dudas, creencias y mitos alrededor del consumo de lácteos",
+};
+
 export default function Mitos() {
     const data = paginas.find((pagina) => pagina.slug === "mitos_realidades");
     return (

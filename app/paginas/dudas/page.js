@@ -7,6 +7,11 @@ import CategoriasDudas from "@/app/components/Dudas/CategoriasDudas";
 import FooterDudas from "@/app/components/Dudas/FooterDudas";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "Resuelve tus dudas",
+  description: "Respuestas claras para comprender el papel de la leche y los productos lácteos en tu salud.",
+};
+
 export default function Dudas() {
     const data = paginas.find((pagina) => pagina.slug === "dudas");
     return (

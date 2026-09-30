@@ -33,6 +33,51 @@ export const menuI_tems = [
     },
 ]
 
+export const videos_aprende = [
+    {
+        id: 1,
+        background: "/images/swiper_video.png",
+        title: "Nombre del video",
+        abstract: "Abstract de que va",
+        video: "https://www.youtube.com/embed/q3lX2p_Uy9I?rel=0"
+    },
+    {
+        id: 2,
+        background: "/images/swiper_video.png",
+        title: "Nombre del video",
+        abstract: "Abstract de que va",
+        video: "https://www.youtube.com/embed/q3lX2p_Uy9I?rel=0"
+    },
+    {
+        id: 3,
+        background: "/images/swiper_video.png",
+        title: "Nombre del video",
+        abstract: "Abstract de que va",
+        video: "https://www.youtube.com/embed/q3lX2p_Uy9I?rel=0"
+    },
+    {
+        id: 4,
+        background: "/images/swiper_video.png",
+        title: "Nombre del video",
+        abstract: "Abstract de que va",
+        video: "https://www.youtube.com/embed/q3lX2p_Uy9I?rel=0"
+    },
+    {
+        id: 5,
+        background: "/images/swiper_video.png",
+        title: "Nombre del video",
+        abstract: "Abstract de que va",
+        video: "https://www.youtube.com/embed/q3lX2p_Uy9I?rel=0"
+    },
+    {
+        id: 6,
+        background: "/images/swiper_video.png",
+        title: "Nombre del video",
+        abstract: "Abstract de que va",
+        video: "https://www.youtube.com/embed/q3lX2p_Uy9I?rel=0"
+    }
+]
+
 export const paginas = [
     {
         slug: "dudas",
@@ -132,22 +177,30 @@ export const dudas = [
     {
         categoria_id: 1,
         pregunta: "Cómo construir una alimentación equilibrada",
-        respuesta: "Conoce los principios básicos para construir una alimentación equilibrada en tu día a día."
+        respuesta: "",
+        slug:"construir-alimentacion-equilibrada",
+        descripcion: "Conoce los principios básicos para construir una alimentación equilibrada en tu día a día."
     },
     {
         categoria_id: 1,
         pregunta: "Grupos de alimentos",
-        respuesta: "Descubre cómo se clasifican los alimentos y la función que cumplen en una dieta balanceada."
+        respuesta: "",
+        slug:"grupo-alimentos",
+        descripcion: "Descubre cómo se clasifican los alimentos y la función que cumplen en una dieta balanceada."
     },
     {
         categoria_id: 1,
         pregunta: "Hábitos saludables",
-        respuesta: "Conoce los hábitos que pueden ayudarte a cuidar tu alimentación y bienestar todos los días."
+        respuesta: "",
+        slug:"habitos-saludables",
+        descripcion: "Conoce los hábitos que pueden ayudarte a cuidar tu alimentación y bienestar todos los días."
     },
     {
         categoria_id: 1,
         pregunta: "El papel de los lácteos en una alimentación equilibrada",
-        respuesta: "Entiende cómo la leche y los productos lácteos pueden formar parte de una alimentación equilibrada."
+        respuesta: "",
+        slug:"lacteos-alimentacion-equilibrada",
+        descripcion: "Entiende cómo la leche y los productos lácteos pueden formar parte de una alimentación equilibrada."
     }
 ]
 
@@ -183,17 +236,20 @@ export const nutricion = [
     {
         categoria_id: 1,
         tema: "Alimentación para un peso saludable",
-        contenido: "Descubre cómo construir hábitos de alimentación sostenibles."
+        contenido: "Descubre cómo construir hábitos de alimentación sostenibles.",
+        slug: "alimentacion-peso-saludable"
     },
     {
         categoria_id: 1,
         tema: "Entendiendo el balance energético",
-        contenido: "Descubre cómo influye en el mantenimiento de un peso saludable."
+        contenido: "Descubre cómo influye en el mantenimiento de un peso saludable.",
+        slug: "ententiendo-balance-energetico"
     },
     {
         categoria_id: 1,
         tema: "Lácteos y composición corporal",
-        contenido: "Conoce qué dice la ciencia sobre su relación con la masa muscular y la grasa corporal."
+        contenido: "Conoce qué dice la ciencia sobre su relación con la masa muscular y la grasa corporal.",
+        slug: "lacteos-composicion-corporal"
     }
 ]
 
@@ -233,11 +289,13 @@ export const categorias_etapas = [
 export const etapas = [
     {
         categoria_id: 2,
+        slug:"nutricion-primeros-annos",
         tema: "Nutrición desde los primeros años",
         contenido: "Conoce las bases de la alimentación durante los primeros años de vida."
     },
     {
         categoria_id: 2,
+        slug:"preguntas-primera-infancia",
         tema: "Preguntas frecuentes sobre primera infancia",
         contenido: "Encuentra respuestas claras a las dudas más comunes sobre alimentación, nutrición y cuidados durante esta etapa."
     }
@@ -471,21 +529,27 @@ export const mitos = [
         titulo: "¿La leche aumenta el riesgo de cáncer?",
         realidad: "No existe evidencia científica que demuestre que el consumo de lácteos aumente el riesgo de cáncer. Por el contrario, estudios científicos muy grandes han encontrado una asociación entre el consumo de lácteos y un menor riesgo de desarrollar cáncer colorrectal.",
         imagen_principal: "/images/mitos/mito_1.png",
-        slug: "leche-aumenta-riesgo-cancer"
+        slug: "leche-aumenta-riesgo-cancer",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 2,
         titulo: "¿Los lácteos provocan inflamación?",
         realidad: "En personas sanas, el consumo de lácteos no aumenta los marcadores de inflamación. Además, alimentos fermentados como el yogurt y el kéfir pueden formar parte de una alimentación que favorezca la salud digestiva.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "lacteos-provocan-inflamacion"
+        slug: "lacteos-provocan-inflamacion",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 3,
         titulo: "¿La leche entera provoca aumento de peso?",
         realidad: "La evidencia actual muestra que el consumo de lácteos, incluso enteros, no se asocia con un mayor peso corporal. La leche entera, yogurt y quesos pueden ser parte de un patrón de dieta y estilo de vida saludable para cuidar y mantener el peso.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "leche-entera-aumento-peso"
+        slug: "leche-entera-aumento-peso",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 4,
@@ -504,105 +568,135 @@ export const mitos = [
        
         `,
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "intolerancia-a-lactosa"
+        slug: "intolerancia-a-lactosa",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 5,
         titulo: "¿Los lácteos causan acné?",
         realidad: "Hasta el momento no existe evidencia sólida que demuestre que los lácteos sean una causa directa del acné. Su aparición depende de múltiples factores y continúa siendo un tema de investigación.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "lacteos-causan-acne"
+        slug: "lacteos-causan-acne",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 6,
         titulo: "¿Es fácil cubrir las necesidades de calcio sin consumir lácteos?",
         realidad: "Existen otros alimentos que contienen calcio, como algunos vegetales, leguminosas y tortillas de maíz. Sin embargo, el calcio presente en los lácteos se absorbe con mayor facilidad, por lo que pueden ser una fuente importante de este nutriente dentro de una alimentación equilibrada.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "calcio-sin-consumir-lacteos"
+        slug: "calcio-sin-consumir-lacteos",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 7,
         titulo: "¿Los lácteos aumentan el riesgo de enfermedades del corazón?",
         realidad: "La evidencia científica actual no muestra una relación directa entre el consumo de lácteos y un mayor riesgo de enfermedad cardiovascular (ECV). Por el contrario, el consumo de lácteos, se ha asociado con menor riesgo de ECV. Lo más importante es mantener una alimentación equilibrada y un estilo de vida saludable.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "lacteos-aumentan-riesgo-corazon"
+        slug: "lacteos-aumentan-riesgo-corazon",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 8,
         titulo: "¿Si soy adulto, ya no necesito consumir leche?",
         realidad: "Los lácteos pueden seguir formando parte de una alimentación saludable durante la vida adulta. Aportan proteínas de alta calidad, calcio y otros nutrientes que contribuyen al mantenimiento de la masa muscular y la salud ósea.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "adulto-no-consumir-leche"
+        slug: "adulto-no-consumir-leche",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 9,
         titulo: "¿Todo malestar después de tomar leche se debe a la lactosa?",
         realidad: "No siempre. Algunas molestias digestivas pueden tener otras causas, como alergia a la proteína de la leche de vaca u otras condiciones digestivas. Por ello, es importante identificar el origen de los síntomas antes de eliminar los lácteos de la alimentación.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: ""
+        slug: "malestar-por-lactosa",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 10,
         titulo: "¿La alergia a la leche y la intolerancia a la lactosa son lo mismo?",
         realidad: "No. La intolerancia a la lactosa es un problema relacionado con la digestión de este azúcar natural de la leche, mientras que la alergia a la proteína de la leche es una respuesta del sistema inmunológico y requiere un manejo diferente.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "alergia-intolerancia-lo-mismo"
+        slug: "alergia-intolerancia-lo-mismo",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 11,
         titulo: "¿El azúcar que aparece en la etiqueta de la leche es azúcar añadida?",
         realidad: "No. En la leche natural, el azúcar que aparece en la etiqueta corresponde a la lactosa, que es el azúcar presente de forma natural en este alimento.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "azucar-en-leche-es-anadida"
+        slug: "azucar-en-leche-es-anadida",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 12,
         titulo: "¿Durante la lactancia materna es necesario consumir únicamente leche deslactosada?",
         realidad: "No existe una recomendación general para que las mujeres que amamantan eliminen la lactosa de su alimentación. Cualquier cambio debe realizarse únicamente bajo la orientación de un profesional de la salud y de acuerdo con cada caso particular.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "lactancia-materna-consumir-deslactosada"
+        slug: "lactancia-materna-consumir-deslactosada",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 13,
         titulo: "¿La leche aumenta el azúcar en sangre porque contiene lactosa?",
         realidad: "La lactosa es un carbohidrato natural de la leche. Sin embargo, gracias a su contenido de proteínas y grasas, la leche tiene un índice glucémico relativamente bajo y puede formar parte de una alimentación equilibrada,  también para las personas que cuidan los niveles de glucosa en sangre.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "leche-aumenta-azucar-en-sangre"
+        slug: "leche-aumenta-azucar-en-sangre",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 14,
         titulo: "¿Los lácteos provocan diabetes tipo 2?",
         realidad: "No. La evidencia científica actual no muestra una relación entre el consumo de leche o lácteos y un mayor riesgo de diabetes tipo 2. Incluso el yogurt y otros lácteos fermentados se ha asociado con un menor riesgo de desarrollar esta enfermedad.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "lacteos-provocan-diabetes"
+        slug: "lacteos-provocan-diabetes",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 15,
         titulo: "¿La leche aumenta la producción de moco durante un resfriado?",
         realidad: "No existe evidencia científica que demuestre que la leche aumente la producción de moco. Algunas personas pueden percibir una sensación temporal de mayor espesor en la boca, pero esto no significa que produce más mucosidad.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "leche-aumenta-moco"
+        slug: "leche-aumenta-moco",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 16,
         titulo: "¿La leche no debe consumirse después del ejercicio?",
         realidad: "Por el contrario, la leche puede ser una buena opción para la recuperación después del ejercicio gracias a su contenido de agua, proteínas, carbohidratos y electrolitos.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "leche-no-consumir-despues-ejercicio"
+        slug: "leche-no-consumir-despues-ejercicio",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 17,
         titulo: "¿Los lácteos enteros siempre son malos porque contienen grasa saturada?",
         realidad: "La evidencia científica más reciente indica que el consumo moderado de lácteos enteros puede formar parte de una alimentación saludable para la mayoría de las personas  Lo más importante es considerar el patrón general de alimentación.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "lactos-enteros-malos"
+        slug: "lactos-enteros-malos",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     },
     {
         id: 18,
         titulo: "¿Los lácteos favorecen el desarrollo de la masa muscular?",
         realidad: "Sí. Los lácteos aportan proteínas de alta calidad, calcio y otros nutrientes que contribuyen al mantenimiento y desarrollo de la masa muscular, especialmente cuando se combinan con actividad física regular.",
         imagen_principal: "/images/nutricion/nutricion_categoria_1.png",
-        slug: "lacteos-favorecen-masa-muscular"
+        slug: "lacteos-favorecen-masa-muscular",
+        author: "Nombre de Autor",
+        date: "29-09-2026"
     }
 
 ]

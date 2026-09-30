@@ -5,6 +5,11 @@ import { paginas } from "@/app/utils/Copies";
 import CategoriasNutricion from "@/app/components/Nutricion/CategoriasNutricion";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "Come mejor, vive mejor",
+  description: "La alimentación y el papel de la leche y los lácteos como parte de una vida saludable",
+};
+
 export default function Nutricion() {
     const data = paginas.find((pagina) => pagina.slug === "nutricion");
     return (

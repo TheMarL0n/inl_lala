@@ -7,7 +7,7 @@ const FormContacto = ({ imagen_footer }) => {
             className={`relative min-h-screen bg-no-repeat bg-cover bg-center flex flex-col sm:justify-center py-20 px-4`}
         >
             <div className="max-w-7xl sm:w-7xl mx-auto">
-                <h3 className={`${encabezado_h3} bg-[#164190] sm:text-[70px]! sm:leading-18!`}>Contacto</h3>
+                <h2 className={`${encabezado_h3} bg-[#164190] sm:text-[70px]! sm:leading-18!`}>Contacto</h2>
                 <form className="w-full mt-20 sm:w-1/2 sm:ml-auto space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <input type="text" id="nombre" name="nombre" placeholder="Nombre" className="border-b border-b-[#164190] placeholder:text-[#C7C7CC] text-[30px] text-[#164190]" />

@@ -4,8 +4,11 @@ const Nutricion = () => {
     return (
         <section className="py-20 px-4">
             <div className="max-w-5xl mx-auto">
-                <h3 className={`${encabezado_h3} bg-[#FF0000] sm:ml-40`}>La nutrición está presente</h3>
-                <h2 className={`${encabezado_h2} bg-[#164190]`}>en cada decisión que tomamos</h2>
+                <h2>
+                    <span className={`${encabezado_h3} bg-[#FF0000] sm:ml-40`}>La nutrición está presente</span>
+                    <br/>
+                    <span className={`${encabezado_h2} bg-[#164190] block ml-auto`}>en cada decisión que tomamos</span>
+                </h2>
                 <div className="max-w-4xl mx-auto flex mt-18 gap-4 sm:gap-12 items-center sm:items-end">
                     <img src="/images/home_bowl.png" width={377} height={377} className="w-30 sm:w-94.25" alt="Bowl" />
                     <p className={`${parrafo_normal} text-[#15428C] sm:mb-30`}>

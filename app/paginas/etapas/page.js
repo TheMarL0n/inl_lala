@@ -4,6 +4,11 @@ import Header from "@/app/components/Header";
 import { paginas } from "@/app/utils/Copies";
 import CategoriasEtapas from "@/app/components/Etapas/CategoriasEtapas";
 
+export const metadata = {
+  title: "Etapas de la vida",
+  description: "Explora contenidos sobre nutrición y leche y lácteos adaptados a cada etapa de la vida.",
+};
+
 export default function Etapas() {
     const data = paginas.find((pagina) => pagina.slug === "etapas");
     return (

@@ -8,6 +8,11 @@ import Aprende from "@/app/components/Home/Aprende";
 import AlianzasColaboraciones from "@/app/components/Profesionales/AlianzasColaboraciones";
 import FormContacto from "@/app/components/FormContacto";
 
+export const metadata = {
+  title: "Para Profesionales",
+  description: "Lo último de la ciencia de la leche y lácteos, validado por autoridades científicas.",
+};
+
 export default function Profesionales() {
     const data = paginas.find((pagina) => pagina.slug === "profesionales");
     return (

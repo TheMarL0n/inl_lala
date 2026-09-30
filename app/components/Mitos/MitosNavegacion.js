@@ -81,7 +81,7 @@ const MitosNavegacion = ({ currentTheme }) => {
                         relatedMitos.map((item, idx) => (
                             <Link
                                 key={idx}
-                                href={`/mitos/${item.slug}`}
+                                href={`/paginas/mitos-y-realidades/${item.slug}`}
                                 className="flex flex-col justify-between space-y-4 group cursor-pointer"
                             >
                                 <div className="space-y-4">

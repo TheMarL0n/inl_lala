@@ -28,16 +28,16 @@ const miFuente = localFont({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://www.institutolala.com.mx/'),
+  metadataBase: new URL('https://www.institutolala.com.mx'),
   title: {
-    default: "Instituto de Nutrición Lala",
+    default: "Lala | Instituto de Nutrición Lala",
     template: "%s | Lala",
   },
   description: "Lo que comes importa, entenderlo también",
   openGraph: {
-    title: "Instituto de Nutrición Lala",
+    title: "Lala | Instituto de Nutrición Lala",
     description: "Lo que comes importa, entenderlo también",
-    url: 'https://www.institutolala.com.mx/',
+    url: 'https://www.institutolala.com.mx',
     siteName: 'Lala',
     images: [
       {
