@@ -15,7 +15,7 @@ const Mitos = ({ alternative, currentSlug }) => {
     const filteredMitos = mitos.filter((item) => item.slug !== currentSlug);
 
     return (
-        <section className="py-10 sm:pt-20">
+        <section className="py-10 sm:pt-20" aria-label="Sección de mitos y realidades">
             {
                 alternative ?
                     ""
@@ -41,16 +41,16 @@ const Mitos = ({ alternative, currentSlug }) => {
             >
                 {filteredMitos.map((item, idx) => (
                     <SwiperSlide key={idx}>
-                        <div className="relative overflow-hidden z-2 flex flex-col sm:flex-row w-full">
-                            
+                        <article className="relative overflow-hidden z-2 flex flex-col sm:flex-row w-full">
+
                             {/* Contenedor de la imagen optimizada */}
                             <div className="w-full sm:w-1/2 relative overflow-hidden h-96 sm:h-129">
-                                <Image 
-                                    src={item.imagen_principal} 
-                                    alt={`Ilustración del mito: ${item.titulo}`}
+                                <Image
+                                    src={item.imagen_principal}
+                                    alt={`Ilustración representativa sobre el mito: ${item.titulo}`}
                                     fill
                                     sizes="(max-width: 640px) 100vw, 50vw"
-                                    className="object-cover absolute top-0 left-0" 
+                                    className="object-cover absolute top-0 left-0"
                                 />
                             </div>
 
@@ -76,7 +76,7 @@ const Mitos = ({ alternative, currentSlug }) => {
                                         alternative ?
                                             <p className='text-[#15428C] font-black text-[40px] m-0'>realidad</p>
                                             :
-                                            <h3 className={`${encabezado_h4} bg-[#009638]`}>Lo que dice la ciencia</h3>
+                                            <h4 className={`${encabezado_h4} bg-[#009638]`}>Lo que dice la ciencia</h4>
                                     }
                                     <div className={`${parrafo_normal} text-[#15428C]`}>{parse(item.realidad)}</div>
                                     {
@@ -87,11 +87,11 @@ const Mitos = ({ alternative, currentSlug }) => {
                                     }
                                 </div>
                             </div>
-                        </div>
+                        </article>
                     </SwiperSlide>
-                ))}
+                ))}                
             </Swiper>
         </section>
     )
 }
-export default Mitos
+export default Mitos;
