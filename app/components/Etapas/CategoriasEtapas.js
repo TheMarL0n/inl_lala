@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import { categorias_etapas } from "@/app/utils/Copies"
+import Image from "next/image"
 import { etapas } from "@/app/utils/Copies"
 import { BlueButton, parrafo_normal, stroke_text } from "@/app/utils/CSS_clases"
 
@@ -30,7 +31,14 @@ const CategoriasEtapas = () => {
                                 <div className="relative min-h-57 max-h-57 mx-2">
                                     <div className={`bg-[#164190] sm:bg-white absolute z-2 h-full w-full object-cover left-0 top-0 duration-400 ${isActive ? "opacity-0" : "opacity-100 group-hover:opacity-0"
                                         }`}></div>
-                                    <img src={item.imagen_principal} alt="Imagen de categoría" className="absolute z-1 top-0 left-0 object-cover w-full h-full" />
+                                    <Image
+                                        src={item.imagen_principal}
+                                        alt={item.titulo || "Imagen de categoría de las etapas de vida y el consumo lácteos"}
+                                        fill
+                                        sizes="(max-width: 640px) 50vw, 25vw"
+                                        priority={idx < 4} // Optimiza la carga de las primeras imágenes visibles
+                                        className="absolute z-1 top-0 left-0 object-cover w-full h-full"
+                                    />
                                 </div>
                                 <div className="absolute sm:relative top-4 sm:top-0 left-4 sm:left-0 z-3">
                                     <div className="hidden sm:block relative z-2 w-7 h-7 rounded-full bg-[#0B75B9] group-hover:bg-[#15428C] mx-auto border-2 border-[#15428C] duration-400"></div>

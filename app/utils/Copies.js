@@ -182,21 +182,21 @@ export const dudas = [
         descripcion: "Conoce los principios básicos para construir una alimentación equilibrada en tu día a día."
     },
     {
-        categoria_id: 1,
+        categoria_id: 2,
         pregunta: "Grupos de alimentos",
         respuesta: "",
         slug:"grupo-alimentos",
         descripcion: "Descubre cómo se clasifican los alimentos y la función que cumplen en una dieta balanceada."
     },
     {
-        categoria_id: 1,
+        categoria_id: 3,
         pregunta: "Hábitos saludables",
         respuesta: "",
         slug:"habitos-saludables",
         descripcion: "Conoce los hábitos que pueden ayudarte a cuidar tu alimentación y bienestar todos los días."
     },
     {
-        categoria_id: 1,
+        categoria_id: 4,
         pregunta: "El papel de los lácteos en una alimentación equilibrada",
         respuesta: "",
         slug:"lacteos-alimentacion-equilibrada",

@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { BlueButton, encabezado_h3, parrafo_normal } from "@/app/utils/CSS_clases"
 
 const TemaDestacado = ({
@@ -8,11 +9,20 @@ const TemaDestacado = ({
     enlace_tema_destacado,
 }) => {
     return (
-        <section
-            style={{ backgroundImage: `url(${imagen_tema_destacado})` }}
-            className={`mt-20 relative sm:min-h-screen bg-no-repeat bg-cover bg-center flex flex-col sm:justify-center`}
-        >
-            <div className="max-w-7xl mx-auto">
+        <section className="mt-20 relative sm:min-h-screen flex flex-col sm:justify-center overflow-hidden">
+            {/* Imagen de fondo optimizada con Next.js Image */}
+            {imagen_tema_destacado && (
+                <Image
+                    src={imagen_tema_destacado}
+                    alt={titulo_tema_destacado || "Imagen de tema destacado"}
+                    fill
+                    sizes="100vw"
+                    priority
+                    className="object-cover object-center absolute inset-0 -z-10"
+                />
+            )}
+
+            <div className="max-w-7xl mx-auto w-full">
                 <div className="relative z-3 max-w-7xl sm:w-7xl mx-auto py-4 px-4">
                     <article>
                         <h2>
@@ -28,6 +38,7 @@ const TemaDestacado = ({
                         <a
                             href={`${enlace_tema_destacado}`}
                             target="_blank"
+                            rel="noopener noreferrer"
                             className={`${BlueButton} w-fit sm:ml-26 mt-6`}
                         >
                             Ver más

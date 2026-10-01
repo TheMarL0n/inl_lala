@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { herramientas_materiales } from "@/app/utils/Copies"
 import { encabezado_h3 } from "@/app/utils/CSS_clases"
 
@@ -15,12 +16,19 @@ const HerramientasMateriales = () => {
                     {
                         herramientas_materiales.map((item, idx) => (
                             <a
-                                key={idx}
+                                key={item.id || idx}
                                 href="#"
                                 className="space-y-4 group cursor-pointer"
                             >
-                                <div className="relative min-h-60 sm:min-h-70 overflow-hidden">
-                                    <img src={item.imagen_principal} alt="Imagen de categoría" className="absolute z-1 top-0 left-0 object-cover w-full h-full group-hover:scale-105 duration-400" />
+                                <div className="relative min-h-60 sm:min-h-70 overflow-hidden rounded-lg">
+                                    {/* Imagen optimizada con Next.js Image */}
+                                    <Image 
+                                        src={item.imagen_principal} 
+                                        alt={item.titulo || "Imagen de categoría de herramientas y materiales"} 
+                                        fill
+                                        sizes="(max-width: 640px) 50vw, 25vw"
+                                        className="absolute z-1 top-0 left-0 object-cover w-full h-full transition-transform duration-400 group-hover:scale-105" 
+                                    />
                                 </div>
                                 <h3 className="text-[18px] leading-5 sm:text-[24px] sm:leading-7 font-bold text-[#15428C]">{item.titulo}</h3>
                             </a>

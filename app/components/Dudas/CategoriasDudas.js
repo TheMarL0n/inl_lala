@@ -1,6 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import Image from "next/image"
 import { categorias_dudas } from "@/app/utils/Copies"
 import { dudas } from "@/app/utils/Copies"
 import { BlueButton, parrafo_normal } from "@/app/utils/CSS_clases"
@@ -58,8 +59,15 @@ const CategoriasDudas = () => {
                             >
                                 <div className="relative min-h-60 sm:min-h-72">
                                     <div className={`bg-[#15428C]/70 absolute z-2 h-full w-full object-cover left-0 top-0 duration-400 ${isActive ? "opacity-0" : "opacity-0 sm:opacity-100 group-hover:opacity-0"
-                                        }`}></div>
-                                    <img src={item.imagen_principal} alt="Imagen de categoría" className="absolute z-1 top-0 left-0 object-cover w-full h-full" />
+                                        }`}></div>                                    
+                                    <Image 
+                                        src={item.imagen_principal} 
+                                        alt={item.titulo || "Imagen de categoría de las dudas más comunes sobre los lácteos"} 
+                                        fill
+                                        sizes="(max-width: 640px) 50vw, 25vw"
+                                        priority={idx < 4} // Optimiza la carga de las primeras imágenes visibles
+                                        className="absolute z-1 top-0 left-0 object-cover w-full h-full" 
+                                    />
                                 </div>
                                 <h3 className="text-[18px] leading-5 sm:text-[24px] sm:leading-7 font-bold text-[#15428C]">{item.titulo}</h3>
                             </div>
@@ -72,7 +80,7 @@ const CategoriasDudas = () => {
                 {
                     dudasFiltradas.length > 0 ? (
                         dudasFiltradas.map((item, idx) => (                           
-                            <article key={idx} className="border-b border-[#164190] pb-8 gap-4 grid grid-cols-3 sm:grid-cols-4 items-center">
+                            <article key={item.categoria_id} className="border-b border-[#164190] pb-8 gap-4 grid grid-cols-3 sm:grid-cols-4 items-center">
                                 <div className="col-span-2 sm:col-span-3">
                                     <h3>
                                         <a href={`/paginas/dudas/${item.slug}`} className={`${parrafo_normal} text-[#164190] font-bold`}>

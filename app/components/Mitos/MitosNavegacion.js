@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { mitos } from "@/app/utils/Copies"
 import { BlueButton, encabezado_h2, parrafo_normal } from "@/app/utils/CSS_clases"
 import { ChevronDown } from "@/app/utils/SVG_Icons"
@@ -7,8 +8,7 @@ const MitosNavegacion = ({ currentTheme }) => {
     // 1. Encontramos el índice del artículo actual dentro del arreglo global de mitos
     const currentIndex = mitos.findIndex(item => item.id === currentTheme?.id)
 
-    // 2. Determinamos el artículo anterior y el siguiente (con lógica circular o limitados por los extremos)
-    // Opción A: Si llega al final/inicio se detiene (devuelve undefined)
+    // 2. Determinamos el artículo anterior y el siguiente
     const prevTheme = currentIndex > 0 ? mitos[currentIndex - 1] : null
     const nextTheme = currentIndex < mitos.length - 1 ? mitos[currentIndex + 1] : null
 
@@ -78,17 +78,20 @@ const MitosNavegacion = ({ currentTheme }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 mt-8">
                     {
-                        relatedMitos.map((item, idx) => (
+                        relatedMitos.map((item) => (
                             <Link
-                                key={idx}
+                                key={item.id}
                                 href={`/paginas/mitos-y-realidades/${item.slug}`}
                                 className="flex flex-col justify-between space-y-4 group cursor-pointer"
                             >
                                 <div className="space-y-4">
                                     <div className="relative min-h-60 sm:min-h-72 overflow-hidden rounded-lg">
-                                        <img 
+                                        {/* Imagen optimizada con Next.js Image */}
+                                        <Image 
                                             src={item.imagen_principal} 
                                             alt={item.titulo} 
+                                            fill
+                                            sizes="(max-width: 640px) 100vw, 25vw"
                                             className="absolute z-1 top-0 left-0 object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" 
                                         />
                                     </div>

@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image"
 import { noticias } from "@/app/utils/Copies"
 import { BlueButton, encabezado_h3 } from "@/app/utils/CSS_clases";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -34,13 +35,22 @@ const RecursosList = () => {
                 >
                     {
                         recursos.map((item, idx) => (
-                            <SwiperSlide key={idx} className="group">
+                            <SwiperSlide key={item.id || idx} className="group">
                                 <article className="space-y-4 overflow-hidden">
-                                    <img src={item.imagen_principal} className="h-60 w-full object-cover" alt="Imagen de recurso" />
-                                    <a href="" className={`${BlueButton} w-fit ml-auto`}>
+                                    <div className="relative h-60 w-full overflow-hidden rounded-lg">
+                                        {/* Imagen optimizada con Next.js Image */}
+                                        <Image 
+                                            src={item.imagen_principal} 
+                                            alt={item.titulo || "Imagen de recurso para medios"} 
+                                            fill
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                            className="object-cover w-full h-full" 
+                                        />
+                                    </div>
+                                    <a href="#" className={`${BlueButton} w-fit ml-auto`}>
                                         Ver más
                                         <span className="sr-only">{item.descripcion}</span>
-                                        </a>
+                                    </a>
                                 </article>
                             </SwiperSlide>
                         ))

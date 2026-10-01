@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
+import Image from "next/image"
 import { categorias_nutricion } from "@/app/utils/Copies"
 import { nutricion } from "@/app/utils/Copies"
 import { BlueButton, parrafo_normal, stroke_text } from "@/app/utils/CSS_clases"
@@ -60,7 +61,14 @@ const CategoriasNutricion = () => {
                                 <div className="relative min-h-60 sm:min-h-72">
                                     <div className={`bg-[#15428C]/70 absolute z-2 h-full w-full object-cover left-0 top-0 duration-400 ${isActive ? "opacity-0" : "opacity-0 sm:opacity-100 group-hover:opacity-0"
                                         }`}></div>
-                                    <img src={item.imagen_principal} alt="Imagen de categoría" className="absolute z-1 top-0 left-0 object-cover w-full h-full" />
+                                    <Image
+                                        src={item.imagen_principal}
+                                        alt={item.titulo || "Imagen de categoría de la nutrición en el consumo de lácteos"}
+                                        fill
+                                        sizes="(max-width: 640px) 50vw, 25vw"
+                                        priority={idx < 4} // Optimiza la carga de las primeras imágenes visibles
+                                        className="absolute z-1 top-0 left-0 object-cover w-full h-full"
+                                    />
                                 </div>
                                 <h3 className="text-[18px] leading-5 sm:text-[24px] sm:leading-7 font-bold text-[#15428C]">{item.titulo}</h3>
                             </div>
