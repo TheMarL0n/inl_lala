@@ -25,7 +25,7 @@ const PagesJumbotron = ({ titulo, subtitulo, background, titulo_descripcion, des
                 </div>
             </div>
 
-            <div className="page_descripcion max-w-4xl mx-4 sm:mx-auto bg-white -mt-30 p-4 sm:p-20 relative z-20 min-h-37.5 shadow-sm">
+            <div className="page_descripcion max-w-4xl mx-4 sm:mx-auto bg-white -mt-30 p-4 sm:p-20 relative z-20 min-h-37.5">
                 <p className="text-[#15428C] text-center font-medium sm:text-[40px] sm:leading-11 text-[26px]">
                     {
                         titulo_descripcion ?

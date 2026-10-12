@@ -63,12 +63,12 @@ const CategoriasEtapas = () => {
                                         </a>
                                     </h3>
                                     <p className={`${parrafo_normal} text-[#164190]`}>
-                                        {item.contenido}
+                                        {item.contenido_1}
                                     </p>
                                 </div>
                                 <a href={`/paginas/etapas/${item.slug}`} className={`${BlueButton} w-fit ml-auto`}>
                                     Ver más
-                                    <span className="sr-only">{item.contenido}</span>
+                                    <span className="sr-only">{item.contenido_1}</span>
                                 </a>
                             </article>
                         ))

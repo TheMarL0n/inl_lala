@@ -1,3 +1,4 @@
+import Breadcrumbs from "@/app/components/Breadcrumbs";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import Mitos from "@/app/components/Home/Mitos";
@@ -7,6 +8,7 @@ import ReferenciasMitos from "@/app/components/Mitos/ReferenciasMitos";
 import SingleMitoMain from "@/app/components/Mitos/SingleMitoMain";
 import PagesSmallJumbotron from "@/app/components/PagesSmallJumbotron";
 import { mitos } from "@/app/utils/Copies";
+import { parrafo_normal } from "@/app/utils/CSS_clases";
 
 export async function generateMetadata({ params }) {
     const resolvedParams = await params;
@@ -122,7 +124,6 @@ const Mito_Realidad = async ({ params }) => {
 
     return (
         <main>
-
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
@@ -135,9 +136,10 @@ const Mito_Realidad = async ({ params }) => {
             <Header />
             <article>
                 <PagesSmallJumbotron background={background} />
+                <Breadcrumbs title={title} parent={"Mitos y realidades"} url={`/paginas/mitos-y-realidades`}/>
                 <SingleMitoMain image={main_image} title={title} reality={reality} />
             </article>
-            <Mitos alternative={true} currentSlug={currentMito.slug}/>
+            <Mitos alternative={true} currentSlug={currentMito.slug} />
             <BuscadorMitos />
             <ReferenciasMitos />
             <MitosNavegacion currentTheme={currentMito} />

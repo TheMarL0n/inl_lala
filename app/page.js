@@ -8,8 +8,7 @@ import Preguntas from "./components/Home/Preguntas";
 import Profesionales from "./components/Home/Profesionales";
 import HomeJumbotron from "./components/HomeJumbotron";
 
-export default function Home() {
-
+export default async function Home() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'MedicalOrganization',

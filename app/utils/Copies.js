@@ -257,22 +257,22 @@ export const categorias_etapas = [
     {
         id: 1,
         titulo: "Embarazo y lactancia",
-        imagen_principal: "/images/etapas/etapa_1.png"
+        imagen_principal: "/images/etapas/etapa_embarazo.png"
     },
     {
         id: 2,
         titulo: "0-5 años",
-        imagen_principal: "/images/etapas/etapa_1.png"
+        imagen_principal: "/images/etapas/etapa_infancia.png"
     },
     {
         id: 3,
         titulo: "6-12 años",
-        imagen_principal: "/images/etapas/etapa_1.png"
+        imagen_principal: "/images/etapas/etapa_niñez.png"
     },
     {
         id: 4,
         titulo: "Adolescencia",
-        imagen_principal: "/images/etapas/etapa_1.png"
+        imagen_principal: "/images/etapas/etapa_adolescencia.png"
     },
     {
         id: 5,
@@ -282,22 +282,32 @@ export const categorias_etapas = [
     {
         id: 5,
         titulo: "Adultos mayores",
-        imagen_principal: "/images/etapas/etapa_1.png"
+        imagen_principal: "/images/etapas/etapa_adultos_mayores.png"
     },
 ]
 
 export const etapas = [
     {
+        categoria_id: 1,
+        slug:"nutricion-embarazo-lactancia",
+        tema: "Embarazo y lactancia",
+        titulo_linea_1: "Embarazo",
+        titulo_linea_2: "y lactancia",
+        contenido_1: "El embarazo y la lactancia son etapas en las que las necesidades nutricionales aumentan para favorecer la salud de la madre y el adecuado crecimiento y desarrollo del bebé.",
+        contenido_2: "Durante este periodo, llevar una alimentación equilibrada ayuda a cubrir los requerimientos de energía, proteínas, vitaminas y minerales. Los lácteos pueden formar parte de esta alimentación, ya que aportan nutrientes importantes como proteínas de alta calidad, calcio y vitaminas.",
+        imagen_principal: "/images/etapas/etapa_embarazo_fondo.png"
+    },
+    {
         categoria_id: 2,
         slug:"nutricion-primeros-annos",
         tema: "Nutrición desde los primeros años",
-        contenido: "Conoce las bases de la alimentación durante los primeros años de vida."
+        contenido_1: "Conoce las bases de la alimentación durante los primeros años de vida."
     },
     {
         categoria_id: 2,
         slug:"preguntas-primera-infancia",
         tema: "Preguntas frecuentes sobre primera infancia",
-        contenido: "Encuentra respuestas claras a las dudas más comunes sobre alimentación, nutrición y cuidados durante esta etapa."
+        contenido_1: "Encuentra respuestas claras a las dudas más comunes sobre alimentación, nutrición y cuidados durante esta etapa."
     }
 ]
 
