@@ -1,14 +1,13 @@
 import Breadcrumbs from "@/app/components/Breadcrumbs";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
-import Mitos from "@/app/components/Home/Mitos";
+import MitosSwiper from "@/app/components/Home/MitosSwiper";
 import BuscadorMitos from "@/app/components/Mitos/BuscadorMitos";
-import MitosNavegacion from "@/app/components/Mitos/MitosNavegacion";
-import ReferenciasMitos from "@/app/components/Mitos/ReferenciasMitos";
+import Referencias from "@/app/components/Referencias";
 import SingleMitoMain from "@/app/components/Mitos/SingleMitoMain";
 import PagesSmallJumbotron from "@/app/components/PagesSmallJumbotron";
-import { mitos } from "@/app/utils/Copies";
-import { parrafo_normal } from "@/app/utils/CSS_clases";
+import { mitos, mitos_referencias } from "@/app/utils/Copies";
+import PaginasNavegacion from "@/app/components/PaginasNavegacion";
 
 export async function generateMetadata({ params }) {
     const resolvedParams = await params;
@@ -139,10 +138,14 @@ const Mito_Realidad = async ({ params }) => {
                 <Breadcrumbs title={title} parent={"Mitos y realidades"} url={`/paginas/mitos-y-realidades`}/>
                 <SingleMitoMain image={main_image} title={title} reality={reality} />
             </article>
-            <Mitos alternative={true} currentSlug={currentMito.slug} />
+            <MitosSwiper contenido={mitos} alternative={true} currentSlug={currentMito.slug} />
             <BuscadorMitos />
-            <ReferenciasMitos />
-            <MitosNavegacion currentTheme={currentMito} />
+            <Referencias contenido={mitos_referencias} />
+            <PaginasNavegacion
+                themes={mitos}
+                parent_url={"mitos-y-realidades"}
+                currentTheme={currentMito}
+            />
             <Footer />
         </main>
     )

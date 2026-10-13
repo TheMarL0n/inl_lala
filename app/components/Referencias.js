@@ -1,10 +1,9 @@
 "use client"
 import { useState } from "react"
-import { mitos_referencias } from "@/app/utils/Copies"
 import { encabezado_h2, parrafo_normal } from "@/app/utils/CSS_clases"
 import { ChevronDown } from "@/app/utils/SVG_Icons"
 
-const ReferenciasMitos = () => {
+const Referencias = ({contenido}) => {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
@@ -26,7 +25,7 @@ const ReferenciasMitos = () => {
                     <div className="overflow-hidden">
                         <ul className="list-disc ml-10 flex flex-col gap-2">
                             {
-                                mitos_referencias.map((item, idx) => (
+                                contenido.map((item, idx) => (
                                     <li key={idx} className={`${parrafo_normal} text-[#15428C] text-[16px]!`}>
                                         {item.title}
                                     </li>
@@ -40,4 +39,4 @@ const ReferenciasMitos = () => {
     )
 }
 
-export default ReferenciasMitos
+export default Referencias

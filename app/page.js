@@ -2,11 +2,12 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Aprende from "./components/Home/Aprende";
 import Dudas from "./components/Home/Dudas";
-import Mitos from "./components/Home/Mitos";
+import MitosSwiper from "./components/Home/MitosSwiper";
 import Nutricion from "./components/Home/Nutricion";
 import Preguntas from "./components/Home/Preguntas";
 import Profesionales from "./components/Home/Profesionales";
 import HomeJumbotron from "./components/HomeJumbotron";
+import { mitos } from "./utils/Copies";
 
 export default async function Home() {
   const jsonLd = {
@@ -38,7 +39,7 @@ export default async function Home() {
       <Dudas />
       <Aprende />
       <Preguntas />
-      <Mitos />
+      <MitosSwiper contenido={mitos} />
       <Profesionales />
       <Footer />
     </main>

@@ -1,25 +1,37 @@
-import { encabezado_h3, parrafo_normal } from "@/app/utils/CSS_clases"
+import parse, { domToReact, Element } from 'html-react-parser';
+import Image from 'next/image';
 
-const SingleEtapaMain = (
-    { title_linea_1,
-        title_linea_2,
-        contenido_linea_1,
-        contenido_linea_2 }
-) => {
+const SingleEtapaMain = ({ contenido }) => {
+
+    const options = {
+        replace: (domNode) => {
+            // Verificamos si el nodo es una etiqueta img
+            if (domNode instanceof Element && domNode.name === 'img') {
+                const { src, alt } = domNode.attribs;
+
+                return (
+                    <div className="my-6 relative w-full h-100"> {/* Ajusta el contenedor según tu diseño */}
+                        <Image
+                            src={src}
+                            alt={alt || 'Imagen del artículo'}
+                            fill
+                            sizes="(max-width: 1024px) 100vw, 1024px"
+                            className="object-cover rounded-lg"
+                            priority={false}
+                        />
+                    </div>
+                );
+            }
+        },
+    };
+
     return (
-        <section className="px-4 py-20">
-            <div className="space-y-20">
-                <div className="max-w-7xl mx-auto">
-                    <h2 className="block">
-                        <span className={`${encabezado_h3} bg-[#0B75B9] hidden sm:block sm:text-[46px]! sm:leading-10!`}>{title_linea_1}</span>
-                        <span className={`${encabezado_h3} bg-[#164190] sm:ml-26 sm:text-[70px]! sm:leading-21!`}>{title_linea_2}</span>
-                    </h2>
-                </div>
-                <div className="max-w-5xl mx-auto space-y-8">
-                    <p className={`${parrafo_normal} text-[38px]! leading-11! text-[#15428C]`}>{contenido_linea_1}</p>
-                    <p className={`${parrafo_normal} text-[#15428C]`}>{contenido_linea_2}</p>
-                </div>
+        <section className="px-4 py-10">
+
+            <div className="max-w-5xl mx-auto">
+                {parse(contenido, options)}
             </div>
+
         </section>
     )
 }

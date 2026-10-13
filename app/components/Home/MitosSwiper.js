@@ -7,12 +7,16 @@ import 'swiper/css/navigation';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { BlueButton, encabezado_h3, encabezado_h4, parrafo_normal } from "@/app/utils/CSS_clases"
 import { Comillas } from "@/app/utils/SVG_Icons"
-import { mitos } from '@/app/utils/Copies';
 import parse from 'html-react-parser';
 
-const Mitos = ({ alternative, currentSlug }) => {
+const MitosSwiper = ({ contenido, alternative, currentSlug, titulo_mitos }) => {
     // Filtramos el arreglo para excluir el mito que coincide con el slug actual
-    const filteredMitos = mitos.filter((item) => item.slug !== currentSlug);
+    const filteredMitos = contenido.filter((item) => {
+        if (!currentSlug) return true;
+        // Si el item no tiene slug, decidimos si incluirlo (por ejemplo, true para mostrarlo siempre)
+        if (!item.slug) return true;
+        return item.slug !== currentSlug;
+    });
 
     return (
         <section className="py-10 sm:pt-20" aria-label="Sección de mitos y realidades">
@@ -56,25 +60,31 @@ const Mitos = ({ alternative, currentSlug }) => {
 
                             <div className="w-full sm:w-1/2 flex flex-col items-start sm:bg-white p-8 sm:-ml-30 sm:mt-40 z-3">
                                 <div className="space-y-12 max-w-125">
-                                    <h3 className="text-[#15428C] font-black text-[50px] leading-12 sm:text-[60px] sm:leading-14">
+                                    <div>
                                         <span><Comillas className="rotate-180 sm:-mt-12 sm:-ml-12" /></span>
                                         {
-                                            alternative ?
-                                                <p className='text-[#15428C] font-black text-[20px]'>mito</p>
+                                            titulo_mitos ?
+                                                <p className='text-[#15428C] font-black text-[32px] leading-[32px] mb-4'>{titulo_mitos}</p>
                                                 :
                                                 ""
                                         }
-                                        {item.titulo}
+                                        {
+                                            alternative ?
+                                                <p className='text-[#15428C] font-black text-[30px]'>mito</p>
+                                                :
+                                                ""
+                                        }
+                                        <h2 className={`text-[#15428C] ${alternative ? "text-[35px] leading-8 sm:text-[45px] sm:leading-10 font-bold" : "text-[50px] leading-12 sm:text-[60px] sm:leading-14 font-black"}`}>{item.titulo}</h2>
                                         {
                                             alternative ?
                                                 ""
                                                 :
                                                 <span><Comillas className="ml-auto block sm:-mt-6" /></span>
                                         }
-                                    </h3>
+                                    </div>
                                     {
                                         alternative ?
-                                            <p className='text-[#15428C] font-black text-[40px] m-0'>realidad</p>
+                                            <p className='text-[#15428C] font-black text-[30px] m-0'>realidad</p>
                                             :
                                             <h4 className={`${encabezado_h4} bg-[#009638]`}>Lo que dice la ciencia</h4>
                                     }
@@ -89,9 +99,9 @@ const Mitos = ({ alternative, currentSlug }) => {
                             </div>
                         </article>
                     </SwiperSlide>
-                ))}                
+                ))}
             </Swiper>
         </section>
     )
 }
-export default Mitos;
+export default MitosSwiper;

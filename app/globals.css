@@ -34,6 +34,58 @@ body {
     color: #15428C;
     opacity: 1 !important;
 }
+.custom_article-etapas section h2{
+  color: #15428C;
+  font-size: 40px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 0;
+}
+.custom_article-etapas section h3{
+  color: #0B75B9;
+  font-size: 34px;
+  line-height: 38px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.custom_article-etapas section h4{
+  color: #15428C;
+  font-size: 38px;
+  margin: 0;
+}
+.custom_article-etapas section p{
+  color: #15428C;
+  font-size: 24px;
+}
+.custom_article-etapas section ul{
+  color: #15428C;
+  font-size: 24px;
+  list-style: disc;
+  margin-left: 2rem;
+}
+.custom_article-etapas section .etapasSwiper h2{
+  color: #0B75B9;
+  font-weight: bold; 
+  font-size: 90px;
+  text-transform: lowercase;
+}
+.custom_article-etapas section .etapasSwiper h3{
+  color: #0B75B9;
+  font-weight: bold; 
+  font-size: 30px;
+  margin-top: 2rem;
+  text-transform: lowercase;
+}
+.custom_article-etapas section .etapasSwiper h4{
+  color: #15428c;
+  font-weight: bold; 
+  font-size: 50px;
+  line-height: 52px;
+  margin: 0;
+}
+.custom_article-etapas section .etapasSwiper p{
+  color: #15428c;
+}
 
 @media (max-width: 767px) {
   .swiper-button-prev,

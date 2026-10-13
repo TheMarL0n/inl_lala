@@ -59,16 +59,16 @@ const CategoriasEtapas = () => {
                                 <div className="col-span-2 sm:col-span-3">
                                     <h3>
                                         <a href={`/paginas/etapas/${item.slug}`} className={`${parrafo_normal} text-[#164190] font-bold`}>
-                                            {item.tema}
+                                            {item.titulo_linea_1} {item.titulo_linea_2}
                                         </a>
                                     </h3>
                                     <p className={`${parrafo_normal} text-[#164190]`}>
-                                        {item.contenido_1}
+                                        {item.descripcion}
                                     </p>
                                 </div>
                                 <a href={`/paginas/etapas/${item.slug}`} className={`${BlueButton} w-fit ml-auto`}>
                                     Ver más
-                                    <span className="sr-only">{item.contenido_1}</span>
+                                    <span className="sr-only">{item.descripcion}</span>
                                 </a>
                             </article>
                         ))

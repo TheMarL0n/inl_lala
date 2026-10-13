@@ -178,28 +178,28 @@ export const dudas = [
         categoria_id: 1,
         pregunta: "Cómo construir una alimentación equilibrada",
         respuesta: "",
-        slug:"construir-alimentacion-equilibrada",
+        slug: "construir-alimentacion-equilibrada",
         descripcion: "Conoce los principios básicos para construir una alimentación equilibrada en tu día a día."
     },
     {
         categoria_id: 2,
         pregunta: "Grupos de alimentos",
         respuesta: "",
-        slug:"grupo-alimentos",
+        slug: "grupo-alimentos",
         descripcion: "Descubre cómo se clasifican los alimentos y la función que cumplen en una dieta balanceada."
     },
     {
         categoria_id: 3,
         pregunta: "Hábitos saludables",
         respuesta: "",
-        slug:"habitos-saludables",
+        slug: "habitos-saludables",
         descripcion: "Conoce los hábitos que pueden ayudarte a cuidar tu alimentación y bienestar todos los días."
     },
     {
         categoria_id: 4,
         pregunta: "El papel de los lácteos en una alimentación equilibrada",
         respuesta: "",
-        slug:"lacteos-alimentacion-equilibrada",
+        slug: "lacteos-alimentacion-equilibrada",
         descripcion: "Entiende cómo la leche y los productos lácteos pueden formar parte de una alimentación equilibrada."
     }
 ]
@@ -288,26 +288,212 @@ export const categorias_etapas = [
 
 export const etapas = [
     {
+        id: "1",
         categoria_id: 1,
-        slug:"nutricion-embarazo-lactancia",
-        tema: "Embarazo y lactancia",
+        slug: "nutricion-embarazo-lactancia",
+        titulo: "Embarazo y lactancia",
         titulo_linea_1: "Embarazo",
         titulo_linea_2: "y lactancia",
-        contenido_1: "El embarazo y la lactancia son etapas en las que las necesidades nutricionales aumentan para favorecer la salud de la madre y el adecuado crecimiento y desarrollo del bebé.",
-        contenido_2: "Durante este periodo, llevar una alimentación equilibrada ayuda a cubrir los requerimientos de energía, proteínas, vitaminas y minerales. Los lácteos pueden formar parte de esta alimentación, ya que aportan nutrientes importantes como proteínas de alta calidad, calcio y vitaminas.",
+        descripcion: "El embarazo y la lactancia son etapas en las que las necesidades nutricionales aumentan para favorecer la salud de la madre y el adecuado crecimiento y desarrollo del bebé.",
+        contenido: [
+            {
+                tipo: "texto",
+                html: `
+            <h4>El embarazo y la lactancia son etapas en las que las necesidades nutricionales aumentan para favorecer la salud de la madre y el adecuado crecimiento y desarrollo del bebé.</h4>
+            <p>Durante este periodo, llevar una alimentación equilibrada ayuda a cubrir los requerimientos de energía, proteínas, vitaminas y minerales. Los lácteos pueden formar parte de esta alimentación, ya que aportan nutrientes importantes como proteínas de alta calidad, calcio y vitaminas.</p>
+        `
+            },
+            {
+                tipo: "texto",
+                html: `
+            <h2><strong>Nutrientes clave durante el embarazo.</strong></h2>
+            <p>Durante el embarazo, algunos nutrientes adquieren un papel especialmente importante para favorecer el desarrollo del bebé y mantener la salud de la madre.</p>
+        `
+            },
+            {
+                tipo: "carrusel",
+                slides: [
+                    {
+                        imagen: "/images/etapas/etapa_embarazo.png",
+                        contenido: `
+                    <h2>Proteína</h2>
+                    <h3>¿Por qué es importante?</h3>
+                    <h4>Favorece el crecimiento y desarrollo de los tejidos del bebé.</h4>
+                    <h3>¿Dónde lo puedes encontrar?</h3>
+                    <p>Lácteos, huevo, pescado, leguminosas.</p>
+                `
+                    },
+                    {
+                        imagen: "/images/etapas/etapa_embarazo.png",
+                        contenido: `
+                    <h2>Calcio</h2>
+                    <h3>¿Por qué es importante?</h3>
+                    <h4>Indispensable para la formación de huesos y dientes.</h4>
+                    <h3>¿Dónde lo puedes encontrar?</h3>
+                    <p>Lácteos, tortillas de maíz nixtamalizado, verdura de hoja verde.</p>
+                `
+                    },
+                    {
+                        imagen: "/images/etapas/etapa_embarazo.png",
+                        contenido: `
+                    <h2>Vitamina D</h2>
+                    <h3>¿Por qué es importante?</h3>
+                    <h4>Favorece la absorción y utilización del calcio.</h4>
+                    <h3>¿Dónde lo puedes encontrar?</h3>
+                    <p>Lácteos enriquecidos, pescado graso, exposición solar moderada.</p>
+                `
+                    }
+                ]
+            },
+            {
+                tipo: "texto",
+                html: `
+            <h3>Es importante acudir a las consultas de seguimiento indicadas por el profesional de la salud, quien evaluará las necesidades nutricionales y orientará sobre la alimentación más adecuada durante esta etapa.</h3>
+        `
+            },
+            {
+                tipo: "texto",
+                html: `
+            <h2><strong>Proteína, calcio y vitamina D</strong></h2>
+            <h4>Las proteínas ayudan al crecimiento de los tejidos maternos y del bebé.</h4>
+        `
+            },
+            {
+                tipo: "texto",
+                html: `
+            <p>El calcio es indispensable para la formación de huesos y dientes, mientras que la vitamina D favorece su absorción y utilización por el organismo.
+            <br><br>
+            Los lácteos reúnen estos nutrientes en un mismo alimento, por lo que pueden ser una forma práctica de incorporarlos dentro de una alimentación equilibrada.
+            </p>
+        `
+            },
+            {
+                tipo: "texto",
+                html: `
+            <img src="/images/etapas/articulo_estapa_infancia_img1.png" alt="Imagen sobre que aporta un vaso de leche">
+        `
+            },
+            {
+                tipo: "texto",
+                html: `
+            <h2>El papel de los lácteos durante el embarazo</h2>            
+            <p>
+                Los lácteos pueden contribuir a cubrir varios de los requerimientos nutricionales que aumentan durante el embarazo.
+                <br><br>
+                La evidencia científica ha observado que su consumo, como parte de una alimentación equilibrada, se asocia con beneficios como:
+            </p>
+        `
+            },
+            {
+                tipo: "texto",
+                html: `
+            <ul>
+                <li>Favorecer un adecuado crecimiento del bebé.</li>
+                <li>Contribuir al mantenimiento de la salud ósea de la madre y del bebé.</li>
+                <li>Ayudar a cubrir los requerimientos de calcio y proteínas durante esta etapa.</li>
+                <li>Aportar probióticos cuando se consumen alimentos fermentados, como el yogurt.</li>
+            </ul>
+            <br><br>
+            <p>
+                Algunas investigaciones también continúan estudiando su posible relación con un menor riesgo de complicaciones como la preeclampsia (una condición del embarazo caracterizada por presión arterial elevada) y la diabetes gestacional.
+            </p>
+        `
+            },
+            {
+                tipo: "texto",
+                html: `
+            <h2>Alimentación durante la lactancia</h2>            
+            <p>
+                Durante la lactancia, las necesidades nutricionales continúan siendo elevadas, ya que la madre produce leche para alimentar al bebé.
+                <br><br>
+                Mantener una alimentación equilibrada ayuda a cubrir estas necesidades y favorece la recuperación después del parto.
+                Los lácteos pueden contribuir porque aportan proteínas, calcio y otros nutrientes importantes para esta etapa.
+                <br><br>
+                Además, los alimentos fermentados, como el yogurt, pueden contener microorganismos vivos que continúan siendo estudiados por sus posibles beneficios para la salud digestiva de la madre y del bebé.
+            </p>
+        `
+            }
+        ],
+
+        titulo_mitos: "Mitos frecuentes durante el embarazo y la lactancia...",
+        mitos_de_etapas: [
+            {
+                titulo: "Los lácteos hacen que suba demasiado de peso durante el embarazo.",
+                realidad: "Consumidos como parte de una alimentación equilibrada, los lácteos no se asocian por sí solos con un aumento de peso.",
+                imagen_principal: "/images/mitos/mito_1.png",
+                author: "Nombre de Autor",
+                date: "29-09-2026"
+            },
+            {
+                titulo: "Si tengo intolerancia a la lactosa, debo dejar todos los lácteos.",
+                realidad: "No necesariamente. Existen opciones como la leche deslactosada, el yogurt y algunos quesos que muchas personas con intolerancia pueden consumir sin presentar molestias.",
+                imagen_principal: "/images/mitos/mito_1.png",
+                author: "Nombre de Autor",
+                date: "29-09-2026"
+            },
+        ],
         imagen_principal: "/images/etapas/etapa_embarazo_fondo.png"
     },
     {
+        id: "2",
         categoria_id: 2,
-        slug:"nutricion-primeros-annos",
-        tema: "Nutrición desde los primeros años",
-        contenido_1: "Conoce las bases de la alimentación durante los primeros años de vida."
+        slug: "nutricion-primeros-annos",
+        titulo: "Nutrición en los primeros años",
+        titulo_linea_1: "Nutrición en los",
+        titulo_linea_2: "primeros años",
+        descripcion: "Conoce las bases de la alimentación durante los primeros años de vida.",
+        contenido: [
+            {
+                tipo: "texto",
+                html: `
+                    <h2>construyendo salud desde el inicio</h2>
+                    <br><br>
+                    <h4>Los primeros cinco años de vida son una etapa única. En este periodo el cuerpo y el cerebro crecen a una velocidad que nunca volverán a experimentar.</h4>
+                    <br><br>
+                    <p>Por eso, la alimentación no solo ayuda a que los niños crezcan; también contribuye a formar huesos fuertes, desarrollar el cerebro, fortalecer el sistema inmunológico y crear hábitos que los acompañarán durante toda la vida.
+                    <br><br>
+                    Como su estómago todavía es pequeño, es importante ofrecer alimentos que aporten los nutrientes que necesitan para crecer y desarrollarse. Esto significa incluir diariamente frutas, verduras, cereales integrales, leguminosas, alimentos de origen animal y lácteos, procurando evitar productos con exceso de azúcares y grasas.
+                    </p>
+                    <br><br>
+                    <h3>Más que buscar una alimentación perfecta, el objetivo es construir hábitos saludables que sean sostenibles para toda la familia.</h3>
+                `
+            },
+            {
+                tipo: "texto",
+                html: `
+                    <h2>¿Cómo cambia la alimentación durante los primeros años?</h2>
+                `
+            },
+        ],
+        titulo_mitos: "Mitos frecuentes durante el embarazo y la lactancia...",
+        mitos_de_etapas: [
+            {
+                titulo: "Los lácteos hacen que suba demasiado de peso durante el embarazo.",
+                realidad: "Consumidos como parte de una alimentación equilibrada, los lácteos no se asocian por sí solos con un aumento de peso.",
+                imagen_principal: "/images/mitos/mito_1.png",
+                author: "Nombre de Autor",
+                date: "29-09-2026"
+            },
+            {
+                titulo: "Si tengo intolerancia a la lactosa, debo dejar todos los lácteos.",
+                realidad: "No necesariamente. Existen opciones como la leche deslactosada, el yogurt y algunos quesos que muchas personas con intolerancia pueden consumir sin presentar molestias.",
+                imagen_principal: "/images/mitos/mito_1.png",
+                author: "Nombre de Autor",
+                date: "29-09-2026"
+            },
+        ],
+        imagen_principal: "/images/etapas/etapa_primeros-aos_fondo.png"
     },
     {
+        id: "3",
         categoria_id: 2,
-        slug:"preguntas-primera-infancia",
-        tema: "Preguntas frecuentes sobre primera infancia",
-        contenido_1: "Encuentra respuestas claras a las dudas más comunes sobre alimentación, nutrición y cuidados durante esta etapa."
+        slug: "preguntas-primera-infancia",
+        titulo: "Preguntas frecuentes sobre primera infancia",
+        titulo_linea_1: "Preguntas frecuentes",
+        titulo_linea_2: "sobre primera infancia",
+        descripcion: "Encuentra respuestas claras a las dudas más comunes sobre alimentación, nutrición y cuidados durante esta etapa.",
+        contenido_1: "",
+        imagen_principal: "/images/etapas/etapa_embarazo_fondo.png"
     }
 ]
 
@@ -726,3 +912,17 @@ export const mitos_referencias = [
     { title: "Volkert, D. (2011). The role of nutrition in the prevention of sarcopenia. Wiener Medizinische Wochenschrift, 161(15-16), 409–415." },
     { title: "Weaver, C. M., & Heaney, R. P. (Eds.). (2006). Calcium in Human Health. Humana Press." },
 ]
+
+export const mitos_de_etapas_referencias = [
+    { title: "Adolphus, K., et al. (2016). The Effects of Breakfast and Breakfast Composition on Cognition in Children and Adolescents: A Systematic Review. Advances in Nutrition." },
+    { title: "de Beer, H. (2012). Dairy products and physical stature: a systematic review and meta-analysis of controlled trials. Economics and Human Biology." },
+    { title: "de Lamas, C., et al. (2019). Effects of Dairy Product Consumption on Height and Bone Mineral Content in Children: A Systematic Review of Controlled Trials. Advances in Nutrition." },
+    { title: "Food and Agriculture Organization (FAO). (2013). Milk and dairy products in human nutrition. Rome." },
+    { title: "Georgieff, M. K., et al. (2018). Nutritional influences on brain development. Acta Pediatrica." },
+    { title: "Roberts, M., et al. (2022). The effects of nutritional interventions on the cognitive development of preschool-age children: A systematic review. Nutrients." },
+    { title: "Secretaría de Salud (SSA). (2025). Guías alimentarias saludables y sostenibles para la población mexicana 2025." },
+    { title: "Smith, N. W., et al. (2022). Modeling the Contribution of Milk to Global Nutrition. Frontiers in Nutrition." },
+]
+
+
+

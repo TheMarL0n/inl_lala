@@ -1,11 +1,10 @@
 "use client"
 import { categorias_etapas } from "@/app/utils/Copies"
-import Image from "next/image"
 import { useState } from "react"
 
-const EnlacesEtapas = () => {
+const EnlacesEtapas = ({cat_id}) => {
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(
-        categorias_etapas.length > 0 ? categorias_etapas[0].id : null
+        categorias_etapas.length > 0 ? cat_id : null
     )
 
     return (

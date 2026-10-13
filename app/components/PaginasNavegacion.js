@@ -1,23 +1,22 @@
 import Link from "next/link"
 import Image from "next/image"
-import { mitos } from "@/app/utils/Copies"
 import { BlueButton, encabezado_h2, parrafo_normal } from "@/app/utils/CSS_clases"
 import { ChevronDown } from "@/app/utils/SVG_Icons"
 
-const MitosNavegacion = ({ currentTheme }) => {
-    // 1. Encontramos el índice del artículo actual dentro del arreglo global de mitos
-    const currentIndex = mitos.findIndex(item => item.id === currentTheme?.id)
+const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
+    // 1. Encontramos el índice del artículo actual dentro del arreglo global
+    const currentIndex = themes.findIndex(item => item.id === currentTheme?.id)
 
     // 2. Determinamos el artículo anterior y el siguiente
-    const prevTheme = currentIndex > 0 ? mitos[currentIndex - 1] : null
-    const nextTheme = currentIndex < mitos.length - 1 ? mitos[currentIndex + 1] : null
+    const prevTheme = currentIndex > 0 ? themes[currentIndex - 1] : null
+    const nextTheme = currentIndex < themes.length - 1 ? themes[currentIndex + 1] : null
 
     // 3. Filtrado para "Sigue explorando" (excluyendo el actual)
     const currentWords = currentTheme?.titulo
         ? currentTheme.titulo.toLowerCase().split(" ").filter(word => word.length > 3)
         : []
 
-    const relatedMitos = mitos
+    const relatedThemes = themes
         .filter(item => item.id !== currentTheme?.id)
         .map(item => {
             const itemTitleLower = item.titulo.toLowerCase()
@@ -38,7 +37,7 @@ const MitosNavegacion = ({ currentTheme }) => {
                     {/* Artículo Anterior */}
                     {prevTheme ? (
                         <Link 
-                            href={`/paginas/mitos-y-realidades/${prevTheme.slug}`} 
+                            href={`/paginas/${parent_url}/${prevTheme.slug}`} 
                             className={`${parrafo_normal} text-[#15428C] text-[16px]! flex gap-4 items-center hover:opacity-80 transition-opacity`}
                         >
                             <ChevronDown className={`-rotate-90`} />
@@ -56,7 +55,7 @@ const MitosNavegacion = ({ currentTheme }) => {
                     {/* Artículo Siguiente */}
                     {nextTheme ? (
                         <Link 
-                            href={`/paginas/mitos-y-realidades/${nextTheme.slug}`} 
+                            href={`/paginas/${parent_url}/${nextTheme.slug}`} 
                             className={`${parrafo_normal} text-[#15428C] text-[16px]! flex gap-4 items-center text-right hover:opacity-80 transition-opacity`}
                         >
                             <span>
@@ -78,10 +77,10 @@ const MitosNavegacion = ({ currentTheme }) => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 mt-8">
                     {
-                        relatedMitos.map((item) => (
+                        relatedThemes.map((item) => (
                             <Link
                                 key={item.id}
-                                href={`/paginas/mitos-y-realidades/${item.slug}`}
+                                href={`/paginas/${parent_url}/${item.slug}`}
                                 className="flex flex-col justify-between space-y-4 group cursor-pointer"
                             >
                                 <div className="space-y-4">
@@ -109,4 +108,4 @@ const MitosNavegacion = ({ currentTheme }) => {
     )
 }
 
-export default MitosNavegacion
+export default PaginasNavegacion
