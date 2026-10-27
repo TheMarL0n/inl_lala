@@ -3,6 +3,16 @@ import Image from "next/image"
 import { BlueButton, encabezado_h2, parrafo_normal } from "@/app/utils/CSS_clases"
 import { ChevronDown } from "@/app/utils/SVG_Icons"
 
+// Si la URL viene de Strapi y no empieza con http, le agregamos el host
+const getStrapiMedia = (url) => {
+  if (!url) return null;
+  if (url.startsWith("http") || url.startsWith("//")) {
+    return url;
+  }
+  const host = process.env.NEXT_PUBLIC_STRAPI_HOST;
+  return `${host}${url}`;
+};
+
 const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
     // 1. Encontramos el índice del artículo actual dentro del arreglo global
     const currentIndex = themes.findIndex(item => item.id === currentTheme?.id)
@@ -19,7 +29,7 @@ const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
     const relatedThemes = themes
         .filter(item => item.id !== currentTheme?.id)
         .map(item => {
-            const itemTitleLower = item.titulo.toLowerCase()
+            const itemTitleLower = item.titulo?.toLowerCase() || item.mito?.toLowerCase()
             let score = 0
             currentWords.forEach(word => {
                 if (itemTitleLower.includes(word)) score++
@@ -43,7 +53,7 @@ const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
                             <ChevronDown className={`-rotate-90`} />
                             <span>
                                 <span className="block text-xs text-gray-400 font-normal">Anterior</span>
-                                {prevTheme.titulo}
+                                {prevTheme.titulo || prevTheme.mito}
                             </span>
                         </Link>
                     ) : (
@@ -60,7 +70,7 @@ const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
                         >
                             <span>
                                 <span className="block text-xs text-gray-400 font-normal">Siguiente</span>
-                                {nextTheme.titulo}
+                                {nextTheme.titulo || nextTheme.mito}
                             </span>
                             <ChevronDown className={`rotate-90`} />
                         </Link>
@@ -86,16 +96,17 @@ const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
                                 <div className="space-y-4">
                                     <div className="relative min-h-60 sm:min-h-72 overflow-hidden rounded-lg">
                                         {/* Imagen optimizada con Next.js Image */}
+                                        
                                         <Image 
-                                            src={item.imagen_principal} 
-                                            alt={item.titulo} 
+                                            src={getStrapiMedia(item.imagen_principal?.url)} 
+                                            alt={item.titulo || item.mito} 
                                             fill
                                             sizes="(max-width: 640px) 100vw, 25vw"
                                             className="absolute z-1 top-0 left-0 object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" 
                                         />
                                     </div>
                                     <h3 className="text-[18px] leading-5 sm:text-[24px] sm:leading-7 font-bold text-[#15428C]">
-                                        {item.titulo}
+                                        {item.titulo || item.mito}
                                     </h3>
                                 </div>
                                 <span className={`${BlueButton} w-fit`}>Ver más</span>

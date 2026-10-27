@@ -7,7 +7,12 @@ import Nutricion from "./components/Home/Nutricion";
 import Preguntas from "./components/Home/Preguntas";
 import Profesionales from "./components/Home/Profesionales";
 import HomeJumbotron from "./components/HomeJumbotron";
-import { mitos } from "./utils/Copies";
+
+import { fetchAPI } from "@/app/lib/strapi";
+
+// 1. Ejecutamos ambas peticiones en paralelo para optimizar tiempos
+  const response = await fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`);
+  const allMitosFromStrapi = response?.data || [];
 
 export default async function Home() {
   const jsonLd = {
@@ -29,6 +34,7 @@ export default async function Home() {
 
   return (
     <main>
+      {console.log(allMitosFromStrapi)}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -39,7 +45,7 @@ export default async function Home() {
       <Dudas />
       <Aprende />
       <Preguntas />
-      <MitosSwiper contenido={mitos} />
+      <MitosSwiper contenido={allMitosFromStrapi} />
       <Profesionales />
       <Footer />
     </main>

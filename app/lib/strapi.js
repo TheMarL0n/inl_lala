@@ -1,4 +1,3 @@
-// lib/strapi.js
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
 
@@ -9,7 +8,6 @@ export async function fetchAPI(endpoint) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${STRAPI_TOKEN}`
       },
-      // Puedes ajustar la caché según te convenga (por ejemplo, 'no-store' para datos frescos)
       cache: 'no-store', 
     });
 

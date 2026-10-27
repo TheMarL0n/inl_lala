@@ -1,8 +1,8 @@
 "use client"
-import { categorias_etapas } from "@/app/utils/Copies"
 import { useState } from "react"
 
-const EnlacesEtapas = ({cat_id}) => {
+const EnlacesEtapas = ({cat_id, categorias_etapas}) => {
+    
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(
         categorias_etapas.length > 0 ? cat_id : null
     )
@@ -11,7 +11,7 @@ const EnlacesEtapas = ({cat_id}) => {
         <section className="px-4">
                 <div className="relative max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-6 gap-4">
                     {
-                        categorias_etapas.map((item, idx) => {
+                        categorias_etapas.sort((a, b) => a.orden - b.orden).map((item, idx) => {
                             const isActive = categoriaSeleccionada === item.id
 
                             return (

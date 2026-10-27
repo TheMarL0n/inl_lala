@@ -8,6 +8,11 @@ body {
   font-family: var(--font-mi-fuente), Arial, Helvetica, sans-serif;
 }
 
+ul li {
+  list-style: disc;
+  margin-left: 1rem;
+}
+
 .videoSwiper .swiper-button-prev,
 .videoSwiper .swiper-button-next {
   color: #ffffff !important;
@@ -20,71 +25,143 @@ body {
   opacity: 1 !important;
 }
 
-
 .recursosSwiper .swiper-button-prev,
-.eventosSwiper .swiper-button-prev{
-    left: -10px !important;
-    color: #15428C;
-    opacity: 1 !important;
+.eventosSwiper .swiper-button-prev {
+  left: -10px !important;
+  color: #15428c;
+  opacity: 1 !important;
 }
 
 .recursosSwiper .swiper-button-next,
-.eventosSwiper .swiper-button-next{
-    right: -10px !important;
-    color: #15428C;
-    opacity: 1 !important;
+.eventosSwiper .swiper-button-next {
+  right: -10px !important;
+  color: #15428c;
+  opacity: 1 !important;
 }
-.custom_article-etapas section h2{
-  color: #15428C;
+
+.custom_article-etapas section h6 {
+  float: inline-start;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #15428c;
+  text-transform: uppercase;
+  color: #0000;
+  font-size: 120px;
+  font-weight: 500;
+  margin-top: -1.5rem;
+  margin-right: 1rem;
+}
+.custom_article-etapas section h2 {
+  color: #15428c;
   font-size: 40px;
   text-transform: uppercase;
   font-weight: bold;
-  margin: 0;
+  margin: 0 0 2rem;
 }
-.custom_article-etapas section h3{
-  color: #0B75B9;
+.custom_article-etapas section h3 {
+  color: #0b75b9;
   font-size: 34px;
   line-height: 38px;
   text-transform: uppercase;
   font-weight: 400;
+  margin: 0 0 2rem;
 }
-.custom_article-etapas section h4{
-  color: #15428C;
+.custom_article-etapas section h4 {
+  color: #15428c;
   font-size: 38px;
   margin: 0;
+  margin: 0 0 2rem;
 }
-.custom_article-etapas section p{
-  color: #15428C;
+.custom_article-etapas section p {
+  color: #15428c;
   font-size: 24px;
+  margin: 0 0 2rem;
 }
-.custom_article-etapas section ul{
-  color: #15428C;
+.custom_article-etapas section ul,
+.seccion-referencias ul {
+  color: #15428c;
   font-size: 24px;
   list-style: disc;
   margin-left: 2rem;
 }
-.custom_article-etapas section .etapasSwiper h2{
-  color: #0B75B9;
-  font-weight: bold; 
-  font-size: 90px;
-  text-transform: lowercase;
+.custom_article-etapas section .etapasSwiper h2,
+.custom_article-etapas section .etapasSwiper h3,
+.custom_article-etapas section .etapasSwiper h4,
+.custom_article-etapas section .etapasSwiper p,
+.custom_article-etapas section .contenido_destacado-alternativo h2,
+.custom_article-etapas section .contenido_destacado-alternativo h3,
+.custom_article-etapas section .contenido_destacado-alternativo h4,
+.custom_article-etapas section .contenido_destacado-alternativo p {
+  margin: 0 !important;
 }
-.custom_article-etapas section .etapasSwiper h3{
-  color: #0B75B9;
-  font-weight: bold; 
+.custom_article-etapas section .etapasSwiper .swiper-destacado h2 {
+  color: #ffffff !important;
+  font-size: 34px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+.custom_article-etapas section .etapasSwiper .swiper-centrado h2 {
+  font-size: 50px;
+}
+.custom_article-etapas section .etapasSwiper h3 {
+  color: #0b75b9;
+  font-weight: bold;
   font-size: 30px;
   margin-top: 2rem;
   text-transform: lowercase;
 }
-.custom_article-etapas section .etapasSwiper h4{
+.custom_article-etapas section .etapasSwiper h4 {
   color: #15428c;
-  font-weight: bold; 
+  font-weight: bold;
   font-size: 50px;
   line-height: 52px;
   margin: 0;
 }
-.custom_article-etapas section .etapasSwiper p{
+.custom_article-etapas section .etapasSwiper p {
   color: #15428c;
+}
+
+.custom_article-etapas section .dobleFotoSwiper h2,
+.custom_article-etapas section .etapasSwiper h2 {
+  color: #0b75b9;
+  font-size: 90px;
+  text-transform: lowercase;
+  line-height: 1.1;
+}
+.custom_article-etapas section .dobleFotoSwiper h3 {
+  color: #0b75b9;
+  font-size: 40px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.custom_article-etapas section .dobleFotoSwiper h4 {
+  color: #15428c;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.custom_article-etapas section .dobleFotoSwiper .modo-oscuro h2,
+.custom_article-etapas section .dobleFotoSwiper .modo-oscuro h3,
+.custom_article-etapas section .dobleFotoSwiper .modo-oscuro h4,
+.custom_article-etapas section .dobleFotoSwiper .modo-oscuro p {
+  color: #ffffff !important;
+}
+
+.custom_article-etapas section .cuadricula_azul p {
+  color: white;
+  font-size: 24px;
+  line-height: normal;
+  margin-bottom: 0.5rem;
+}
+
+.custom_article-etapas section.contenido_destacado p {
+  color: #ffffff;
+}
+
+.custom_article-etapas section.vertical-swiper h2,
+.custom_article-etapas section.vertical-swiper h3,
+.custom_article-etapas section.vertical-swiper h4,
+.custom_article-etapas section.vertical-swiper p {
+  margin: 0;
 }
 
 @media (max-width: 767px) {
@@ -99,5 +176,13 @@ body {
   .videoSwiper .swiper-button-prev,
   .videoSwiper .swiper-button-next {
     color: #15428c !important;
+  }
+  .custom_article-etapas section .dobleFotoSwiper h2,
+  .custom_article-etapas section .etapasSwiper h2 {
+    font-size: 40px;
+  }
+  .custom_article-etapas section .etapasSwiper h4{
+    font-size: 30px;
+    line-height: 1.1;
   }
 }

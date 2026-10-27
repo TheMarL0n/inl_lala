@@ -4,19 +4,36 @@ import Header from "@/app/components/Header";
 import { paginas } from "@/app/utils/Copies";
 import MitosGrid from "@/app/components/Mitos/MitosGrid";
 
+import { fetchAPI } from "@/app/lib/strapi";
+
 export const metadata = {
   title: "Mitos y realidades",
-  description: "Aclarando dudas, creencias y mitos alrededor del consumo de lácteos",
+  description:
+    "Aclarando dudas, creencias y mitos alrededor del consumo de lácteos",
 };
 
+// 1. Ejecutamos ambas peticiones 
+const response = await fetchAPI(
+  `/mitos-y-realidades?populate[0]=imagen_principal`,
+);
+
+const allMitosFromStrapi = response?.data || [];
+
 export default function Mitos() {
-    const data = paginas.find((pagina) => pagina.slug === "mitos_realidades");
-    return (
-        <main>
-            <Header />
-            <PagesJumbotron titulo={data.titulo} subtitulo={data.subtitulo} background={data.imagen_principal} titulo_descripcion={data.titulo_descripcion} descripcion={data.descripcion} detalles={data.detalles} />
-            <MitosGrid/>
-            <Footer />
-        </main>
-    );
+  const data = paginas.find((pagina) => pagina.slug === "mitos_realidades");
+  return (
+    <main>
+      <Header />
+      <PagesJumbotron
+        titulo={data.titulo}
+        subtitulo={data.subtitulo}
+        background={data.imagen_principal}
+        titulo_descripcion={data.titulo_descripcion}
+        descripcion={data.descripcion}
+        detalles={data.detalles}
+      />
+      <MitosGrid mitos={allMitosFromStrapi} />
+      <Footer />
+    </main>
+  );
 }

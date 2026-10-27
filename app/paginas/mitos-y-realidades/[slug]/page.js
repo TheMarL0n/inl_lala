@@ -6,148 +6,73 @@ import BuscadorMitos from "@/app/components/Mitos/BuscadorMitos";
 import Referencias from "@/app/components/Referencias";
 import SingleMitoMain from "@/app/components/Mitos/SingleMitoMain";
 import PagesSmallJumbotron from "@/app/components/PagesSmallJumbotron";
-import { mitos, mitos_referencias } from "@/app/utils/Copies";
 import PaginasNavegacion from "@/app/components/PaginasNavegacion";
 
-export async function generateMetadata({ params }) {
-    const resolvedParams = await params;
-
-    const currentMito = mitos.find(
-        (mito) => mito.slug === resolvedParams.slug
-    );
-
-    if (!currentMito) {
-        return {
-            title: "Página no encontrada | Lala",
-            description: "Desmintiendo los mitos que existen sobre los Lácteos.",
-        };
-    }
-
-    const baseUrl = "https://www.institutolala.com.mx";
-
-    return {
-        title: currentMito.titulo || "Mitos y realidades | Lala",
-        description: "Desmintiendo los mitos que existen sobre los Lácteos.",
-        alternates: {
-            canonical: `${baseUrl}/paginas/mitos-y-realidades/${resolvedParams.slug}`,
-        },
-        openGraph: {
-            title: currentMito.titulo,
-            description: "Desmintiendo los mitos que existen sobre los Lácteos.",
-            url: `${baseUrl}/paginas/mitos-y-realidades/${resolvedParams.slug}`,
-            siteName: "Instituto de Nutrición Lala",
-            images: [
-                {
-                    url: currentMito.imagen_principal,
-                }
-            ],
-            type: "article",
-            publishedTime: currentMito.date,
-            authors: [currentMito.author],
-        },
-    };
-}
+import { fetchAPI } from "@/app/lib/strapi";
 
 const Mito_Realidad = async ({ params }) => {
-    const resolvedParams = await params;
-    const currentMito = mitos.find(
-        (mito) => mito.slug === resolvedParams.slug
-    );
+  const resolvedParams = await params;
+ 
+  // 1. Ejecutamos ambas peticiones en paralelo para optimizar tiempos
+  const [responseMito, responseTodos] = await Promise.all([
+    fetchAPI(
+      `/mitos-y-realidades?filters[slug][$eq]=${resolvedParams.slug}&populate[0]=imagen_principal`,
+    ),
+    fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`)
+  ]);
 
-    const title = currentMito ? currentMito.titulo : "";
-    const reality = currentMito ? currentMito.realidad : "";
-    const main_image = currentMito ? currentMito.imagen_principal : "";
-    const date = currentMito ? currentMito.date : "";
-    const author = currentMito ? currentMito.author : "";
-    const background = "/images/mitos/mitos_bkg.png";
-    const baseUrl = "https://www.institutolala.com.mx";
-    const currentUrl = `${baseUrl}/paginas/mitos-y-realidades/${resolvedParams.slug}`;
+  const currentMitoData = responseMito?.data?.[0];
+  if (!currentMitoData) {
+    return <div>Etapa no encontrada</div>;
+  }
+  const currentMito = {
+    id: currentMitoData.id,
+    ...currentMitoData,
+  };
+  const allMitosFromStrapi = responseTodos?.data || [];
 
-    // Schema de Artículo (Mito)
-    const articleSchema = {
-        "@context": "https://schema.org",
-        "@type": "ClaimReview",
-        "datePublished": date,
-        "url": currentUrl,
-        "claimReviewed": title,
-        "author": {
-            "@type": "Organization",
-            "name": author || "Instituto de Nutrición Lala"
-        },
-        "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": "1", // 1 suele indicar falso / mito desmentido en escalas personalizadas
-            "bestRating": "5",
-            "worstRating": "1",
-            "alternateName": "Falso / Mito"
-        },
-        "itemReviewed": {
-            "@type": "Claim",
-            "appearance": {
-                "@type": "CreativeWork",
-                "url": currentUrl
-            },
-            "author": {
-                "@type": "Organization",
-                "name": "Creencia popular"
-            },
-            "datePublished": date || "2026",
-            "name": title
-        }
-    };
+  const title = currentMito ? currentMito.mito : "";
+  const reality = currentMito ? currentMito.realidad : "";
+  const main_image = currentMito ? currentMito.imagen_principal : "";
+  const date = currentMito ? currentMito.date : "";
+  const author = currentMito ? currentMito.author : "";
+  const background = "/images/mitos/mitos_bkg.png";
+  const baseUrl = "https://www.institutolala.com.mx";
+  const currentUrl = `${baseUrl}/paginas/mitos-y-realidades/${resolvedParams.slug}`;
 
-    const breadcrumbSchema = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Inicio",
-                "item": baseUrl
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Mitos y Realidades",
-                "item": `${baseUrl}/paginas/mitos-y-realidades`
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": title,
-                "item": currentUrl
-            }
-        ]
-    };
 
-    return (
-        <main>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-            />
+  return (
+    <main>
+      <Header />
+      <article>
+        <PagesSmallJumbotron background={background} />
+        <Breadcrumbs
+          title={title}
+          parent={"Mitos y realidades"}
+          url={`/paginas/mitos-y-realidades`}
+        />
+        <SingleMitoMain image={main_image} title={title} reality={reality} />
+      </article>
 
-            <Header />
-            <article>
-                <PagesSmallJumbotron background={background} />
-                <Breadcrumbs title={title} parent={"Mitos y realidades"} url={`/paginas/mitos-y-realidades`}/>
-                <SingleMitoMain image={main_image} title={title} reality={reality} />
-            </article>
-            <MitosSwiper contenido={mitos} alternative={true} currentSlug={currentMito.slug} />
-            <BuscadorMitos />
-            <Referencias contenido={mitos_referencias} />
-            <PaginasNavegacion
-                themes={mitos}
-                parent_url={"mitos-y-realidades"}
-                currentTheme={currentMito}
-            />
-            <Footer />
-        </main>
-    )
-}
-export default Mito_Realidad
+      {console.log(currentMito)}
+
+      <MitosSwiper
+        contenido={allMitosFromStrapi}
+        alternative={true}
+        currentSlug={currentMito.slug}
+      />
+
+      <BuscadorMitos themes={allMitosFromStrapi} />
+
+      <Referencias contenido={currentMito.referencias} />
+
+      <PaginasNavegacion
+        themes={allMitosFromStrapi}
+        parent_url={"mitos-y-realidades"}
+        currentTheme={currentMito}
+      />
+      <Footer />
+    </main>
+  );
+};
+export default Mito_Realidad;
