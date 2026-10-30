@@ -14,8 +14,13 @@ const miFuente = localFont({
       style: "normal",
     },
     {
-      path: "../public/fonts/Program_Nar_OT_Medium.otf",
+      path: "../public/fonts/Program_OT_Medium.otf",
       weight: "500",
+
+    },
+    {
+      path: "../public/fonts/Program_Nar_OT_Medium.otf",
+      weight: "600",
 
     },
     {

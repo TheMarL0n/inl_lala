@@ -36,7 +36,7 @@ export const menuI_tems = [
 export const videos_aprende = [
   {
     id: 1,
-    background: "/images/swiper_video.png",
+    background: "/images/swiper_video_1.png",
     title: "Nombre del video",
     abstract: "Abstract de que va",
     video: "https://www.youtube.com/embed/q3lX2p_Uy9I?rel=0",
@@ -50,14 +50,14 @@ export const videos_aprende = [
   },
   {
     id: 3,
-    background: "/images/swiper_video.png",
+    background: "/images/swiper_video_2.png",
     title: "Nombre del video",
     abstract: "Abstract de que va",
     video: "https://www.youtube.com/embed/q3lX2p_Uy9I?rel=0",
   },
   {
     id: 4,
-    background: "/images/swiper_video.png",
+    background: "/images/swiper_video_1.png",
     title: "Nombre del video",
     abstract: "Abstract de que va",
     video: "https://www.youtube.com/embed/q3lX2p_Uy9I?rel=0",
@@ -71,7 +71,7 @@ export const videos_aprende = [
   },
   {
     id: 6,
-    background: "/images/swiper_video.png",
+    background: "/images/swiper_video_2.png",
     title: "Nombre del video",
     abstract: "Abstract de que va",
     video: "https://www.youtube.com/embed/q3lX2p_Uy9I?rel=0",
@@ -113,7 +113,7 @@ export const paginas = [
   },
   {
     slug: "profesionales",
-    titulo: "para",
+    titulo: "",
     subtitulo: "profesionales",
     titulo_descripcion: "",
     descripcion:

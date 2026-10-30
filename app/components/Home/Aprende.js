@@ -14,7 +14,7 @@ const Aprende = ({ fromPage }) => {
 
     return (
         <section className="pt-20 sm:pt-0">
-            <div className="max-w-7xl mx-auto px-4 sm:px-0">
+            <div className="max-w-6xl mx-auto px-4 sm:px-0">
                 {
                     fromPage ?
                         <h2>

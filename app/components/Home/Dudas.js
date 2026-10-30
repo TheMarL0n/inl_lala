@@ -37,10 +37,10 @@ const Dudas = () => {
                 <h2>
                     <span className={`${encabezado_h3} bg-[#0B75B9]`}>Resuelve tus</span>
                     <br />
-                    <span className="uppercase text-[120px] sm:text-[200px] sm:leading-55 text-[#0B75B9] font-medium">Dudas</span>
+                    <span className="uppercase text-[120px] sm:text-[250px] sm:leading-55 text-[#0B75B9] font-[600]">Dudas</span>
                 </h2>
 
-                <p className={`${parrafo_normal} text-white max-w-113 mt-4`}>
+                <p className={`${parrafo_normal} text-white max-w-113 mt-4 text-[25px]!`}>
                     Explora contenidos para aprender sobre nutrición, salud y alimentación desde una perspectiva científica, práctica y fácil de entender.
                 </p>
 
@@ -55,7 +55,7 @@ const Dudas = () => {
                             if (e.target.value === "") setBusquedaActiva(false)
                         }}
                         placeholder="¿Qué estás buscando?"
-                        className="border-white border p-2 h-11.5 w-full sm:w-86.25 focus:outline-0 text-white text-[18px] font-bold placeholder:text-white placeholder:text-[18px] placeholder:italic placeholder:font-bold"
+                        className="border-white border p-2 h-11.5 w-full sm:w-86.25 focus:outline-0 text-white text-[18px] placeholder:text-white placeholder:text-[23px] placeholder:italic"
                     />
                     <button type="submit" className={WhiteButton}>Buscar</button>
                 </form>

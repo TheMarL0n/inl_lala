@@ -46,7 +46,7 @@ const CategoriasNutricion = () => {
 
     return (
         <section id="quiero_at_top" className="pb-20 px-4">
-            <h3 className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-center text-[120px] sm:text-[200px] sm:leading-55 uppercase`}>Quiero:</h3>
+            <h2 className={`text-center text-[50px] sm:text-[90px] sm:leading-55 text-[#164190] uppercase font-[600]`}>Quiero saber sobre:</h2>
             <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-5 gap-4">
                 {
                     categorias_nutricion.map((item, idx) => {
