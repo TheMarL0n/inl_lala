@@ -54,7 +54,7 @@ const ContenidoDestacado = ({ contenido }) => {
           </div>
 
           <div
-            className={`${contenido.tipo === "oscuro" ? "bg-[#15428C]" : ""} px-8 py-16 space-y-8 flex flex-col justify-center`}
+            className={`${contenido.tipo === "oscuro" ? "bg-[#15428C]" : ""} sm:min-h-[650px] px-8 py-16 space-y-8 flex flex-col justify-center`}
           >
             {contenido.titulo_linea_1 || contenido.titulo_linea_2 ? (
               <h2>
@@ -103,7 +103,7 @@ const ContenidoDestacado = ({ contenido }) => {
         </div>
 
         {/* TEXTO CENTRAL: Fluye de manera natural y hace scroll libremente */}
-        <div className={`w-full sm:col-span-2 flex flex-col items-start p-8`}>
+        <div className={`w-full sm:col-span-2 flex flex-col items-start p-8 sm:min-h-[650px]`}>
           <ReactMarkdown>{contenido.html}</ReactMarkdown>
         </div>
 
@@ -148,7 +148,7 @@ const ContenidoDestacado = ({ contenido }) => {
       )}
 
       <div
-        className={`${contenido.tipo === "oscuro" ? "bg-[#15428C]" : ""} px-8 py-16 space-y-8 flex flex-col justify-center`}
+        className={`${contenido.tipo === "oscuro" ? "bg-[#15428C]" : ""} sm:min-h-[650px] px-8 py-16 space-y-8 flex flex-col justify-center`}
       >
         {contenido.titulo_linea_1 || contenido.titulo_linea_2 ? (
           <h2>

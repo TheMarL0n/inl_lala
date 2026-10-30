@@ -33,9 +33,7 @@ const CategoriasEtapas = ({ etapas, categorias }) => {
 
   return (
     <section className="pb-20 px-4">
-      <h2
-        className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-center text-[120px] leading-31 sm:text-[200px] sm:leading-56 uppercase`}
-      >
+      <h2 className={`text-center text-[50px] sm:text-[90px] sm:leading-55 text-[#164190] uppercase font-[600]`}>
         ¿qué edad buscas?:
       </h2>
       <div className="relative max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-6">

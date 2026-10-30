@@ -225,34 +225,38 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
                 <div
                   className={`max-w-7xl mx-auto relative overflow-hidden z-2 grid grid-cols-1 sm:grid-cols-3 w-full justify-center items-center`}
                 >
-                  <div
-                    className={`w-full relative overflow-hidden h-96 sm:h-129`}
-                  >
-                    {tipo === "con_indice" ? (
-                      <span
-                        className={`${stroke_text} z-2 absolute top-30 left-20 [-webkit-text-stroke-color:#15428C] text-center text-[210px]! leading-31 uppercase`}
-                      >
-                        {idx + 1}.
-                      </span>
-                    ) : (
-                      ""
-                    )}
+                  {tipo === "con_indice" || item.imagen ? (
+                    <div
+                      className={`w-full relative overflow-hidden h-96 sm:h-129`}
+                    >
+                      {tipo === "con_indice" ? (
+                        <span
+                          className={`${stroke_text} z-2 absolute top-30 left-20 [-webkit-text-stroke-color:#15428C] text-center text-[210px]! leading-31 uppercase`}
+                        >
+                          {idx + 1}.
+                        </span>
+                      ) : (
+                        ""
+                      )}
 
-                    {item.imagen ? (
-                      <Image
-                        src={getStrapiMedia(item.imagen.url)}
-                        alt={
-                          item.imagen.alternativeText ||
-                          `Imagen que representa lo relacionado a ${tituloH2}`
-                        } //viene desde la api directo
-                        fill
-                        sizes="(max-width: 640px)"
-                        className="object-contain absolute top-0 left-0"
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </div>
+                      {item.imagen ? (
+                        <Image
+                          src={getStrapiMedia(item.imagen.url)}
+                          alt={
+                            item.imagen.alternativeText ||
+                            `Imagen que representa lo relacionado a ${tituloH2}`
+                          } //viene desde la api directo
+                          fill
+                          sizes="(max-width: 640px)"
+                          className="object-contain absolute top-0 left-0"
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
                   <div
                     className={`w-full ${item.imagen || tipo === "con_indice" ? "sm:col-span-2 p-8" : "sm:col-span-3"} flex flex-col items-start sm:bg-white`}
