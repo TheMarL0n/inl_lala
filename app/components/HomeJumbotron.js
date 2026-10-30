@@ -67,10 +67,10 @@ const HomeJumbotron = () => {
       <div className="relative z-10 w-full px-4 sm:w-auto max-w-6xl mx-auto space-y-40 sm:space-y-4 mt-40 sm:mt-20">
         <motion.h1
           style={{ y: textY }}
-          className="text-white text-[43px] sm:text-[70px] font-black uppercase flex flex-col sm:flex-row items-start"
+          className="text-white text-[43px] sm:text-[70px] font-black uppercase flex flex-col sm:flex-row items-start sm:justify-end text-right"
         >
           <span className="bg-[#15428C] sm:pr-8 px-3">Lo que comes</span>
-          <span className="text-[73px] leading-[80px] sm:text-[135px] sm:leading-[140px] sm:pl-40 ml-auto sm:ml-0 bg-[#15428C] px-3">
+          <span className="text-[73px] leading-[80px] sm:text-[135px] sm:leading-[140px] sm:pl-34 ml-auto sm:ml-0 bg-[#15428C] px-3">
             importa
           </span>
         </motion.h1>
