@@ -20,7 +20,7 @@ const EnlacesEtapas = ({cat_id, categorias_etapas}) => {
                                     onClick={() => setCategoriaSeleccionada(item.id)}
                                     className="relative space-y-4 group cursor-pointer"
                                 >                                    
-                                        <h3 className={`p-2 uppercase text-[18px] leading-5 sm:text-[20px] sm:leading-7 font-medium text-center transition-all ${isActive ? "text-white bg-[#0B75B9] border border-[#0B75B9]" : "text-[#15428C] bg-white border border-[#15428C] hover:text-white hover:bg-[#0B75B9]"}`}>{item.titulo}</h3>    
+                                        <h3 className={`p-2 uppercase text-[18px] leading-5 sm:text-[20px] sm:leading-7 font-[600] text-center transition-all ${isActive ? "text-white bg-[#0B75B9] border border-[#0B75B9]" : "text-[#15428C] bg-white border border-[#15428C] hover:text-white hover:bg-[#0B75B9]"}`}>{item.titulo}</h3>    
                                 </div>
                             )
                         })
