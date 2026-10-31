@@ -64,18 +64,18 @@ const HomeJumbotron = () => {
         />
       </motion.div>
 
-      <div className="relative z-10 w-full px-4 sm:w-auto max-w-6xl mx-auto space-y-40 sm:space-y-4 mt-40 sm:mt-20">
+      <div className="relative z-10 w-full px-4 sm:w-5xl mx-auto space-y-40 sm:space-y-4 mt-40 sm:mt-20">
         <motion.h1
           style={{ y: textY }}
-          className="text-white text-[43px] sm:text-[70px] font-black uppercase flex flex-col sm:flex-row items-start sm:justify-end text-right"
+          className="text-white text-[43px] sm:text-[70px] font-black uppercase flex flex-col sm:flex-row items-start sm:justify-end"
         >
-          <span className="bg-[#15428C] sm:pr-8 px-3">Lo que comes</span>
-          <span className="text-[73px] leading-[80px] sm:text-[135px] sm:leading-[140px] sm:pl-34 ml-auto sm:ml-0 bg-[#15428C] px-3">
+          <span className="bg-[#15428C] sm:pr-4 sm:pl-12 px-3">Lo que comes</span>
+          <span className="text-[73px] sm:pr-16 sm:pl-28 px-3 leading-[80px] sm:text-[135px] sm:leading-[140px] ml-auto sm:ml-0 bg-[#15428C]">
             importa
           </span>
         </motion.h1>
       </div>
-      <div className="relative z-30 w-full px-4 sm:w-4xl mx-auto space-y-40 sm:space-y-4 sm:mt-1">
+      <div className="relative z-30 w-full px-4 sm:w-5xl mx-auto space-y-40 sm:space-y-4 sm:mt-1">
         <h2 className="px-4 bg-[#009638] text-[36px] sm:text-[46px] text-white font-medium w-fit mr-auto ml-auto sm:mr-0">
           Entenderlo también
         </h2>
