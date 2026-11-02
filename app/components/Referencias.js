@@ -8,7 +8,7 @@ const Referencias = ({ contenido }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section className="seccion-referencias px-4 py-10">
+    <section className="seccion-referencias px-4 pb-10">
       <div className="max-w-7xl mx-auto">
         <button
           onClick={() => setIsOpen(!isOpen)}

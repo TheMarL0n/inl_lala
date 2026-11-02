@@ -38,7 +38,7 @@ const Nutricion = () => {
           </div>
 
           <p
-            className={`${parrafo_normal} text-[#15428C] sm:mb-30 text-[38px]! leading-[1.2]!`}
+            className={`${parrafo_normal} text-[#15428C] sm:mb-30 sm:text-[38px]! leading-[1.2]!`}
           >
             En el <strong>Instituto de Nutrición Lala</strong> creemos que
             entender la alimentación no debería ser complicado. Por eso reunimos
