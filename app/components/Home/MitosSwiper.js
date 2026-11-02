@@ -81,13 +81,13 @@ const MitosSwiper = ({ contenido, alternative, currentSlug, titulo_mitos }) => {
               </div>
 
               <div className="w-full sm:w-1/2 flex flex-col items-start sm:bg-white p-8 sm:-ml-30 sm:mt-40 z-3">
-                <div className="space-y-12 max-w-125">
+                <div className="space-y-4 max-w-125">
                   <div>
                     <span>
                       <Comillas className="rotate-180 sm:-mt-12 sm:-ml-12" />
                     </span>
                     {titulo_mitos ? (
-                      <p className="text-[#15428C] font-black text-[32px] leading-[32px] mb-4">
+                      <p className="text-[#15428C] font-black text-[32px] leading-[32px] mb-4!">
                         {titulo_mitos}
                       </p>
                     ) : (

@@ -25,17 +25,15 @@ ul li {
   opacity: 1 !important;
 }
 
-.recursosSwiper .swiper-button-prev,
-.eventosSwiper .swiper-button-prev {
+.swiper-button-prev {
   left: -10px !important;
-  color: #15428c;
+  color: #15428c !important;
   opacity: 1 !important;
 }
 
-.recursosSwiper .swiper-button-next,
-.eventosSwiper .swiper-button-next {
+.swiper-button-next {
   right: -10px !important;
-  color: #15428c;
+  color: #15428c !important;
   opacity: 1 !important;
 }
 
@@ -47,7 +45,7 @@ ul li {
   color: #0000;
   font-size: 120px;
   font-weight: 500;
-  margin-top: -1.5rem;
+  margin-top: 0.5rem;
   margin-right: 1rem;
 }
 .custom_article-etapas section h2 {
@@ -55,7 +53,7 @@ ul li {
   font-size: 40px;
   text-transform: uppercase;
   font-weight: bold;
-  margin: 0 0 2rem;
+  margin: 4rem 0 0;
 }
 .custom_article-etapas section h3 {
   color: #0b75b9;
@@ -65,15 +63,20 @@ ul li {
   font-weight: 400;
   margin: 0 0 2rem;
 }
+.custom_article-etapas section h3 strong{
+  font-weight: 500;
+}
 .custom_article-etapas section h4 {
   color: #15428c;
   font-size: 38px;
+  line-height: 1.2;
   margin: 0;
   margin: 0 0 2rem;
 }
 .custom_article-etapas section p {
   color: #15428c;
   font-size: 24px;
+  line-height: 1.1;
   margin: 0 0 2rem;
 }
 .custom_article-etapas section ul,
@@ -93,6 +96,10 @@ ul li {
 .custom_article-etapas section .contenido_destacado-alternativo p {
   margin: 0 !important;
 }
+.custom_article-etapas section .mitosSwiper h2,
+.custom_article-etapas section .mitosSwiper p{
+  margin: 0;
+}
 .custom_article-etapas section .etapasSwiper .swiper-destacado h2 {
   color: #ffffff !important;
   font-size: 34px;
@@ -105,14 +112,14 @@ ul li {
 .custom_article-etapas section .etapasSwiper h3 {
   color: #0b75b9;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 26px;
   margin-top: 2rem;
   text-transform: lowercase;
 }
 .custom_article-etapas section .etapasSwiper h4 {
   color: #15428c;
   font-weight: bold;
-  font-size: 50px;
+  font-size: 42px;
   line-height: 52px;
   margin: 0;
 }

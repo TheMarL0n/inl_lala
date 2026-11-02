@@ -66,7 +66,7 @@ const FasesSeccion = ({ contenido = [] }) => {
         </div>
 
         {/* COLUMNA DERECHA: Elementos asociados a la fase seleccionada */}
-        <div className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
+        <div className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
           {fasesAgrupadas[faseActiva]?.map((item, idx) => (
             <div key={idx} className="flex flex-col items-start bg-white p-6">
               

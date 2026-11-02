@@ -45,7 +45,7 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
   // Estado para llevar el control del índice del slide activo
   const [activeIndex, setActiveIndex] = useState(0);
   return (
-    <section className="py-10 px-4" aria-label="Sección de etapas de la vida">
+    <section className="px-4" aria-label="Sección de etapas de la vida">
       {tipo === "alternativo" ? (
         <div
           className={`max-w-xl mx-auto flex justify-between items-start mb-12`}
@@ -87,10 +87,10 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
         slidesPerView={diapositivas}
         spaceBetween={30}
         navigation={true}
-        // autoplay={{
-        //   delay: 4500,
-        //   disableOnInteraction: false,
-        // }}
+        autoplay={{
+          delay: 4500,
+          disableOnInteraction: false,
+        }}
         onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
         modules={[Navigation, Autoplay]}
         className="etapasSwiper max-w-5xl mx-auto"
