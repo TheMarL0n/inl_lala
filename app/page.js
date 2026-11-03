@@ -34,7 +34,6 @@ export default async function Home() {
 
   return (
     <main>
-      {console.log(allMitosFromStrapi)}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
