@@ -6,6 +6,7 @@ import {
   parrafo_normal,
   stroke_text,
 } from "@/app/utils/CSS_clases";
+import CustomLink from "../Auxiliares/CustomLinks";
 
 const CategoriasEtapas = ({ etapas, categorias }) => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(() => {
@@ -89,24 +90,24 @@ const CategoriasEtapas = ({ etapas, categorias }) => {
             >
               <div className="col-span-2 sm:col-span-3">
                 <h3>
-                  <a
+                  <CustomLink
                     href={`/paginas/etapas/${item.slug}`}
                     className={`${parrafo_normal} text-[#164190] font-bold`}
                   >
                     {item.titulo_linea_1} {item.titulo_linea_2}
-                  </a>
+                  </CustomLink>
                 </h3>
                 <p className={`${parrafo_normal} text-[#164190]`}>
                   {item.descripcion}
                 </p>
               </div>
-              <a
+              <CustomLink
                 href={`/paginas/etapas/${item.slug}`}
                 className={`${BlueButton} w-fit ml-auto`}
               >
                 Ver más
                 <span className="sr-only">{item.descripcion}</span>
-              </a>
+              </CustomLink>
             </article>
           ))
         ) : (

@@ -5,6 +5,7 @@ import Image from "next/image"
 import { categorias_dudas } from "@/app/utils/Copies"
 import { dudas } from "@/app/utils/Copies"
 import { BlueButton, parrafo_normal } from "@/app/utils/CSS_clases"
+import CustomLink from "../Auxiliares/CustomLinks"
 
 const CategoriasDudas = () => {
     const searchParams = useSearchParams()
@@ -83,18 +84,18 @@ const CategoriasDudas = () => {
                             <article key={item.categoria_id} className="border-b border-[#164190] pb-8 gap-4 grid grid-cols-3 sm:grid-cols-4 items-center">
                                 <div className="col-span-2 sm:col-span-3">
                                     <h3>
-                                        <a href={`/paginas/dudas/${item.slug}`} className={`${parrafo_normal} text-[#164190] font-bold`}>
+                                        <CustomLink href={`/paginas/dudas/${item.slug}`} className={`${parrafo_normal} text-[#164190] font-bold`}>
                                             {item.pregunta}
-                                        </a>
+                                        </CustomLink>
                                     </h3>
                                     <p className={`${parrafo_normal} text-[#164190]`}>
                                         {item.descripcion}
                                     </p>
                                 </div>
-                                <a href={`/paginas/dudas/${item.slug}`} className={`${BlueButton} w-fit ml-auto`}>
+                                <CustomLink href={`/paginas/dudas/${item.slug}`} className={`${BlueButton} w-fit ml-auto`}>
                                     Ver más
                                     <span className="sr-only">{item.descripcion}</span>
-                                </a>
+                                </CustomLink>
                             </article>
                         ))
                     ) : (

@@ -8,6 +8,7 @@ import {
 import { MenuBarIcon } from '../utils/SVG_Icons'
 import SearchForm from './SearchForm'
 import { motion, AnimatePresence } from 'framer-motion'
+import CustomLink from './Auxiliares/CustomLinks'
 
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -63,7 +64,7 @@ export default function Header() {
                 }`}
             >
                 <div className="flex lg:flex-1">
-                    <a href="/" className="ml-3 p-1.5">
+                    <CustomLink href="/" className="ml-3 p-1.5">
                         <span className="sr-only">INL Lala</span>
                         <img
                             alt="logo"
@@ -72,7 +73,7 @@ export default function Header() {
                                 isAtTop ? 'h-11.5 sm:h-20' : 'h-8 sm:h-12'
                             }`}
                         />
-                    </a>
+                    </CustomLink>
                 </div>
                 <div className="flex items-center gap-8 sm:gap-16">
                     <SearchForm />
@@ -125,14 +126,14 @@ export default function Header() {
                                     <div className="-my-6 divide-y divide-gray-500/15 w-full">
                                         <div className="py-6 text-center space-y-4">
                                             {menuI_tems.map((item, idx) => (
-                                                <a
+                                                <CustomLink
                                                     key={idx}
                                                     href={item.url}
                                                     className="nav-item relative group block mx-auto w-fit rounded-lg px-3 py-2 uppercase text-[30px] leading-12 font-medium text-white duration-400"
                                                 >
                                                     <span>{item.name}</span>
                                                     <span className="absolute bottom-2 left-0 w-0 h-1 bg-white transition-all duration-300 group-hover:w-full"></span>
-                                                </a>
+                                                </CustomLink>
                                             ))}
                                         </div>
                                     </div>

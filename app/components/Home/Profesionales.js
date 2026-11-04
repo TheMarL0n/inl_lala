@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { encabezado_h3, parrafo_normal, WhiteButton } from "@/app/utils/CSS_clases"
+import CustomLink from '../Auxiliares/CustomLinks'
 
 const Profesionales = () => {
     return (
@@ -21,7 +22,7 @@ const Profesionales = () => {
                 <p className={`${parrafo_normal} text-white max-w-113 mt-4`}>
                     Encuentra herramientas y lo más reciente en evidencia científica en temas de nutrición, salud, leche y productos lácteos, y fortalecer tu práctica profesional.
                 </p>
-                <a href="/paginas/profesionales" className={`${WhiteButton} w-fit`}>conocer más</a>
+                <CustomLink href="/paginas/profesionales" className={`${WhiteButton} w-fit`}>conocer más</CustomLink>
             </div>
         </section>
     )

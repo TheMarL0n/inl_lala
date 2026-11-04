@@ -8,7 +8,7 @@ export const menuI_tems = [
     url: "/paginas/dudas",
   },
   {
-    name: "Come mejor. Vive mejor.",
+    name: "Come mejor. Vive mejor",
     url: "/paginas/nutricion",
   },
   {
