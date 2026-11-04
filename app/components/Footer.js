@@ -1,14 +1,15 @@
 import { menuI_tems } from "../utils/Copies"
+import CustomLink from "./Auxiliares/CustomLinks"
 
 const Footer = () => {
     return (
         <footer className="py-20 px-4 bg-[#15428C]">
             <div className="max-w-7xl mx-auto grid grid-cols-2 gap-4">
-                <a href="/"><img width={224} height={125} src="/logo_footer.svg" className="w-[80%] sm:w-56" alt="logo" /></a>
+                <CustomLink href="/"><img width={224} height={125} src="/logo_footer.svg" className="w-[80%] sm:w-56" alt="logo" /></CustomLink>
                 <div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 space-y-1">
                         {menuI_tems.map((item, idx) => (
-                            <a key={idx} href={item.url} className="text-white text-[16px] sm:text-[18px] font-medium">{item.name}</a>
+                            <CustomLink key={idx} href={item.url} className="text-white text-[16px] sm:text-[18px] font-medium">{item.name}</CustomLink>
                         ))}
                     </div>
                     <div className="flex flex-wrap mt-8 gap-4">

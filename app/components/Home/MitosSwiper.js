@@ -13,6 +13,7 @@ import {
 } from "@/app/utils/CSS_clases";
 import { Comillas } from "@/app/utils/SVG_Icons";
 import ReactMarkdown from "react-markdown";
+import CustomLink from "../Auxiliares/CustomLinks";
 
 // Si la URL viene de Strapi y no empieza con http, le agregamos el host
 const getStrapiMedia = (url) => {
@@ -130,9 +131,9 @@ const MitosSwiper = ({ contenido, alternative, currentSlug, titulo_mitos }) => {
                       <Comillas className="ml-auto block sm:-mt-6" />
                     </span>
                   ) : (
-                    <button className={`${BlueButton} mb-12 sm:mb-0 sm:mt-12`}>
+                    <CustomLink href={`/paginas/mitos-y-realidades/${item.slug}`} className={`${BlueButton} mb-12 sm:mb-0 sm:mt-12 w-fit`}>
                       Descubre por qué
-                    </button>
+                    </CustomLink>
                   )}
                 </div>
               </div>

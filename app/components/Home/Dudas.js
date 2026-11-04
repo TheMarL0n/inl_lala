@@ -3,6 +3,7 @@ import { useState } from "react"
 import { categorias_dudas, dudas } from "@/app/utils/Copies"
 import { encabezado_h3, parrafo_normal, WhiteButton } from "@/app/utils/CSS_clases"
 import Image from 'next/image'
+import CustomLink from "../Auxiliares/CustomLinks"
 
 const Dudas = () => {
     const [criterio, setCriterio] = useState("")
@@ -78,13 +79,13 @@ const Dudas = () => {
                                                 {duda.respuesta}
                                             </p>
                                             {/* Enlace para ir a la vista de categorías con su respectivo ID */}
-                                            <a
+                                            <CustomLink
                                                 href={`/paginas/dudas?cat=${duda.categoria_id}`}
                                                 target="_blank"
                                                 className={`${WhiteButton}`}
                                             >
                                                 Ver más
-                                            </a>
+                                            </CustomLink>
                                         </div>
                                     )
                                 })
@@ -102,7 +103,7 @@ const Dudas = () => {
                                         <br />
                                         {item.subtitulo}
                                     </p>
-                                    <a href={`/paginas/dudas?cat=${item.id}`} target="_blank" className={WhiteButton}>Ver más</a>
+                                    <CustomLink href={`/paginas/dudas?cat=${item.id}`} target="_blank" className={WhiteButton}>Ver más</CustomLink>
                                 </div>
                             ))
                         )

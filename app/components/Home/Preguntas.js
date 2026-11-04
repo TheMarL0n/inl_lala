@@ -1,5 +1,6 @@
 import { encabezado_h3, parrafo_normal, stroke_text, WhiteButton } from "@/app/utils/CSS_clases"
 import { categorias_nutricion } from "@/app/utils/Copies"
+import CustomLink from "../Auxiliares/CustomLinks"
 
 const Preguntas = () => {
     return (
@@ -15,14 +16,14 @@ const Preguntas = () => {
                 <div>
                     {
                         categorias_nutricion.map((item, idx) => (
-                            <a href={`/paginas/nutricion?cat=${item.id}`} key={idx} className="text-white block font-black uppercase text-[20px] sm:text-[38px] leading-10.5 border-b border-white py-4 hover:text-white/75 duration-400">{item.titulo}</a>
+                            <CustomLink href={`/paginas/nutricion?cat=${item.id}`} key={idx} className="text-white block font-black uppercase text-[20px] sm:text-[38px] leading-10.5 border-b border-white py-4 hover:text-white/75 duration-400">{item.titulo}</CustomLink>
                         ))
                     }
                 </div>
             </div>
             <div className="max-w-7xl mx-auto flex justify-between flex-col sm:flex-row border-b border-white pb-4">
                 <p className={`${parrafo_normal} text-white mb-4 sm:mb-0`}>Encuentra información y recomendaciones sobre el tema que más te interesa.</p>
-                <a href="/paginas/nutricion" className={WhiteButton}>Ver más</a>
+                <CustomLink href="/paginas/nutricion" className={WhiteButton}>Ver más</CustomLink>
             </div>
         </section>
     )
