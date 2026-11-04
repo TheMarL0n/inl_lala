@@ -17,13 +17,7 @@ export default function Header() {
     const [isAtTop, setIsAtTop] = useState(true)
 
     // Efecto para bloquear/desbloquear el scroll del body cuando el menú esté abierto
-    useEffect(() => {
-        if (mobileMenuOpen) {
-            document.body.style.overflow = 'hidden'
-        } else {
-            document.body.style.overflow = 'unset'
-        }
-        
+    useEffect(() => {        
         // Limpieza por si el componente se desamonta con el menú abierto
         return () => {
             document.body.style.overflow = 'unset'
@@ -106,9 +100,9 @@ export default function Header() {
                         {/* Contenedor principal abarcando absolutamente todo el alto */}
                         <div className="fixed inset-0 w-full h-full flex justify-end pointer-events-none">
                             <motion.div
-                                initial={{ x: '100%' }}
-                                animate={{ x: 0 }}
-                                exit={{ x: '100%' }}
+                                initial={{ y: '100%' }}
+                                animate={{ y: 0 }}
+                                exit={{ y: '100%' }}
                                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                                 className="pointer-events-auto w-full h-full min-h-screen overflow-y-auto bg-[#15428C] p-6 shadow-2xl flex flex-col"
                             >

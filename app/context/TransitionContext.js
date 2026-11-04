@@ -19,6 +19,10 @@ export function TransitionProvider({ children }) {
 
   const navigate = (href) => {
     if (isExiting) return;
+
+    // Si hacen clic en un enlace que es la misma ruta actual, ignoramos la transición
+    if (href === window.location.pathname) return;
+
     setIsExiting(true);
 
     // Damos tiempo a que la cortina suba/cierre antes de hacer el router.push

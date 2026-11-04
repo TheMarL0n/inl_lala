@@ -1,4 +1,5 @@
 import Image from "next/image";
+import CustomLink from "../Auxiliares/CustomLinks";
 
 const MitosGrid = ({ mitos }) => {
   // Si la URL viene de Strapi y no empieza con http, le agregamos el host
@@ -14,7 +15,7 @@ const MitosGrid = ({ mitos }) => {
     <section className="py-20 px-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {mitos.map((item, idx) => (
-          <a
+          <CustomLink
             key={item.id || item.slug || idx}
             href={`/paginas/mitos-y-realidades/${item.slug}`}
             className="space-y-4 group cursor-pointer"
@@ -35,7 +36,7 @@ const MitosGrid = ({ mitos }) => {
                 {item.mito}
               </h3>
             </div>
-          </a>
+          </CustomLink>
         ))}
       </div>
     </section>

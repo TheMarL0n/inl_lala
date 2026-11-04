@@ -1,3 +1,5 @@
+// etapas/[slug]/page.js
+import { Suspense } from "react";
 import BlueGrid from "@/app/components/BlueGrid";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
 import CTAGenerico from "@/app/components/CTAGenerico";
@@ -16,13 +18,11 @@ import SimpleSwiper from "@/app/components/Swipers/SimpleSwiper";
 import VerticalSwiper from "@/app/components/Swipers/VerticalSwiper";
 import { fetchAPI } from "@/app/lib/strapi";
 
-const Etapa_Pagina = async ({ params }) => {
-  const resolvedParams = await params;
-
-  // 1. Ejecutamos ambas peticiones en paralelo para optimizar tiempos
+// Componente secundario que realiza los fetch pesados de la etapa y su contenido
+async function EtapaContent({ slug }) {
   const [responseEtapa, responseTodas, responseCategorias] = await Promise.all([
     fetchAPI(
-      `/etapas?filters[slug][$eq]=${resolvedParams.slug}&populate[0]=imagen_principal&populate[1]=contenido&populate[2]=contenido.diapositiva&populate[3]=contenido.diapositiva.imagen&populate[4]=contenido.diapositiva.imagen_izquierda&populate[5]=contenido.diapositiva.imagen_derecha&populate[6]=categoria&populate[7]=contenido.imagen_destacada&populate[8]=contenido.imagen_izquierda&populate[9]=contenido.imagen_derecha`,
+      `/etapas?filters[slug][$eq]=${slug}&populate[0]=imagen_principal&populate[1]=contenido&populate[2]=contenido.diapositiva&populate[3]=contenido.diapositiva.imagen&populate[4]=contenido.diapositiva.imagen_izquierda&populate[5]=contenido.diapositiva.imagen_derecha&populate[6]=categoria&populate[7]=contenido.imagen_destacada&populate[8]=contenido.imagen_izquierda&populate[9]=contenido.imagen_derecha`,
     ),
     fetchAPI(`/etapas?populate[0]=imagen_principal&populate[1]=categoria`),
     fetchAPI(`/categorias-etapas`),
@@ -30,8 +30,9 @@ const Etapa_Pagina = async ({ params }) => {
 
   const currentEtapaData = responseEtapa?.data?.[0];
   if (!currentEtapaData) {
-    return <div>Etapa no encontrada</div>;
+    return <div className="py-20 text-center">Etapa no encontrada</div>;
   }
+
   const currentEtapa = {
     id: currentEtapaData.id,
     ...currentEtapaData,
@@ -39,53 +40,28 @@ const Etapa_Pagina = async ({ params }) => {
   const allEtapasFromStrapi = responseTodas?.data || [];
   const catEtapasFromStrapi = responseCategorias?.data || [];
 
-  // Si la URL viene de Strapi y no empieza con http, le agregamos el host
-  const getStrapiMedia = (url) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("//")) {
-      return url;
-    }
-    return `${process.env.NEXT_PUBLIC_STRAPI_HOST}${url}`;
-  };
-  //-----------------------------------------------------------------------------------------------
-
-  //Variables de datos-----------------------------------------------------------------------------
-  const cat_id = currentEtapa ? currentEtapa.categoria.id : "";
-  const title = currentEtapa
-    ? currentEtapa.titulo_linea_1 + " " + currentEtapa.titulo_linea_2
-    : "";
-  const title_linea_1 = currentEtapa ? currentEtapa.titulo_linea_1 : "";
-  const title_linea_2 = currentEtapa ? currentEtapa.titulo_linea_2 : "";
-  const referencias = currentEtapa ? currentEtapa.Referencias : "";
+  const cat_id = currentEtapa?.categoria?.id || "";
+  const title = (currentEtapa?.titulo_linea_1 || "") + " " + (currentEtapa?.titulo_linea_2 || "");
+  const title_linea_1 = currentEtapa?.titulo_linea_1 || "";
+  const title_linea_2 = currentEtapa?.titulo_linea_2 || "";
+  const referencias = currentEtapa?.Referencias || "";
   const contenido = currentEtapa?.contenido || [];
-  const background = getStrapiMedia(currentEtapa?.imagen_principal?.url);
-  const baseUrl = "https://www.institutolala.com.mx";
   const titulo_mitos = "Mitos frecuentes durante el embarazo y la lactancia...";
-  //-----------------------------------------------------------------------------------------------
 
-  const currentUrl = `${baseUrl}/paginas/etapas/${resolvedParams.slug}`;
-  const main_image = currentEtapa ? currentEtapa.imagen_principal : "";
-
-  // Filtramos las etapas relacionadas excluyendo la actual de una sola vez
+  // Filtramos las etapas relacionadas
   const etapasRelacionadas = allEtapasFromStrapi.filter(
-    (item) => item.categoria.id === cat_id && item.id !== currentEtapa?.id,
+    (item) => item?.categoria?.id === cat_id && item.id !== currentEtapa?.id,
   );
 
   return (
-    <main>
-      <Header />
-
-      {/* Componente de cabecera ****************************************************/}
-      <PagesSmallJumbotron background={background} title={title} />
-      {/* Componente de migas de pan ************************************************/}
+    <>
       <Breadcrumbs
         title={title}
         parent={"Etapas de la vida"}
         url={`/paginas/etapas`}
       />
-      {/* Componente de indicador de etapa ******************************************/}
       <EnlacesEtapas cat_id={cat_id} categorias_etapas={catEtapasFromStrapi} />
-      {/* Componente de titulo de dos lineas ****************************************/}
+      
       <article className="custom_article-etapas">
         <PageTitle
           title_linea_1={title_linea_1}
@@ -93,73 +69,55 @@ const Etapa_Pagina = async ({ params }) => {
         />
         
         {contenido.map((item, idx) => {
-          //Tipo de contenido CARRUSEL -------------------------------------------------------------
           if (item.__component === "contenido-principal.carrusel") {
-            const slidesData = item.diapositiva || [];
-            const slideType = item.tipo;
-            const numberOfSlides = item.diapositivas_por_vista;
             return (
               <SimpleSwiper
                 key={idx}
-                contenido={slidesData}
-                tipo={slideType}
-                diapositivas={numberOfSlides}
+                contenido={item.diapositiva || []}
+                tipo={item.tipo}
+                diapositivas={item.diapositivas_por_vista}
               />
             );
           }
 
-          //Tipo de contenido MITOS Y REALIDADES----------------------------------------------------
           if (item.__component === "contenido-principal.mitos-y-realidades") {
-            const slidesData = item.diapositiva || [];
             return (
               <MitosSwiper
                 key={idx}
-                contenido={slidesData}
+                contenido={item.diapositiva || []}
                 alternative={true}
                 titulo_mitos={titulo_mitos}
               />
             );
           }
 
-          //Tipo de contenido CARRUSEL COMPUESTO--------------------------------------------------------------
           if (item.__component === "contenido-principal.carrusel-compuesto") {
-            const slidesData = item.diapositiva || [];
-            const slideType = item.tipo;
             return (
               <DobleFotoSwiper
                 key={idx}
-                contenido={slidesData}
-                tipo={slideType}
+                contenido={item.diapositiva || []}
+                tipo={item.tipo}
               />
             );
           }
 
-          //Tipo de contenido NEVEGACION VERTICAL--------------------------------------------------
           if (item.__component === "contenido-principal.navegacion-vertical") {
-            const slidesData = item.diapositiva || [];
-            return <VerticalSwiper key={idx} contenido={slidesData} />;
+            return <VerticalSwiper key={idx} contenido={item.diapositiva || []} />;
           }
 
-          //Tipo de contenido CUADRICULA-----------------------------------------------------------
           if (item.__component === "contenido-principal.cuadricula") {
-            const cuadriculasData = item.diapositiva || [];
-            const cuadriculaType = item.tipo || [];
-            const titulo_columna_1 = item.titulo_columna_1 || "";
-            const titulo_columna_2 = item.titulo_columna_2 || "";
-            const titulo_columna_3 = item.titulo_columna_3 || "";
             return (
               <BlueGrid
                 key={idx}
-                contenido={cuadriculasData}
-                tipo={cuadriculaType}
-                titulo_columna_1={titulo_columna_1}
-                titulo_columna_2={titulo_columna_2}
-                titulo_columna_3={titulo_columna_3}
+                contenido={item.diapositiva || []}
+                tipo={item.tipo || []}
+                titulo_columna_1={item.titulo_columna_1 || ""}
+                titulo_columna_2={item.titulo_columna_2 || ""}
+                titulo_columna_3={item.titulo_columna_3 || ""}
               />
             );
           }
 
-          //Tipo de contenido DESTACADO
           if (item.__component === "contenido-principal.destacado") {
             return <ContenidoDestacado key={idx} contenido={item} />;
           }
@@ -174,23 +132,55 @@ const Etapa_Pagina = async ({ params }) => {
         })}
       </article>
 
-      {/* CTAGenerico */}
-      {etapasRelacionadas.length > 0 ? (
+      {etapasRelacionadas.length > 0 && (
         <CTAGenerico array={etapasRelacionadas} parent={"etapas"} />
-      ) : null}
+      )}
 
-      {/* Referencias */}
       <Referencias contenido={referencias} />
 
-      {/* Navegación */}
       <PaginasNavegacion
         themes={allEtapasFromStrapi}
         parent_url={"etapas"}
         currentTheme={currentEtapa}
       />
+    </>
+  );
+}
+
+// Esqueleto de carga mientras Strapi procesa los componentes dinámicos
+function EtapaSkeleton() {
+  return (
+    <div className="w-full flex flex-col items-center justify-center -mt-10 sm:-mt-15 px-6 relative z-2">
+      <div className="w-full sm:w-7xl mx-auto bg-white p-4">
+        <div className="w-full animate-pulse flex flex-col items-start space-y-4">
+          <div className="h-8 bg-gray-200 rounded w-3/4 max-w-lg"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/2 max-w-md"></div>
+          <div className="w-full h-64 bg-gray-200 rounded-xl mt-8"></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default async function Etapa_Pagina({ params }) {
+  const resolvedParams = await params;
+  
+  // Realizamos una consulta ligera o directa para obtener la imagen del Jumbotron si es necesario, 
+  // o dejamos un fondo genérico predeterminado para que pinte al instante.
+  const background = "/images/etapas/etapas_bkg.png"; // O ajusta según prefieras
+
+  return (
+    <main>
+      <Header />
+      {/* El Jumbotron se renderiza de inmediato con la transición fluida */}
+      <PagesSmallJumbotron background={background} />
+
+      {/* El contenido complejo y pesado de Strapi fluye con Suspense */}
+      <Suspense fallback={<EtapaSkeleton />}>
+        <EtapaContent slug={resolvedParams.slug} />
+      </Suspense>
+
       <Footer />
     </main>
   );
-};
-
-export default Etapa_Pagina;
+}

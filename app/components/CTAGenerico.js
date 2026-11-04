@@ -1,4 +1,5 @@
 import { BlueButton, parrafo_normal } from "../utils/CSS_clases";
+import CustomLink from "./Auxiliares/CustomLinks";
 
 const CTAGenerico = ({ array, parent }) => {
   return (
@@ -10,24 +11,24 @@ const CTAGenerico = ({ array, parent }) => {
               >
                 <div className="col-span-2 sm:col-span-3">
                   <h3>
-                    <a
+                    <CustomLink
                       href={`/paginas/${parent}/${item.slug}`}
                       className={`${parrafo_normal} text-[#164190] font-bold`}
                     >
                       {item.titulo_linea_1} {item.titulo_linea_2}
-                    </a>
+                    </CustomLink>
                   </h3>
                   <p className={`${parrafo_normal} text-[#164190]`}>
                     {item.descripcion}
                   </p>
                 </div>
-                <a
+                <CustomLink
                   href={`/paginas/${parent}/${item.slug}`}
                   className={`${BlueButton} w-fit ml-auto`}
                 >
                   Ver más
                   <span className="sr-only">{item.descripcion}</span>
-                </a>
+                </CustomLink>
               </div>
             ))
         }
