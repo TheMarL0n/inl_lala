@@ -2,6 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { BlueButton, encabezado_h2, parrafo_normal } from "@/app/utils/CSS_clases"
 import { ChevronDown } from "@/app/utils/SVG_Icons"
+import CustomLink from "./Auxiliares/CustomLinks"
 
 // Si la URL viene de Strapi y no empieza con http, le agregamos el host
 const getStrapiMedia = (url) => {
@@ -46,7 +47,7 @@ const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
                 <div className="flex justify-between items-center w-full border-b border-[#15428C] pb-12 mb-12">
                     {/* Artículo Anterior */}
                     {prevTheme ? (
-                        <Link 
+                        <CustomLink 
                             href={`/paginas/${parent_url}/${prevTheme.slug}`} 
                             className={`${parrafo_normal} text-[#15428C] text-[16px]! flex gap-4 items-center hover:opacity-80 transition-opacity`}
                         >
@@ -55,7 +56,7 @@ const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
                                 <span className="block text-xs text-gray-400 font-normal">Anterior</span>
                                 {prevTheme.titulo || prevTheme.mito}
                             </span>
-                        </Link>
+                        </CustomLink>
                     ) : (
                         <span className="text-gray-300 flex gap-4 items-center cursor-not-allowed">
                             Primer artículo
@@ -64,7 +65,7 @@ const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
 
                     {/* Artículo Siguiente */}
                     {nextTheme ? (
-                        <Link 
+                        <CustomLink 
                             href={`/paginas/${parent_url}/${nextTheme.slug}`} 
                             className={`${parrafo_normal} text-[#15428C] text-[16px]! flex gap-4 items-center text-right hover:opacity-80 transition-opacity`}
                         >
@@ -73,7 +74,7 @@ const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
                                 {nextTheme.titulo || nextTheme.mito}
                             </span>
                             <ChevronDown className={`rotate-90`} />
-                        </Link>
+                        </CustomLink>
                     ) : (
                         <span className="text-gray-300 flex gap-4 items-center cursor-not-allowed">
                             Último artículo
@@ -88,7 +89,7 @@ const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 mt-8">
                     {
                         relatedThemes.map((item) => (
-                            <Link
+                            <CustomLink
                                 key={item.id}
                                 href={`/paginas/${parent_url}/${item.slug}`}
                                 className="flex flex-col justify-between space-y-4 group cursor-pointer"
@@ -110,7 +111,7 @@ const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
                                     </h3>
                                 </div>
                                 <span className={`${BlueButton} w-fit`}>Ver más</span>
-                            </Link>
+                            </CustomLink>
                         ))
                     }
                 </div>

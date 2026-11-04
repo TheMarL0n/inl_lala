@@ -2,6 +2,7 @@ import SmoothScroll from "./components/Auxiliares/SmoothScroll";
 import { TransitionProvider } from "./context/TransitionContext";
 import localFont from "next/font/local";
 import "./globals.css";
+import InitialLoader from "./components/Auxiliares/InitialLoader";
 
 const miFuente = localFont({
   src: [
@@ -76,6 +77,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es" className={`${miFuente.variable} antialiased`}>
       <body className="min-h-full flex flex-col">
+        {/* Loader de presentación (Solo aparece en carga inicial o F5) */}
+        <InitialLoader />
+
         <TransitionProvider>
           <SmoothScroll>{children}</SmoothScroll>
         </TransitionProvider>

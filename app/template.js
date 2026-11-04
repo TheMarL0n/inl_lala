@@ -20,7 +20,7 @@ export default function Template({ children }) {
 
       {/* Cortina de transición */}
       <motion.div
-        className="fixed inset-0 z-50 bg-[#0a0a0a] pointer-events-none"
+        className="fixed inset-0 z-50 bg-[#15428C] pointer-events-none"
         initial={{ scaleY: 1 }}
         animate={{ scaleY: isExiting ? 1 : 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

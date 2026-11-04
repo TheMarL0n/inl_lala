@@ -2,7 +2,7 @@ import { parrafo_normal } from "../utils/CSS_clases"
 
 const Breadcrumbs = ({ title, parent, url }) => {
     return (
-        <div className="page_descripcion max-w-7xl mx-4 sm:mx-auto bg-white -mt-10 sm:-mt-30 py-4 px-6 relative z-2 sm:min-h-37.5">
+        <div className="page_descripcion max-w-7xl mx-4 sm:mx-auto bg-white -mt-10 sm:-mt-15 py-4 px-6 relative z-2 sm:min-h-37.5">
             <nav aria-label="Breadcrumb">
                 <ol className="flex flex-col sm:flex-row sm:items-center space-x-2">
                     <li>
