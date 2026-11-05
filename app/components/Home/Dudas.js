@@ -24,7 +24,7 @@ const Dudas = () => {
     return (
         <section className="sm:py-20 grid grid-cols-1 sm:grid-cols-2">
             <div className="sm:sticky sm:top-0 h-fit">
-                <div className="relative w-full h-[500px] sm:h-[800px]"> {/* Ajusta la altura según tu diseño original */}
+                <div className="relative w-full h-[500px] sm:h-screen"> {/* Ajusta la altura según tu diseño original */}
                     <Image
                         src="/images/girl_eating.png"
                         alt="Joven disfrutando de una alimentación saludable y equilibrada"
