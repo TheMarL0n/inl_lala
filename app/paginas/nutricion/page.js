@@ -5,6 +5,8 @@ import CategoriasNutricion from "@/app/components/Nutricion/CategoriasNutricion"
 import { Suspense } from "react";
 import { fetchAPI } from "@/app/lib/strapi";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Come mejor, vive mejor",
   description:

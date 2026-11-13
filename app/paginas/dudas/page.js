@@ -6,6 +6,7 @@ import CategoriasDudas from "@/app/components/Dudas/CategoriasDudas";
 import FooterDudas from "@/app/components/Dudas/FooterDudas";
 import { Suspense } from "react";
 import { fetchAPI } from "@/app/lib/strapi";
+
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
@@ -69,8 +70,6 @@ export default function Dudas() {
   return (
     <main>
       <Header />
-      {/* Suspense permite que la estructura base cargue al instante 
-          y la cortina fluya perfecto mientras se obtienen los datos */}
       <Suspense fallback={<DudasSkeleton />}>
         <DudasContent />
       </Suspense>
