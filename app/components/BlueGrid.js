@@ -360,7 +360,7 @@ const BlueGrid = ({
         <div className="cuadricula_azul grid grid-cols-1 sm:grid-cols-4 gap-4 sm:grid-rows-2 auto-rows-[220px]">
           {contenido.map((item, idx) => {
             const tieneImagen = item.contenido && item.contenido.includes("![");
-            
+
             let spanClasses = "col-span-1 row-span-1";
             if (idx === 0) {
               spanClasses = "sm:col-start-1 sm:col-end-2 sm:row-start-1 sm:row-end-3"; // Izquierda alto
@@ -375,9 +375,8 @@ const BlueGrid = ({
             return (
               <div
                 key={idx}
-                className={`relative overflow-hidden flex flex-col justify-center items-start ${spanClasses} ${
-                  tieneImagen ? "grid grid-cols-2 items-end" : ""
-                } ${item.imagen ? "bg-gray-100" : "bg-[#15428C] text-white p-6"}`}
+                className={`relative overflow-hidden flex flex-col justify-center items-start ${spanClasses} ${tieneImagen ? "grid grid-cols-2 items-end" : ""
+                  } ${item.imagen ? "bg-gray-100" : "bg-[#15428C] text-white p-6"}`}
               >
                 {item.imagen ? (
                   <Image
@@ -477,65 +476,93 @@ const BlueGrid = ({
 
   if (tipo === "desbordada_simple") {
     return (
-      <section className="py-20 px-4 max-w-5xl mx-auto overflow-visible">
-        <div className="cuadricula_azul grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+      <section className="py-24 px-4 max-w-3xl mx-auto overflow-visible">
+        {/* Contenedor relativo general para permitir el solapamiento */}
+        <div className="cuadricula_azul relative flex justify-center items-center my-8">
+
           {contenido.map((item, idx) => {
             const tieneImagen = item.contenido && item.contenido.includes("![");
-            const esAnchoDoble = tieneH6Markdown(item.contenido); // Mantenemos la compatibilidad con H6
+            const esAnchoDoble = tieneH6Markdown(item.contenido);
 
-            let spanClasses = "col-span-1 row-span-1";
-            if (idx === 0) {
-              spanClasses = "sm:col-start-1 sm:col-end-2 flex justify-center sm:-ml-12 z-10";
-            } else if (idx === 1) {
-              spanClasses = `sm:col-start-2 sm:col-end-3 ${esAnchoDoble ? "sm:col-span-2" : ""}`;
-            } else if (idx === 2) {
-              spanClasses = "sm:col-start-3 sm:col-end-4 flex justify-center sm:-mr-12 z-10";
-            }
-
-            return (
-              <div
-                key={idx}
-                className={`
-                  relative flex flex-col justify-center items-center min-h-[260px] p-6 text-white
-                  ${spanClasses}
-                  ${idx === 1 ? fondosOscuros[item.color_fondo] || fondosOscuros.azul : ""}
-                  ${tieneImagen ? "grid grid-cols-2 items-end" : ""}
-                `}
-              >
-                {item.imagen ? (
-                  <Image
-                    src={getStrapiMedia(item.imagen.url)}
-                    alt={item.alt || "Imagen de cuadrícula desbordada simple"}
-                    fill
-                    sizes="(max-width: 640px) 100vw, 33vw"
-                    className="object-cover"
-                  />
-                ) : (
+            // 1. TARJETA CENTRAL AZUL (idx === 1)
+            if (idx === 1) {
+              return (
+                <div
+                  key={idx}
+                  className={`
+        relative z-10 w-full sm:w-[520px] min-h-[260px] p-8 text-white flex flex-col justify-center items-center text-center shadow-xl
+        ${fondosOscuros[item.color_fondo] || fondosOscuros.azul}
+        ${esAnchoDoble ? "sm:w-[650px]" : ""}
+      `}
+                >
                   <ReactMarkdown
                     components={{
                       img: ({ src, alt }) => {
-                        // Las imágenes laterales se renderizan con tamaño prominente para lograr el efecto desbordado
-                        const containerClasses = "relative w-[220px] sm:w-[260px] h-[220px] sm:h-[260px] pointer-events-none block";
-
                         return (
-                          <span className={containerClasses}>
+                          <span className="my-2 inline-flex justify-center items-center w-full">
                             <Image
                               src={src}
-                              alt={alt || 'Imagen lateral'}
-                              fill
-                              sizes="(max-width: 1024px) 100vw, 400px"
-                              className="object-contain drop-shadow-xl"
-                              priority={false}
+                              alt={alt || 'Símbolo'}
+                              width={24}
+                              height={24}
+                              className="w-6 h-6 object-contain filter brightness-0 invert"
                             />
                           </span>
                         );
                       }
-                    }}>
+                    }}
+                  >
                     {item.contenido}
                   </ReactMarkdown>
-                )}
-              </div>
-            );
+                </div>
+              );
+            }
+
+            // 2. IMAGEN IZQUIERDA (idx === 0) - Se desborda sobre el borde izquierdo de la tarjeta azul
+            if (idx === 0) {
+              return (
+                <div
+                  key={idx}
+                  className="absolute left-0 sm:left-4 lg:-left-12 -bottom-16 z-20 w-[180px] sm:w-[300px] h-[180px] sm:h-[300px] pointer-events-none"
+                >
+                  {item.imagen ? (
+                    <Image
+                      src={getStrapiMedia(item.imagen.url)}
+                      alt={item.alt || "Imagen izquierda"}
+                      fill
+                      sizes="(max-width: 640px) 150px, 300px"
+                      className="object-contain drop-shadow-2xl"
+                    />
+                  ) : (
+                    <ReactMarkdown>{item.contenido}</ReactMarkdown>
+                  )}
+                </div>
+              );
+            }
+
+            // 3. IMAGEN DERECHA (idx === 2) - Se desborda sobre el borde derecho de la tarjeta azul
+            if (idx === 2) {
+              return (
+                <div
+                  key={idx}
+                  className="absolute right-0 sm:right-4 lg:-right-12 -bottom-16 z-20 w-[150px] sm:w-[300px] h-[200px] sm:h-[300px] pointer-events-none"
+                >
+                  {item.imagen ? (
+                    <Image
+                      src={getStrapiMedia(item.imagen.url)}
+                      alt={item.alt || "Imagen derecha"}
+                      fill
+                      sizes="(max-width: 640px) 150px, 300px"
+                      className="object-contain drop-shadow-2xl"
+                    />
+                  ) : (
+                    <ReactMarkdown>{item.contenido}</ReactMarkdown>
+                  )}
+                </div>
+              );
+            }
+
+            return null;
           })}
         </div>
       </section>
