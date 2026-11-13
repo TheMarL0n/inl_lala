@@ -800,3 +800,26 @@ export const mitos_de_etapas_referencias = [
       "Smith, N. W., et al. (2022). Modeling the Contribution of Milk to Global Nutrition. Frontiers in Nutrition.",
   },
 ];
+
+export const dudas_storyline =[
+  { id:"1",
+    titulo: "calcio",
+    contenido: "Importante para la formación y mantenimiento de huesos y dientes."
+  },
+  { id:"2",
+    titulo: "calcio",
+    contenido: "Importante para la formación y mantenimiento de huesos y dientes."
+  },
+  { id:"3",
+    titulo: "calcio",
+    contenido: "Importante para la formación y mantenimiento de huesos y dientes."
+  },
+  { id:"4",
+    titulo: "calcio",
+    contenido: "Importante para la formación y mantenimiento de huesos y dientes."
+  },
+  { id:"5",
+    titulo: "calcio",
+    contenido: "Importante para la formación y mantenimiento de huesos y dientes."
+  }
+]

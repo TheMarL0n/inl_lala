@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { parrafo_normal } from "../utils/CSS_clases";
+import ReactMarkdown from "react-markdown";
 
 const PagesJumbotron = ({
   titulo,
@@ -10,12 +11,21 @@ const PagesJumbotron = ({
   descripcion,
   detalles,
 }) => {
+  // Si la URL viene de Strapi y no empieza con http, le agregamos el host
+  const getStrapiMedia = (url) => {
+    if (!url) return null;
+    if (url.startsWith("http") || url.startsWith("//")) {
+      return url;
+    }
+    return `${process.env.NEXT_PUBLIC_STRAPI_HOST}${url}`;
+  };
+
   return (
     <section className="relative overflow-hidden">
       <div className="relative h-screen min-h-150 max-h-225 2xl:max-h-200 flex flex-col sm:justify-center w-full">
-        {background && (
+        {background.url ?
           <Image
-            src={background}
+            src={getStrapiMedia(background.url)}
             alt={
               titulo
                 ? `Imagen de fondo para ${titulo}`
@@ -26,7 +36,9 @@ const PagesJumbotron = ({
             sizes="100vw"
             className="object-cover object-center -z-10"
           />
-        )}
+        :
+        ""
+        }
 
         <div className="max-w-7xl sm:w-7xl mx-auto space-y-20 sm:space-y-4 mt-40 sm:mt-20 relative z-10 px-4 sm:px-0">
           <h1 className="text-white text-[30px] sm:text-[70px] font-black uppercase flex flex-col sm:gap-2 items-start">
@@ -39,17 +51,15 @@ const PagesJumbotron = ({
       </div>
 
       <div className="page_descripcion max-w-4xl mx-4 sm:mx-auto bg-white -mt-30 p-4 sm:p-20 relative z-20 min-h-37.5">
-        <p className="text-[#15428C] text-center font-medium sm:text-[40px] sm:leading-11 text-[26px]">
+        <div className="text-[#15428C] text-center font-medium sm:text-[40px] sm:leading-11 text-[26px]">
           {titulo_descripcion ? (
-            <>
-              <strong className="uppercase">{titulo_descripcion}</strong>
-              <br />
-            </>
+            <ReactMarkdown>
+              {titulo_descripcion}              
+            </ReactMarkdown>
           ) : (
             ""
           )}
-          {descripcion}
-        </p>
+        </div>
       </div>
 
       {detalles ? (

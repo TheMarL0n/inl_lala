@@ -140,30 +140,41 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
                   </div>
                 </div>
               ) : tipo === "texto_gigante_centro" ? (
-                <div className="flex flex-col justify-center items-center relative">
-                  <div className="w-full max-w-[300px] h-[300px] relative overflow-hidden z-2">
-                    <Image
-                      src={getStrapiMedia(item.imagen.url)}
-                      alt={
-                        item.imagen.alternativeText ||
-                        `Imagen que representa lo relacionado a ${tituloH2}`
-                      } //viene desde la api directo
-                      fill
-                      sizes="(max-width: 640px)"
-                      className="object-contain absolute top-0 left-0"
-                    />
-                  </div>
-
-                  <h2 className="relative sm:absolute sm:top-[93px] flex flex-col space-y-2">
+                <div className="my-10">
+                  <div className="flex flex-col sm:flex-row items-center justify-center relative w-full">
+                    {/* 1. Primera mitad del texto (ej. "LE") */}
                     <span
-                      className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-center text-[40px]! sm:text-[210px]! leading-1.1 sm:leading-31 uppercase`}
+                      className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-center text-[40px]! sm:text-[210px]! leading-1.1 sm:leading-none uppercase z-10`}
                     >
-                      {tituloH2}
+                      {tituloH2.slice(0, Math.ceil(tituloH2.length / 2))}
                     </span>
-                    <span className="sm:ml-auto font-bold text-[#164190] text-[26px] leading-[1.1]">
-                      {subtitulo}
-                    </span>
-                  </h2>
+
+                    {/* 2. Contenedor de la imagen al centro */}
+                    <div className="w-full max-w-[300px] h-[300px] relative overflow-hidden z-20 -m-20">
+                      <Image
+                        src={getStrapiMedia(item.imagen.url)}
+                        alt={
+                          item.imagen.alternativeText ||
+                          `Imagen que representa lo relacionado a ${tituloH2}`
+                        }
+                        fill
+                        sizes="(max-width: 640px)"
+                        className="object-contain absolute top-0 left-0"
+                      />
+                    </div>
+
+                    {/* 3. Segunda mitad del texto (ej. "CHE") y el subtítulo */}
+                    <div className="flex flex-col space-y-2 z-10 text-center sm:text-left">
+                      <span
+                        className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-center text-[40px]! sm:text-[210px]! leading-1.1 sm:leading-none uppercase`}
+                      >
+                        {tituloH2.slice(Math.ceil(tituloH2.length / 2))}
+                      </span>
+                    </div>
+                  </div>
+                  <h3 className="text-right font-bold text-[#164190]! text-[26px]! leading-[1.1]">
+                    {subtitulo}
+                  </h3>
                 </div>
               ) : tipo === "destacado" ? (
                 <div

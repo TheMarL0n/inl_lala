@@ -1,4 +1,5 @@
 import { parrafo_normal } from "../utils/CSS_clases"
+import CustomLink from "./Auxiliares/CustomLinks"
 
 const Breadcrumbs = ({ title, parent, url }) => {
     return (
@@ -6,15 +7,15 @@ const Breadcrumbs = ({ title, parent, url }) => {
             <nav aria-label="Breadcrumb">
                 <ol className="flex flex-col sm:flex-row sm:items-center space-x-2">
                     <li>
-                        <a href="/" className={`${parrafo_normal} text-[16px]! text-[#164190] uppercase`}>
+                        <CustomLink href="/" className={`${parrafo_normal} text-[16px]! text-[#164190] uppercase`}>
                             Inicio
-                        </a>
+                        </CustomLink>
                     </li>
                     <li><span className={`${parrafo_normal} text-[16px]! text-[#164190] hidden sm:block`}>|</span></li>
                     <li>
-                        <a href={url} className={`${parrafo_normal} text-[16px]! text-[#164190] uppercase`}>
+                        <CustomLink href={url} className={`${parrafo_normal} text-[16px]! text-[#164190] uppercase`}>
                             {parent}
-                        </a>
+                        </CustomLink>
                     </li>
                     <li><span className={`${parrafo_normal} text-[16px]! text-[#164190] hidden sm:block`}>|</span></li>
                     <li>

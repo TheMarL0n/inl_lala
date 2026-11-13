@@ -1,4 +1,3 @@
-// mitos-y-realidades/page.js
 import { Suspense } from "react";
 import PagesJumbotron from "@/app/components/PagesJumbotron";
 import Footer from "@/app/components/Footer";

@@ -48,6 +48,7 @@ ul li {
   margin-top: 0.5rem;
   margin-right: 1rem;
 }
+
 .custom_article-etapas section h2 {
   color: #15428c;
   font-size: 40px;
@@ -55,6 +56,7 @@ ul li {
   font-weight: bold;
   margin: 4rem 0 0;
 }
+
 .custom_article-etapas section h3 {
   color: #0b75b9;
   font-size: 34px;
@@ -63,9 +65,11 @@ ul li {
   font-weight: 400;
   margin: 0 0 2rem;
 }
-.custom_article-etapas section h3 strong{
+
+.custom_article-etapas section h3 strong {
   font-weight: 500;
 }
+
 .custom_article-etapas section h4 {
   color: #15428c;
   font-size: 38px;
@@ -73,12 +77,18 @@ ul li {
   margin: 0;
   margin: 0 0 2rem;
 }
+
 .custom_article-etapas section p {
   color: #15428c;
   font-size: 24px;
   line-height: 1.1;
   margin: 0 0 2rem;
 }
+
+.custom_article-etapas section#storyline_at_top p {
+  color: #ffffff;
+}
+
 .custom_article-etapas section ul,
 .seccion-referencias ul {
   color: #15428c;
@@ -86,6 +96,18 @@ ul li {
   list-style: disc;
   margin-left: 2rem;
 }
+
+.custom_article-etapas section.text-destacado .cuerpo h2,
+.custom_article-etapas section.text-destacado .cuerpo h3,
+.custom_article-etapas section.text-destacado .cuerpo h4,
+.custom_article-etapas section.text-destacado .cuerpo p {
+  color: inherit;
+}
+
+.custom_article-etapas section.text-destacado .cuerpo h2 {
+  font-size: 34px;
+}
+
 .custom_article-etapas section .etapasSwiper h2,
 .custom_article-etapas section .etapasSwiper h3,
 .custom_article-etapas section .etapasSwiper h4,
@@ -96,19 +118,34 @@ ul li {
 .custom_article-etapas section .contenido_destacado-alternativo p {
   margin: 0 !important;
 }
+
+.custom_article-etapas section .contenido_destacado-estrecho p {
+  color: inherit;
+}
+
 .custom_article-etapas section .mitosSwiper h2,
-.custom_article-etapas section .mitosSwiper p{
+.custom_article-etapas section .mitosSwiper p {
   margin: 0;
 }
+
 .custom_article-etapas section .etapasSwiper .swiper-destacado h2 {
   color: #ffffff !important;
   font-size: 34px;
   font-weight: 300;
   text-transform: uppercase;
 }
+
+.custom_article-etapas section .etapasSwiper .swiper-destacado p {
+  color: #ffffff !important;
+  font-size: 24px;
+  font-weight: normal;
+  margin-bottom: 2rem !important;
+}
+
 .custom_article-etapas section .etapasSwiper .swiper-centrado h2 {
   font-size: 50px;
 }
+
 .custom_article-etapas section .etapasSwiper h3 {
   color: #0b75b9;
   font-weight: bold;
@@ -116,6 +153,7 @@ ul li {
   margin-top: 2rem;
   text-transform: lowercase;
 }
+
 .custom_article-etapas section .etapasSwiper h4 {
   color: #15428c;
   font-weight: bold;
@@ -123,6 +161,7 @@ ul li {
   line-height: 52px;
   margin: 0;
 }
+
 .custom_article-etapas section .etapasSwiper p {
   color: #15428c;
 }
@@ -134,12 +173,14 @@ ul li {
   text-transform: lowercase;
   line-height: 1.1;
 }
+
 .custom_article-etapas section .dobleFotoSwiper h3 {
   color: #0b75b9;
   font-size: 40px;
   font-weight: 500;
   text-transform: uppercase;
 }
+
 .custom_article-etapas section .dobleFotoSwiper h4 {
   color: #15428c;
   font-size: 30px;
@@ -160,6 +201,17 @@ ul li {
   margin-bottom: 0.5rem;
 }
 
+.custom_article-etapas section .cuadricula_azul h6 {
+  color: #15428C;
+  font-size: 36px;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.custom_article-etapas section .cuadricula_azul .bg-transparent p {
+  color: inherit;
+}
+
 .custom_article-etapas section.contenido_destacado p {
   color: #ffffff;
 }
@@ -172,23 +224,28 @@ ul li {
 }
 
 @media (max-width: 767px) {
+
   .swiper-button-prev,
   .swiper-button-next {
     position: relative !important;
   }
+
   .swiper-button-next {
     margin-top: -45px !important;
     margin-left: auto !important;
   }
+
   .videoSwiper .swiper-button-prev,
   .videoSwiper .swiper-button-next {
     color: #15428c !important;
   }
+
   .custom_article-etapas section .dobleFotoSwiper h2,
   .custom_article-etapas section .etapasSwiper h2 {
     font-size: 40px;
   }
-  .custom_article-etapas section .etapasSwiper h4{
+
+  .custom_article-etapas section .etapasSwiper h4 {
     font-size: 30px;
     line-height: 1.1;
   }
