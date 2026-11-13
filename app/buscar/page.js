@@ -3,7 +3,7 @@ import Image from "next/image";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { fetchAPI } from "@/app/lib/strapi";
-
+export const dynamic = 'force-dynamic';
 export default async function SearchPage({ searchParams }) {
   // 1. Llamamos a ambas APIs en paralelo de forma segura
   let mitos = [];
