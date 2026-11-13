@@ -39,6 +39,7 @@ async function MitoContent({ slug }) {
 
   return (
     <>
+      <PagesSmallJumbotron background={main_image} />
       <article>
         <Breadcrumbs
           title={title}
@@ -89,14 +90,9 @@ export default async function Mito_Realidad({ params }) {
   return (
     <main>
       <Header />
-      {/* El Jumbotron se pinta al instante junto con el Header */}
-      <PagesSmallJumbotron background={background} />
-
-      {/* Todo el contenido que depende de la API se carga mediante Suspense */}
       <Suspense fallback={<MitoSkeleton />}>
         <MitoContent slug={resolvedParams.slug} />
-      </Suspense>
-      
+      </Suspense>      
       <Footer />
     </main>
   );

@@ -2,9 +2,10 @@ import { Suspense } from "react";
 import PagesJumbotron from "@/app/components/PagesJumbotron";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
-import { paginas } from "@/app/utils/Copies";
 import MitosGrid from "@/app/components/Mitos/MitosGrid";
 import { fetchAPI } from "@/app/lib/strapi";
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: "Mitos y realidades",
@@ -14,12 +15,32 @@ export const metadata = {
 
 // Componente separado que hace el fetch
 async function MitosContent() {
-  const response = await fetchAPI(
-    `/mitos-y-realidades?populate[0]=imagen_principal`
+  const [responseContenido, responseMitos,] = await Promise.all(
+    [
+      fetchAPI(`/paginas?populate[0]=imagen_principal`),
+      fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`)
+    ]
   );
-  const allMitosFromStrapi = response?.data || [];
 
-  return <MitosGrid mitos={allMitosFromStrapi} />;
+  const contenidoFromStrapi = responseContenido?.data || [];
+  const allMitosFromStrapi = responseMitos?.data || [];
+
+  const data = contenidoFromStrapi.find(
+    (pagina) => pagina.slug === "mitos_realidades",
+  );
+
+  return (
+    <>
+      <PagesJumbotron
+        titulo={data.titulo}
+        subtitulo={data.subtitulo}
+        background={data.imagen_principal}
+        titulo_descripcion={data.titulo_descripcion}
+        descripcion={data.descripcion}
+      />
+      <MitosGrid mitos={allMitosFromStrapi} />
+      <Footer />
+    </>);
 }
 
 // Esqueleto de carga mientras responde la API
@@ -40,27 +61,14 @@ function MitosSkeleton() {
 }
 
 export default function Mitos() {
-  const data = paginas.find((pagina) => pagina.slug === "mitos_realidades");
-
   return (
     <main>
       <Header />
-      <PagesJumbotron
-        titulo={data.titulo}
-        subtitulo={data.subtitulo}
-        background={data.imagen_principal}
-        titulo_descripcion={data.titulo_descripcion}
-        descripcion={data.descripcion}
-        detalles={data.detalles}
-      />
-      
-      {/* Suspense permite que la página pinte el diseño base de inmediato 
-          y muestre el esqueleto mientras Strapi responde */}
+
       <Suspense fallback={<MitosSkeleton />}>
         <MitosContent />
       </Suspense>
 
-      <Footer />
     </main>
   );
 }

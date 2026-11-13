@@ -1,11 +1,11 @@
-// etapas/page.js
 import { Suspense } from "react";
 import PagesJumbotron from "@/app/components/PagesJumbotron";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
-import { paginas } from "@/app/utils/Copies";
 import CategoriasEtapas from "@/app/components/Etapas/CategoriasEtapas";
 import { fetchAPI } from "@/app/lib/strapi";
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: "Etapas de la vida",
@@ -14,19 +14,35 @@ export const metadata = {
 
 // Componente secundario que realiza las peticiones a Strapi de forma asíncrona
 async function EtapasContent() {
-  const [responseEtapa, responseCategorias] = await Promise.all([
+  const [responseContenido, responseEtapa, responseCategorias] = await Promise.all([
+    fetchAPI(`/paginas?populate[0]=imagen_principal`),
     fetchAPI(`/etapas?populate[0]=imagen_principal&populate[1]=categoria`),
     fetchAPI(`/categorias-etapas?populate[0]=imagen_principal`),
   ]);
 
+  const contenidoFromStrapi = responseContenido?.data || [];
   const allEtapasFromStrapi = responseEtapa?.data || [];
   const catEtapasFromStrapi = responseCategorias?.data || [];
 
+  const data = contenidoFromStrapi.find(
+    (pagina) => pagina.slug === "etapas",
+  );
+
   return (
-    <CategoriasEtapas 
-      etapas={allEtapasFromStrapi} 
-      categorias={catEtapasFromStrapi} 
-    />
+    <>
+      <PagesJumbotron
+        titulo={data.titulo}
+        subtitulo={data.subtitulo}
+        background={data.imagen_principal}
+        titulo_descripcion={data.titulo_descripcion}
+        descripcion={data.descripcion}
+      />
+      <CategoriasEtapas
+        etapas={allEtapasFromStrapi}
+        categorias={catEtapasFromStrapi}
+      />
+      <Footer />
+    </>
   );
 }
 
@@ -48,21 +64,10 @@ function EtapasSkeleton() {
 }
 
 export default function Etapas() {
-  const data = paginas.find((pagina) => pagina.slug === "etapas");
-
   return (
     <main>
       <Header />
-      <PagesJumbotron 
-        titulo={data.titulo} 
-        subtitulo={data.subtitulo} 
-        background={data.imagen_principal} 
-        titulo_descripcion={data.titulo_descripcion} 
-        descripcion={data.descripcion} 
-      />
-
-      {/* Suspense permite que la estructura base cargue al instante 
-          y la cortina fluya perfecto mientras se obtienen los datos */}
+    
       <Suspense fallback={<EtapasSkeleton />}>
         <EtapasContent />
       </Suspense>

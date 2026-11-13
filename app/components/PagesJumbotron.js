@@ -62,12 +62,14 @@ const PagesJumbotron = ({
         </div>
       </div>
 
-      {detalles ? (
+      {descripcion ? (
         <div className="page_descripcion max-w-4xl mx-4 sm:mx-auto bg-white p-4 relative z-20 min-h-37.5">
           <p
             className={`${parrafo_normal} text-[38px]! leading-11! text-[#164190]`}
           >
-            {detalles}
+            
+              {descripcion}              
+            
           </p>
         </div>
       ) : (
