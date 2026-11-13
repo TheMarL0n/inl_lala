@@ -83,7 +83,6 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_HOST;
 
   return (
     <main>
-        {console.log(mitos)}
       <Header />
       <div className="max-w-7xl mx-auto py-40 px-6">
         {/* Encabezado */}

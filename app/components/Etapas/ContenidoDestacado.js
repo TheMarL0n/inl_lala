@@ -27,6 +27,13 @@ const extraerRestoDeMarkdown = (markdownText) => {
 };
 
 const ContenidoDestacado = ({ contenido }) => {
+  const fondosOscuros = {
+    azul: "bg-[#15428C]",
+    rojo: "bg-[#FF0000]",
+    verde: "bg-[#009638]",
+    celeste: "bg-[#0B75B9]",
+  };
+
   if (contenido.tipo === "alternativo") {
     const tituloH6 = extraerH6Markdown(contenido.html);
     const restoMarkdown = extraerRestoDeMarkdown(contenido.html);
@@ -34,11 +41,13 @@ const ContenidoDestacado = ({ contenido }) => {
     return (
       <section>
         <div
-          className={`contenido_destacado-alternativo w-full sm:max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 overflow-hidden`}
+          className={`contenido_destacado-alternativo w-full sm:max-w-5xl mx-auto grid grid-cols-1 ${contenido.tipo === "alternativo" ? "sm:grid-cols-3" : "sm:grid-cols-2"} overflow-hidden`}
         >
           {/* Contenedor de la imagen optimizada */}
           <div className="relative overflow-hidden h-72 sm:h-full">
-            <h6 className="absolute top-0 left-0 z-2">{tituloH6}.</h6>
+            <h6 className="absolute top-0 left-0 z-2">
+              {tituloH6 ? `${tituloH6}.` : ""}
+            </h6>
 
             {contenido.imagen_destacada ? (
               <Image
@@ -46,7 +55,7 @@ const ContenidoDestacado = ({ contenido }) => {
                 alt="Profesional de la salud revisando información científica y nutricional"
                 fill
                 sizes="(max-width: 640px) 100vw, 50vw"
-                className="object-contain object-top"
+                className="object-contain object-center"
               />
             ) : (
               ""
@@ -54,7 +63,7 @@ const ContenidoDestacado = ({ contenido }) => {
           </div>
 
           <div
-            className={`${contenido.tipo === "oscuro" ? "bg-[#15428C]" : ""} sm:min-h-[650px] px-8 py-16 space-y-8 flex flex-col justify-center`}
+            className={`${contenido.tipo === "oscuro" ? "bg-[#15428C]" : ""} ${contenido.tipo === "alternativo" ? "sm:col-span-2" : ""} sm:min-h-[650px] px-8 py-16 space-y-8 flex flex-col justify-center`}
           >
             {contenido.titulo_linea_1 || contenido.titulo_linea_2 ? (
               <h2>
@@ -71,9 +80,63 @@ const ContenidoDestacado = ({ contenido }) => {
             ) : (
               ""
             )}
-            <div className="sm:max-w-113">
+            <div
+              className={`${contenido.tipo === "alternativo" ? "sm:max-w-full space-y-4!" : "sm:max-w-113"}`}
+            >
               <ReactMarkdown>{restoMarkdown}</ReactMarkdown>
             </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (contenido.tipo === "estrecho") {
+    const restoMarkdown = extraerRestoDeMarkdown(contenido.html);
+
+    return (
+      <section>
+        <div
+          className={`contenido_destacado-estrecho w-full sm:max-w-5xl mx-auto grid grid-cols-1 ${contenido.tipo === "estrecho" ? "sm:grid-cols-3" : "sm:grid-cols-2"} overflow-hidden`}
+        >
+          <div
+            className={`bg-[#0B75B9] ${contenido.tipo === "estrecho" ? "sm:col-span-2" : ""} sm:min-h-[650px] px-8 py-16 space-y-8 flex flex-col justify-center`}
+          >
+            {contenido.titulo_linea_1 || contenido.titulo_linea_2 ? (
+              <h2>
+                <span
+                  className={`${encabezado_h3} bg-[#0B75B9] text-[#15428C]! text-[46px]`}
+                >
+                  {contenido.titulo_linea_1}
+                </span>
+                <br />
+                <span className="text-[#0B75B9] text-[40px] sm:text-[100px]">
+                  {contenido.titulo_linea_2}
+                </span>
+              </h2>
+            ) : (
+              ""
+            )}
+            <div
+              className={`${contenido.tipo === "estrecho" ? "sm:max-w-full space-y-4!" : "sm:max-w-113"} text-white!`}
+            >
+              <ReactMarkdown>{restoMarkdown}</ReactMarkdown>
+            </div>
+          </div>
+
+          {/* Contenedor de la imagen optimizada */}
+          <div className="relative overflow-hidden h-72 sm:h-full">
+            {contenido.imagen_destacada ? (
+              <Image
+                src={getStrapiMedia(contenido.imagen_destacada.url)}
+                alt="Profesional de la salud revisando información científica y nutricional"
+                fill
+                sizes="(max-width: 640px) 100vw, 50vw"
+                className="object-contain object-center"
+              />
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </section>
@@ -83,7 +146,7 @@ const ContenidoDestacado = ({ contenido }) => {
   if (contenido.tipo === "doble_foto") {
     return (
       <section
-        className={`grid grid-cols-1 sm:grid-cols-4 mx-auto relative z-2 w-full items-start px-4 py-10`}
+        className={`grid grid-cols-1 sm:grid-cols-4 mx-auto relative z-2 w-full items-start px-4 sm:px-0 py-10`}
       >
         {/* IMAGEN IZQUIERDA: Fija (sticky) al hacer scroll */}
         <div className="sm:sticky sm:top-0 h-fit w-full">
@@ -103,7 +166,9 @@ const ContenidoDestacado = ({ contenido }) => {
         </div>
 
         {/* TEXTO CENTRAL: Fluye de manera natural y hace scroll libremente */}
-        <div className={`w-full sm:col-span-2 flex flex-col items-start p-8 sm:min-h-[650px]`}>
+        <div
+          className={`w-full sm:col-span-2 flex flex-col items-start p-8 sm:min-h-[650px]`}
+        >
           <ReactMarkdown>{contenido.html}</ReactMarkdown>
         </div>
 
@@ -148,17 +213,22 @@ const ContenidoDestacado = ({ contenido }) => {
       )}
 
       <div
-        className={`${contenido.tipo === "oscuro" ? "bg-[#15428C]" : ""} sm:min-h-[650px] px-8 py-16 space-y-8 flex flex-col justify-center`}
+        className={`
+        ${contenido.tipo === "oscuro" ? fondosOscuros[contenido.color_fondo] || fondosOscuros.azul : ""} 
+        sm:min-h-[650px] px-8 py-16 space-y-8 flex flex-col justify-center
+      `}
       >
         {contenido.titulo_linea_1 || contenido.titulo_linea_2 ? (
           <h2>
             <span
-              className={`${encabezado_h3} bg-[#0B75B9] text-[#15428C]! text-[46px]`}
+              className={`${encabezado_h3} ${contenido.color_fondo === "azul" || contenido.color_fondo === null ? "bg-[#0B75B9] text-[#15428C]!" : "bg-[#15428C] text-[#0B75B9]!"} text-[46px]`}
             >
               {contenido.titulo_linea_1}
             </span>
             <br />
-            <span className="text-[#0B75B9] text-[40px] sm:text-[100px]">
+            <span
+              className={`${contenido.color_fondo === "azul" || contenido.color_fondo === null ? "text-[#0B75B9]" : "text-[#15428C]"} text-[40px] sm:text-[100px]`}
+            >
               {contenido.titulo_linea_2}
             </span>
           </h2>

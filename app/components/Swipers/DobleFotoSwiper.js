@@ -30,6 +30,81 @@ const DobleFotoSwiper = ({ contenido, tipo }) => {
   // Estado para llevar el control del índice del slide activo
   const [activeIndex, setActiveIndex] = useState(0);
 
+  if (tipo === "simple") {
+    const fondosOscuros = {
+      blanco: "bg-transparent",
+      azul: "bg-[#15428C]",
+      rojo: "bg-[#FF0000]",
+      verde: "bg-[#009638]",
+      celeste: "bg-[#0B75B9]",
+    };
+    return (
+      <section aria-label="Sección de etapas de la vida">
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={30}
+          navigation={true}
+          autoplay={{
+            delay: 4500,
+            disableOnInteraction: false,
+          }}
+          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+          modules={[Navigation, Autoplay]}
+          className="dobleFotoSwiper"
+        >
+          {contenido.map((item, idx) => (
+            <SwiperSlide
+              key={idx}
+              className={`${fondosOscuros[item.color_fondo] || fondosOscuros.azul} h-auto flex flex-col justify-between`}
+            >
+              <div
+                className={`grid grid-cols-1 sm:grid-cols-6 mx-auto relative overflow-hidden z-2 w-full min-h-[450px] sm:min-h-[590px]`}
+              >
+
+                <div
+                  className={`relative`}
+                >
+                  {item.imagen_izquierda ? (
+                    <Image
+                      src={getStrapiMedia(item.imagen_izquierda.url)}
+                      alt={`Ilustración representativa sobre el mito: ${item.titulo}`}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                      className="object-cover absolute top-0 left-0"
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+
+                <div
+                  className={`w-full sm:col-span-3 flex flex-col items-start justify-center p-8 ${item.modo_oscuro ? "modo-oscuro" : ""}`}
+                >
+                  <ReactMarkdown>{item.contenido}</ReactMarkdown>
+                </div>
+
+                <div className="relative sm:col-span-2">
+                  {item.imagen_derecha ? (
+                    <Image
+                      src={getStrapiMedia(item.imagen_derecha.url)}
+                      alt={`Ilustración representativa sobre el mito: ${item.titulo}`}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 50vw"
+                      className="object-cover absolute top-0 left-0"
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
+    )
+  }
+
   return (
     <section aria-label="Sección de etapas de la vida">
       {tipo === "original" ? (
@@ -55,9 +130,8 @@ const DobleFotoSwiper = ({ contenido, tipo }) => {
                 {/* Título extraído del h2 del markdown */}
                 {tituloH2 && (
                   <span
-                    className={`text-[20px] text-[#15428C] capitalize ${
-                      isActive ? "font-bold" : "font-normal"
-                    }`}
+                    className={`text-[20px] text-[#15428C] capitalize ${isActive ? "font-bold" : "font-normal"
+                      }`}
                   >
                     {tituloH2}
                   </span>

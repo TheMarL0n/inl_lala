@@ -4,7 +4,6 @@ import Image from "next/image";
 import {
   BlueButton,
   parrafo_normal,
-  stroke_text,
 } from "@/app/utils/CSS_clases";
 import CustomLink from "../Auxiliares/CustomLinks";
 
@@ -18,6 +17,14 @@ const CategoriasEtapas = ({ etapas, categorias }) => {
     );
     return categoriasOrdenadas[0].id;
   });
+
+  const handleEtapaClick = (id) => {
+    setCategoriaSeleccionada(id);
+    const elemento = document.getElementById("etapas_at_top");
+    if (elemento) {
+      elemento.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const etapasFiltradas = categoriaSeleccionada
     ? etapas.filter((etapa) => etapa.categoria.id === categoriaSeleccionada)
@@ -33,7 +40,7 @@ const CategoriasEtapas = ({ etapas, categorias }) => {
   };
 
   return (
-    <section className="pb-20 px-4">
+    <section id="etapas_at_top" className="pb-20 px-4">
       <h2 className={`text-center text-[50px] sm:text-[90px] sm:leading-55 text-[#164190] uppercase font-[600]`}>
         ¿qué edad buscas?:
       </h2>
@@ -46,7 +53,7 @@ const CategoriasEtapas = ({ etapas, categorias }) => {
             return (
               <div
                 key={idx}
-                onClick={() => setCategoriaSeleccionada(item.id)}
+                onClick={() => handleEtapaClick(item.id)}
                 className="relative space-y-4 group cursor-pointer"
               >
                 <div className="relative min-h-57 max-h-57 mx-2">

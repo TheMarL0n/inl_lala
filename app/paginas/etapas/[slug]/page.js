@@ -39,9 +39,12 @@ async function EtapaContent({ slug }) {
   };
   const allEtapasFromStrapi = responseTodas?.data || [];
   const catEtapasFromStrapi = responseCategorias?.data || [];
-
+  const background = currentEtapa?.imagen_principal || "";
   const cat_id = currentEtapa?.categoria?.id || "";
-  const title = (currentEtapa?.titulo_linea_1 || "") + " " + (currentEtapa?.titulo_linea_2 || "");
+  const title =
+    (currentEtapa?.titulo_linea_1 || "") +
+    " " +
+    (currentEtapa?.titulo_linea_2 || "");
   const title_linea_1 = currentEtapa?.titulo_linea_1 || "";
   const title_linea_2 = currentEtapa?.titulo_linea_2 || "";
   const referencias = currentEtapa?.Referencias || "";
@@ -55,19 +58,20 @@ async function EtapaContent({ slug }) {
 
   return (
     <>
+      <PagesSmallJumbotron background={background} />
       <Breadcrumbs
         title={title}
         parent={"Etapas de la vida"}
         url={`/paginas/etapas`}
       />
       <EnlacesEtapas cat_id={cat_id} categorias_etapas={catEtapasFromStrapi} />
-      
+
       <article className="custom_article-etapas">
         <PageTitle
           title_linea_1={title_linea_1}
           title_linea_2={title_linea_2}
         />
-        
+
         {contenido.map((item, idx) => {
           if (item.__component === "contenido-principal.carrusel") {
             return (
@@ -102,7 +106,9 @@ async function EtapaContent({ slug }) {
           }
 
           if (item.__component === "contenido-principal.navegacion-vertical") {
-            return <VerticalSwiper key={idx} contenido={item.diapositiva || []} />;
+            return (
+              <VerticalSwiper key={idx} contenido={item.diapositiva || []} />
+            );
           }
 
           if (item.__component === "contenido-principal.cuadricula") {
@@ -164,16 +170,9 @@ function EtapaSkeleton() {
 
 export default async function Etapa_Pagina({ params }) {
   const resolvedParams = await params;
-  
-  // Realizamos una consulta ligera o directa para obtener la imagen del Jumbotron si es necesario, 
-  // o dejamos un fondo genérico predeterminado para que pinte al instante.
-  const background = "/images/etapas/etapas_bkg.png"; // O ajusta según prefieras
-
   return (
     <main>
       <Header />
-      {/* El Jumbotron se renderiza de inmediato con la transición fluida */}
-      <PagesSmallJumbotron background={background} />
 
       {/* El contenido complejo y pesado de Strapi fluye con Suspense */}
       <Suspense fallback={<EtapaSkeleton />}>
