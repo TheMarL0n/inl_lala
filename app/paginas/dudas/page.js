@@ -6,6 +6,7 @@ import CategoriasDudas from "@/app/components/Dudas/CategoriasDudas";
 import FooterDudas from "@/app/components/Dudas/FooterDudas";
 import { Suspense } from "react";
 import { fetchAPI } from "@/app/lib/strapi";
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: "Resuelve tus dudas",
