@@ -20,7 +20,7 @@ const TituloDestacado = ({ title_linea_1, title_linea_2, color_fondo_1, color_fo
     };
     return (
         <section className="text-destacado relative overflow-hidden my-20">
-            <div className="relative h-screen min-h-150 max-h-225 2xl:max-h-200 flex flex-col sm:justify-center w-full">
+            <div className={`relative ${background.url ? "h-screen sm:h-[600px] min-h-150 max-h-225 2xl:max-h-200": ""} flex flex-col sm:justify-center w-full`}>
                 {background.url ?
                     <Image
                         src={getStrapiMedia(background.url)}

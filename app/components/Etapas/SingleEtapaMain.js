@@ -29,13 +29,13 @@ const SingleEtapaMain = ({ contenido, float, acordion }) => {
         <section className="px-4 py-10 relative overflow-hidden">
             {
                 acordion ?
-                    <div className="max-w-7xl mx-auto">
+                    <div className="max-w-5xl mx-auto">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             className="flex items-center justify-between gap-2 cursor-pointer text-left focus:outline-none w-full group"
                         >
                             <h2
-                                className={`${encabezado_h2} text-[#15428C]! text-[32px]! m-0!`}
+                                className={`${encabezado_h2} text-[#15428C]! text-[32px]! m-0! px-0!`}
                             >
                                 {tituloH2}
                             </h2>
@@ -55,7 +55,7 @@ const SingleEtapaMain = ({ contenido, float, acordion }) => {
                         </div>
                     </div>
                     :
-                    <div className={`max-w-5xl mx-auto clearfix transition-all ${float ? "sm:pr-[260px]" : ""
+                    <div className={`max-w-5xl mx-auto clearfix transition-all ${float ? "sm:pr-[360px] md:min-h-[420px] lg:min-h-[500px]" : ""
                         }`}>
                         <div className="prose max-w-none">
                             <ReactMarkdown
@@ -63,7 +63,7 @@ const SingleEtapaMain = ({ contenido, float, acordion }) => {
                                     // Usamos un span con display block para evitar que el navegador rompa la regla de hidratación del <p>
                                     img: ({ src, alt }) => {
                                         const containerClasses = float
-                                            ? "relative sm:absolute right-0 w-full md:w-[420px] lg:w-[462px] h-[350px] md:h-[420px] lg:h-[500px] top-10 md:top-20 pointer-events-none block"
+                                            ? "relative sm:absolute right-0 w-full md:w-[420px] lg:w-[462px] h-[350px] md:h-[420px] lg:h-[500px] top-10 md:top-0 pointer-events-none block"
                                             : "my-6 relative w-full h-[400px] block";
 
                                         return (
@@ -73,7 +73,7 @@ const SingleEtapaMain = ({ contenido, float, acordion }) => {
                                                     alt={alt || 'Imagen del artículo'}
                                                     fill
                                                     sizes="(max-width: 1024px) 100vw, 500px"
-                                                    className="object-contain"
+                                                    className="object-contain object-center"
                                                     priority={false}
                                                 />
                                             </span>

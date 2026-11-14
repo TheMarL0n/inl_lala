@@ -12,7 +12,7 @@ const PagesSmallJumbotron = ({ background, title }) => {
 
   return (
     <section className="relative">
-      <div className="relative h-screen min-h-150 max-h-117 flex flex-col sm:justify-center overflow-hidden">
+      <div className="relative h-screen min-h-126 max-h-126 flex flex-col sm:justify-center overflow-hidden">
         <Image
           src={getStrapiMedia(background.url)}
           alt={`Imagen que describe el tema de ${title}`}

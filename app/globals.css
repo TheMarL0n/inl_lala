@@ -51,10 +51,10 @@ ul li {
 
 .custom_article-etapas section h2 {
   color: #15428c;
-  font-size: 40px;
+  font-size: 34px;
   text-transform: uppercase;
   font-weight: bold;
-  margin: 4rem 0 0;
+  margin: 2rem 0 1rem;
 }
 
 .custom_article-etapas section h3 {
@@ -72,8 +72,8 @@ ul li {
 
 .custom_article-etapas section h4 {
   color: #15428c;
-  font-size: 38px;
-  line-height: 1.2;
+  font-size: 30px;
+  line-height: 1.1;
   margin: 0;
   margin: 0 0 2rem;
 }
@@ -89,10 +89,15 @@ ul li {
   color: #ffffff;
 }
 
-.custom_article-etapas section ul,
-.seccion-referencias ul {
+.custom_article-etapas section ul {
   color: #15428c;
   font-size: 24px;
+  list-style: disc;
+  margin-left: 2rem;
+}
+.seccion-referencias ul {
+  color: #15428c;
+  font-size: 18px;
   list-style: disc;
   margin-left: 2rem;
 }

@@ -10,6 +10,7 @@ import SingleMitoMain from "@/app/components/Mitos/SingleMitoMain";
 import PagesSmallJumbotron from "@/app/components/PagesSmallJumbotron";
 import PaginasNavegacion from "@/app/components/PaginasNavegacion";
 import { fetchAPI } from "@/app/lib/strapi";
+import Skeleton from "@/app/components/Skeleton";
 
 // Componente secundario que hace el fetch pesado
 async function MitoContent({ slug }) {
@@ -56,7 +57,6 @@ async function MitoContent({ slug }) {
       />
 
       <BuscadorMitos themes={allMitosFromStrapi} />
-
       <Referencias contenido={currentMito.referencias} />
 
       <PaginasNavegacion
@@ -68,29 +68,13 @@ async function MitoContent({ slug }) {
   );
 }
 
-// Esqueleto de carga ligero mientras Strapi responde
-function MitoSkeleton() {
-  return (
-    <div className="w-full flex flex-col items-center justify-center -mt-10 sm:-mt-15 px-6 relative z-2">
-      <div className="w-full sm:w-7xl mx-auto bg-white p-4">
-        <div className="w-full animate-pulse flex flex-col items-start space-y-4">
-          <div className="h-8 bg-gray-200 rounded w-3/4 max-w-lg"></div>
-          <div className="h-4 bg-gray-200 rounded w-1/2 max-w-md"></div>
-          <div className="w-full h-64 bg-gray-200 rounded-xl mt-8"></div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default async function Mito_Realidad({ params }) {
   const resolvedParams = await params;
-  const background = "/images/mitos/mitos_bkg.png";
 
   return (
     <main>
       <Header />
-      <Suspense fallback={<MitoSkeleton />}>
+      <Suspense fallback={<Skeleton />}>
         <MitoContent slug={resolvedParams.slug} />
       </Suspense>      
       <Footer />

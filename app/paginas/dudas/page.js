@@ -6,6 +6,8 @@ import CategoriasDudas from "@/app/components/Dudas/CategoriasDudas";
 import FooterDudas from "@/app/components/Dudas/FooterDudas";
 import { Suspense } from "react";
 import { fetchAPI } from "@/app/lib/strapi";
+import Skeleton from "@/app/components/Skeleton";
+import CTAGenerico from "@/app/components/CTAGenerico";
 
 export const dynamic = 'force-dynamic';
 
@@ -15,8 +17,10 @@ export const metadata = {
     "Respuestas claras para comprender el papel de la leche y los productos lácteos en tu salud.",
 };
 
-// Componente separado que hace el fetch
-async function DudasContent() {
+async function DudasContent({ searchParams }) {
+  const resolvedSearchParams = await searchParams;
+  const query = resolvedSearchParams?.criteria?.toLowerCase() || "";
+
   const [responseContenido, responseDudas, responseCategorias] =
     await Promise.all([
       fetchAPI(`/paginas?populate[0]=imagen_principal&populate[1]=imagen_footer`),
@@ -29,6 +33,14 @@ async function DudasContent() {
   const catDudasFromStrapi = responseCategorias?.data || [];
   const data = contenidoFromStrapi.find((pagina) => pagina.slug === "dudas");
 
+  // FILTRADO: Solo filtramos si hay texto en la consulta. Si no hay, devolvemos un arreglo vacío.
+  const dudasFiltradas = query 
+    ? allDudasFromStrapi.filter((duda) => {
+        const tituloDuda = (duda.attributes?.titulo || duda.titulo || "").toLowerCase();
+        return tituloDuda.includes(query);
+      })
+    : [];
+
   return (
     <>
       <PagesJumbotron
@@ -39,39 +51,44 @@ async function DudasContent() {
         descripcion={data.descripcion}
       />
       <BuscadorDudas />
+
+      {/* SECCIÓN DE RESULTados DE BÚSQUEDA (Solo aparece si el usuario escribió algo) */}
+      {query && (
+        <div className="max-w-7xl mx-auto px-4 mb-16">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#164190]">
+            Resultados de búsqueda para: &quot;{resolvedSearchParams.criteria}&quot;
+          </h2>
+          
+          {dudasFiltradas.length > 0 ? (
+            <CTAGenerico array={dudasFiltradas} parent={"dudas"} />
+          ) : (
+            <div className="bg-gray-50 border border-gray-200 p-8 rounded-lg text-center">
+              <p className="text-gray-600 text-lg italic">
+                No encontramos ninguna duda que coincida con tu búsqueda.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* CategoriasDudas se queda intacto mostrando siempre todo el contenido original */}
       <CategoriasDudas
-        dudas={allDudasFromStrapi}
+        dudas={allDudasFromStrapi} 
         categorias_dudas={catDudasFromStrapi}
       />
+      
       <FooterDudas imagen_footer={data.imagen_footer} />
       <Footer />
     </>
   );
 }
 
-// Esqueleto de carga mientras responde la API
-function DudasSkeleton() {
-  return (
-    <div className="w-full py-20 flex justify-center items-center">
-      <div className="animate-pulse flex space-x-4">
-        <div className="rounded-full bg-gray-300 h-12 w-12"></div>
-        <div className="flex-1 space-y-4 py-1">
-          <div className="h-4 bg-gray-300 rounded w-48"></div>
-          <div className="space-y-2">
-            <div className="h-4 bg-gray-300 rounded w-96"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function Dudas() {
+export default function Dudas({ searchParams }) {
   return (
     <main>
       <Header />
-      <Suspense fallback={<DudasSkeleton />}>
-        <DudasContent />
+      <Suspense fallback={<Skeleton />}>
+        <DudasContent searchParams={searchParams} />
       </Suspense>
     </main>
   );

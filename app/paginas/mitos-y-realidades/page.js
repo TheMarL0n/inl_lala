@@ -4,6 +4,7 @@ import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import MitosGrid from "@/app/components/Mitos/MitosGrid";
 import { fetchAPI } from "@/app/lib/strapi";
+import Skeleton from "@/app/components/Skeleton";
 
 export const dynamic = 'force-dynamic';
 
@@ -43,29 +44,11 @@ async function MitosContent() {
     </>);
 }
 
-// Esqueleto de carga mientras responde la API
-function MitosSkeleton() {
-  return (
-    <div className="w-full py-20 flex justify-center items-center">
-      <div className="animate-pulse flex space-x-4">
-        <div className="rounded-full bg-gray-300 h-12 w-12"></div>
-        <div className="flex-1 space-y-4 py-1">
-          <div className="h-4 bg-gray-300 rounded w-48"></div>
-          <div className="space-y-2">
-            <div className="h-4 bg-gray-300 rounded w-96"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Mitos() {
   return (
     <main>
       <Header />
-
-      <Suspense fallback={<MitosSkeleton />}>
+      <Suspense fallback={<Skeleton />}>
         <MitosContent />
       </Suspense>
 

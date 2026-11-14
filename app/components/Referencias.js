@@ -15,7 +15,7 @@ const Referencias = ({ contenido }) => {
           className="flex items-center justify-between gap-2 cursor-pointer text-left focus:outline-none w-full group"
         >
           <h2
-            className={`${encabezado_h2} text-[#15428C]! text-[24px]! m-0! capitalize!`}
+            className={`${encabezado_h2} font-black! text-[#15428C]! text-[28px]! m-0! capitalize!`}
           >
             Referencias:
           </h2>

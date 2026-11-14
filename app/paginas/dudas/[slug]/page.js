@@ -19,6 +19,7 @@ import VerticalSwiper from "@/app/components/Swipers/VerticalSwiper";
 import { fetchAPI } from "@/app/lib/strapi";
 import StoryLine from "@/app/components/StoryLine";
 import TituloDestacado from "@/app/components/TituloDestacado";
+import Skeleton from "@/app/components/Skeleton";
 
 // Componente secundario que realiza los fetch pesados de la etapa y su contenido
 async function DudaContent({ slug }) {
@@ -141,7 +142,7 @@ async function DudaContent({ slug }) {
               title_linea_2={item.titulo_parte_2}
               color_fondo_1={item.color_titulo_parte_1}
               color_fondo_2={item.color_titulo_parte_2}
-              background={item.imagen_principal}
+              background={item.imagen_principal ? item.imagen_principal : ""}
               contenido={item.contenido}
             />
           }
@@ -172,33 +173,13 @@ async function DudaContent({ slug }) {
   );
 }
 
-// Esqueleto de carga mientras Strapi procesa los componentes dinámicos
-function DudaSkeleton() {
-  return (
-    <div className="w-full flex flex-col items-center justify-center -mt-10 sm:-mt-15 px-6 relative z-2">
-      <div className="w-full sm:w-7xl mx-auto bg-white p-4">
-        <div className="w-full animate-pulse flex flex-col items-start space-y-4">
-          <div className="h-8 bg-gray-200 rounded w-3/4 max-w-lg"></div>
-          <div className="h-4 bg-gray-200 rounded w-1/2 max-w-md"></div>
-          <div className="w-full h-64 bg-gray-200 rounded-xl mt-8"></div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default async function Duda_Pagina({ params }) {
   const resolvedParams = await params;
-
-  // Realizamos una consulta ligera o directa para obtener la imagen del Jumbotron si es necesario,
-  // o dejamos un fondo genérico predeterminado para que pinte al instante.
-  const background = "/images/etapas/etapas_bkg.png"; // O ajusta según prefieras
 
   return (
     <main>
       <Header />
-      {/* El contenido complejo y pesado de Strapi fluye con Suspense */}
-      <Suspense fallback={<DudaSkeleton />}>
+      <Suspense fallback={<Skeleton />}>
         <DudaContent slug={resolvedParams.slug} />
       </Suspense>
       <Footer />

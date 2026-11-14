@@ -48,7 +48,7 @@ const StoryLine = ({contenido}) => {
                 <div className="hidden sm:block relative z-2 w-7 h-7 rounded-full bg-[#0B75B9] group-hover:bg-[#15428C] mx-auto border-2 border-[#15428C] duration-400"></div>
                 <div className="hidden sm:block absolute border-dashed border-2 border-[#164190] w-full top-3"></div>
                 <h3
-                  className={`uppercase text-[18px]! leading-5 sm:text-[24px]! sm:leading-7 font-bold! text-white sm:text-[#15428C]! sm:text-center ${isActive ? "opacity-0 sm:opacity-100" : "opacity-100 group-hover:opacity-0 sm:group-hover:opacity-100"}`}
+                  className={`uppercase text-[18px]! leading-5 ${isActive ? "sm:text-[30px]!" : "sm:text-[24px]!" } sm:leading-7 font-bold! text-white sm:text-[#15428C]! sm:text-center ${isActive ? "opacity-0 sm:opacity-100" : "opacity-100 group-hover:opacity-0 sm:group-hover:opacity-100"}`}
                 >
                   {item.titulo}
                 </h3>
