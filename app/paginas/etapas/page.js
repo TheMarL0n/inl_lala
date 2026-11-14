@@ -4,6 +4,7 @@ import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import CategoriasEtapas from "@/app/components/Etapas/CategoriasEtapas";
 import { fetchAPI } from "@/app/lib/strapi";
+import Skeleton from "@/app/components/Skeleton";
 
 export const dynamic = 'force-dynamic';
 
@@ -46,29 +47,12 @@ async function EtapasContent() {
   );
 }
 
-// Esqueleto de carga ligero mientras Strapi responde
-function EtapasSkeleton() {
-  return (
-    <div className="w-full py-32 flex justify-center items-center">
-      <div className="animate-pulse flex flex-col items-center space-y-4">
-        <div className="h-8 bg-gray-200 rounded w-64"></div>
-        <div className="h-4 bg-gray-200 rounded w-96"></div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl mt-8 px-4">
-          <div className="h-48 bg-gray-200 rounded-xl"></div>
-          <div className="h-48 bg-gray-200 rounded-xl"></div>
-          <div className="h-48 bg-gray-200 rounded-xl"></div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Etapas() {
   return (
     <main>
       <Header />
     
-      <Suspense fallback={<EtapasSkeleton />}>
+      <Suspense fallback={<Skeleton />}>
         <EtapasContent />
       </Suspense>
 

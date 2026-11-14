@@ -283,6 +283,70 @@ const BlueGrid = ({
     );
   }
 
+  if (tipo === "comparativa") {
+    return (
+      <section className="px-4 py-2">
+        {/* Contenedor relativo para que el "vs." pueda posicionarse exactamente al centro */}
+        <div className="max-w-5xl mx-auto relative">
+          
+          <div
+            className={`cuadricula_azul grid grid-cols-1 sm:grid-cols-2 gap-20`}
+          >
+            {contenido.map((item, idx) => {
+              const tieneImagen = item.contenido && item.contenido.includes("![");
+              return (
+                <div
+                  key={idx}
+                  className={`${fondosOscuros[item.color_fondo] || fondosOscuros.blanco} ${tieneImagen ? "grid grid-cols-2 items-end" : ""} min-h-[226px] ${item.color_fondo === null ? "text-[#15428C]! border border-[#15428C]" : "text-white!"} relative overflow-hidden flex flex-col justify-center items-start ${
+                    item.imagen ? "" : "p-4"
+                  }`}
+                >
+                  {item.imagen ? (
+                    <Image
+                      src={getStrapiMedia(item.imagen.url)}
+                      alt={item.alt || "Imagen de cuadrícula LALA"}
+                      fill
+                      sizes="(max-width: 640px) 50vw, 25vw"
+                      className="object-contain"
+                    />
+                  ) : (
+                    <ReactMarkdown
+                      components={{
+                        img: ({ src, alt }) => {
+                          const containerClasses = "relative sm:absolute right-0 w-full sm:w-[220px] sm:h-[200px] sm:bottom-0 pointer-events-none block";
+
+                          return (
+                            <span className={containerClasses}>
+                              <Image
+                                src={src}
+                                alt={alt || 'Imagen del artículo'}
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 500px"
+                                className="object-contain object-top"
+                                priority={false}
+                              />
+                            </span>
+                          );
+                        }
+                      }}>
+                      {item.contenido}
+                    </ReactMarkdown>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Círculo o etiqueta de "vs." centrada entre las dos columnas (solo en pantallas medianas/grandes) */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hidden sm:flex items-center justify-center bg-white text-[#164190] font-bold text-[32px] px-3 py-1.5">
+            vs.
+          </div>
+
+        </div>
+      </section>
+    );
+  }
+
   if (tipo === "texto_gigante") {
     return (
       <section className="px-4 py-2">

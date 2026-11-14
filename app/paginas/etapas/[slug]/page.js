@@ -17,6 +17,7 @@ import DobleFotoSwiper from "@/app/components/Swipers/DobleFotoSwiper";
 import SimpleSwiper from "@/app/components/Swipers/SimpleSwiper";
 import VerticalSwiper from "@/app/components/Swipers/VerticalSwiper";
 import { fetchAPI } from "@/app/lib/strapi";
+import Skeleton from "@/app/components/Skeleton";
 
 // Componente secundario que realiza los fetch pesados de la etapa y su contenido
 async function EtapaContent({ slug }) {
@@ -153,21 +154,6 @@ async function EtapaContent({ slug }) {
   );
 }
 
-// Esqueleto de carga mientras Strapi procesa los componentes dinámicos
-function EtapaSkeleton() {
-  return (
-    <div className="w-full flex flex-col items-center justify-center -mt-10 sm:-mt-15 px-6 relative z-2">
-      <div className="w-full sm:w-7xl mx-auto bg-white p-4">
-        <div className="w-full animate-pulse flex flex-col items-start space-y-4">
-          <div className="h-8 bg-gray-200 rounded w-3/4 max-w-lg"></div>
-          <div className="h-4 bg-gray-200 rounded w-1/2 max-w-md"></div>
-          <div className="w-full h-64 bg-gray-200 rounded-xl mt-8"></div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default async function Etapa_Pagina({ params }) {
   const resolvedParams = await params;
   return (
@@ -175,7 +161,7 @@ export default async function Etapa_Pagina({ params }) {
       <Header />
 
       {/* El contenido complejo y pesado de Strapi fluye con Suspense */}
-      <Suspense fallback={<EtapaSkeleton />}>
+      <Suspense fallback={<Skeleton />}>
         <EtapaContent slug={resolvedParams.slug} />
       </Suspense>
 

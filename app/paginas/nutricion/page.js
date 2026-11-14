@@ -4,6 +4,7 @@ import Header from "@/app/components/Header";
 import CategoriasNutricion from "@/app/components/Nutricion/CategoriasNutricion";
 import { Suspense } from "react";
 import { fetchAPI } from "@/app/lib/strapi";
+import Skeleton from "@/app/components/Skeleton";
 
 export const dynamic = 'force-dynamic';
 
@@ -44,28 +45,11 @@ async function NutricionContent() {
   );
 }
 
-// Esqueleto de carga mientras responde la API
-function NutricionSkeleton() {
-  return (
-    <div className="w-full py-20 flex justify-center items-center">
-      <div className="animate-pulse flex space-x-4">
-        <div className="rounded-full bg-gray-300 h-12 w-12"></div>
-        <div className="flex-1 space-y-4 py-1">
-          <div className="h-4 bg-gray-300 rounded w-48"></div>
-          <div className="space-y-2">
-            <div className="h-4 bg-gray-300 rounded w-96"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Nutricion() {
   return (
     <main>
       <Header />
-      <Suspense fallback={<NutricionSkeleton />}>
+      <Suspense fallback={<Skeleton />}>
         <NutricionContent />
       </Suspense>
     </main>

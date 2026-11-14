@@ -63,7 +63,7 @@ const ContenidoDestacado = ({ contenido }) => {
           </div>
 
           <div
-            className={`${contenido.tipo === "oscuro" ? "bg-[#15428C]" : ""} ${contenido.tipo === "alternativo" ? "sm:col-span-2" : ""} sm:min-h-[650px] px-8 py-16 space-y-8 flex flex-col justify-center`}
+            className={`${contenido.tipo === "oscuro" ? "bg-[#15428C]" : ""} ${contenido.tipo === "alternativo" ? "sm:col-span-2" : ""} px-8 py-16 space-y-8 flex flex-col justify-center`}
           >
             {contenido.titulo_linea_1 || contenido.titulo_linea_2 ? (
               <h2>
@@ -100,7 +100,10 @@ const ContenidoDestacado = ({ contenido }) => {
           className={`contenido_destacado-estrecho w-full sm:max-w-5xl mx-auto grid grid-cols-1 ${contenido.tipo === "estrecho" ? "sm:grid-cols-3" : "sm:grid-cols-2"} overflow-hidden`}
         >
           <div
-            className={`bg-[#0B75B9] ${contenido.tipo === "estrecho" ? "sm:col-span-2" : ""} sm:min-h-[650px] px-8 py-16 space-y-8 flex flex-col justify-center`}
+            className={`
+              ${fondosOscuros[contenido.color_fondo] || fondosOscuros.azul}
+              ${contenido.tipo === "estrecho" ? "sm:col-span-2" : ""} 
+              sm:min-h-[650px] px-8 py-16 space-y-8 flex flex-col justify-center`}
           >
             {contenido.titulo_linea_1 || contenido.titulo_linea_2 ? (
               <h2>
@@ -150,7 +153,7 @@ const ContenidoDestacado = ({ contenido }) => {
       >
         {/* IMAGEN IZQUIERDA: Fija (sticky) al hacer scroll */}
         <div className="sm:sticky sm:top-0 h-fit w-full">
-          <div className="relative w-full h-[400px] sm:h-[650px]">
+          <div className="relative w-full h-[500px] sm:h-screen">
             {contenido.imagen_izquierda ? (
               <Image
                 src={getStrapiMedia(contenido.imagen_izquierda.url)}
@@ -174,7 +177,7 @@ const ContenidoDestacado = ({ contenido }) => {
 
         {/* IMAGEN DERECHA: Fija (sticky) al hacer scroll */}
         <div className="sm:sticky sm:top-0 h-fit w-full">
-          <div className="relative w-full h-[400px] sm:h-[650px]">
+          <div className="relative w-full h-[500px] sm:h-screen">
             {contenido.imagen_derecha ? (
               <Image
                 src={getStrapiMedia(contenido.imagen_derecha.url)}
@@ -194,11 +197,11 @@ const ContenidoDestacado = ({ contenido }) => {
 
   return (
     <section
-      className={`${contenido.tipo === "oscuro" ? "contenido_destacado" : ""} relative grid grid-cols-1 sm:grid-cols-2 items-start`}
+      className={`${contenido.tipo === "oscuro" ? "contenido_destacado" : ""} relative grid grid-cols-1 sm:grid-cols-2`}
     >
       {contenido.imagen_destacada ? (
         <div className="sm:sticky sm:top-0 h-fit w-full">
-          <div className="relative w-full h-[400px] sm:h-[650px]">
+          <div className="relative w-full h-[500px] sm:h-screen">
             <Image
               src={getStrapiMedia(contenido.imagen_destacada.url)}
               alt="Ilustración representativa derecha"
