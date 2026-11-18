@@ -62,7 +62,7 @@ const DobleFotoSwiper = ({ contenido, tipo }) => {
               >
 
                 <div
-                  className={`relative`}
+                  className={`relative ${item.imagen_izquierda ? "sm:col-span-2" : ""}`}
                 >
                   {item.imagen_izquierda ? (
                     <Image
@@ -83,7 +83,7 @@ const DobleFotoSwiper = ({ contenido, tipo }) => {
                   <ReactMarkdown>{item.contenido}</ReactMarkdown>
                 </div>
 
-                <div className="relative sm:col-span-2">
+                <div className={`relative ${item.imagen_derecha ? "sm:col-span-2" : ""}`}>
                   {item.imagen_derecha ? (
                     <Image
                       src={getStrapiMedia(item.imagen_derecha.url)}

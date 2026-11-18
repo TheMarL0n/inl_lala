@@ -89,6 +89,10 @@ ul li {
   color: #ffffff;
 }
 
+.custom_article-etapas section#storyline_at_top .sl-estatica p{
+  color: inherit;
+}
+
 .custom_article-etapas section ul {
   color: #15428c;
   font-size: 24px;
@@ -171,12 +175,30 @@ ul li {
   color: #15428c;
 }
 
+.custom_article-etapas section.seccion-tabla p{
+  margin-bottom: 0;
+}
+
 .custom_article-etapas section .dobleFotoSwiper h2,
 .custom_article-etapas section .etapasSwiper h2 {
   color: #0b75b9;
   font-size: 90px;
   text-transform: lowercase;
   line-height: 1.1;
+}
+
+.custom_article-etapas section .etapasSwiper .multislide h2{
+  text-transform: uppercase !important;
+  font-size: 30px !important;
+  color: #0B75B9;
+  font-weight: 100;
+}
+.custom_article-etapas section .etapasSwiper .multislide h4{
+  text-transform: uppercase !important;
+  font-size: 20px !important;
+  line-height: 1.1;
+  color: #0B75B9;
+  margin-bottom: 1rem !important;
 }
 
 .custom_article-etapas section .dobleFotoSwiper h3 {
@@ -217,7 +239,9 @@ ul li {
   color: inherit;
 }
 
-.custom_article-etapas section.contenido_destacado p {
+.custom_article-etapas section.contenido_destacado p,
+.custom_article-etapas section.contenido_destacado .cuerpo-oscuro h2
+ {
   color: #ffffff;
 }
 
@@ -226,6 +250,10 @@ ul li {
 .custom_article-etapas section.vertical-swiper h4,
 .custom_article-etapas section.vertical-swiper p {
   margin: 0;
+}
+
+.carusel-imagen-abajo .swiper-wrapper{
+  align-items: flex-end;
 }
 
 @media (max-width: 767px) {

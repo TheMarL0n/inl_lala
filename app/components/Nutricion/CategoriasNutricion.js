@@ -2,14 +2,12 @@
 import { useState, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import Image from "next/image"
-import { categorias_nutricion } from "@/app/utils/Copies"
-import { nutricion } from "@/app/utils/Copies"
-import { BlueButton, parrafo_normal, stroke_text } from "@/app/utils/CSS_clases"
+import { BlueButton, parrafo_normal } from "@/app/utils/CSS_clases"
 import CustomLink from "../Auxiliares/CustomLinks"
 
-const CategoriasNutricion = () => {
+const CategoriasNutricion = ({ nutricion, categorias_nutricion }) => {
     const searchParams = useSearchParams()
-    const catUrl = searchParams.get("cat") // Obtenemos el valor de ?cat=...
+    const catUrl = searchParams.get("cat")
 
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(() => {
         // Si viene un parámetro 'cat' en la URL, lo usamos (convertido a número si tus IDs son numéricos)
@@ -42,8 +40,17 @@ const CategoriasNutricion = () => {
     }
 
     const nutricionFiltradas = categoriaSeleccionada
-        ? nutricion.filter(nutri => nutri.categoria_id === categoriaSeleccionada)
+        ? nutricion.filter(nutri => nutri.categoria.id === categoriaSeleccionada)
         : nutricion
+
+    // Si la URL viene de Strapi y no empieza con http, le agregamos el host
+    const getStrapiMedia = (url) => {
+        if (!url) return null;
+        if (url.startsWith("http") || url.startsWith("//")) {
+            return url;
+        }
+        return `${process.env.NEXT_PUBLIC_STRAPI_HOST}${url}`;
+    };
 
     return (
         <section id="quiero_at_top" className="pb-20 px-4">
@@ -63,7 +70,7 @@ const CategoriasNutricion = () => {
                                     <div className={`bg-[#15428C]/70 absolute z-2 h-full w-full object-cover left-0 top-0 duration-400 ${isActive ? "opacity-0" : "opacity-0 sm:opacity-100 group-hover:opacity-0"
                                         }`}></div>
                                     <Image
-                                        src={item.imagen_principal}
+                                        src={getStrapiMedia(item.imagen_principal.url)}
                                         alt={item.titulo || "Imagen de categoría de la nutrición en el consumo de lácteos"}
                                         fill
                                         sizes="(max-width: 640px) 50vw, 25vw"
@@ -86,11 +93,11 @@ const CategoriasNutricion = () => {
                                 <div className="col-span-2 sm:col-span-3">
                                     <h3>
                                         <CustomLink href={`/paginas/nutricion/${item.slug}`} className={`${parrafo_normal} text-[#164190] font-bold`}>
-                                            {item.tema}
+                                            {item.titulo}
                                         </CustomLink>
                                     </h3>
                                     <p className={`${parrafo_normal} text-[#164190]`}>
-                                        {item.contenido}
+                                        {item.descripcion}
                                     </p>
                                 </div>
                                 <CustomLink href={`/paginas/nutricion/${item.slug}`} className={`${BlueButton} w-fit ml-auto`}>

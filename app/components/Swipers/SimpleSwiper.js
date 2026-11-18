@@ -68,9 +68,8 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
                 {/* Título extraído del h2 del markdown */}
                 {tituloH2 && (
                   <span
-                    className={`text-[20px] text-[#15428C] capitalize ${
-                      isActive ? "font-bold" : "font-normal"
-                    }`}
+                    className={`text-[20px] text-[#15428C] capitalize ${isActive ? "font-bold" : "font-normal"
+                      }`}
                   >
                     {tituloH2}
                   </span>
@@ -93,14 +92,14 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
         }}
         onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
         modules={[Navigation, Autoplay]}
-        className="etapasSwiper max-w-5xl mx-auto"
+        className={`etapasSwiper max-w-5xl mx-auto ${tipo === "centrado" ? "carusel-imagen-abajo" : ""}`}
       >
         {contenido.map((item, idx) => {
           const tituloH2 = extraerH2Markdown(item.contenido) || "";
           const tituloH3 = extraerH3Markdown(item.contenido) || "";
           const subtitulo = extraerRestoDeMarkdown(item.contenido);
           return (
-            <SwiperSlide key={idx}>
+            <SwiperSlide key={idx} className="h-full">
               {tipo === "texto_gigante_izquierda" ? (
                 <div className="grid grid-cols-1 sm:grid-cols-3 sm:items-end relative min-h-[400px]">
                   <div className="sm:col-span-2 flex flex-col sm:flex-row items-start h-full">
@@ -120,16 +119,22 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
 
                   <div className="sm:absolute w-full sm:w-[400px] sm:h-[400px] sm:left-[50%] sm:-ml-[200px] top-0">
                     <div className="w-full max-w-[400px] h-[400px] relative overflow-hidden z-1">
-                      <Image
-                        src={getStrapiMedia(item.imagen.url)}
-                        alt={
-                          item.imagen.alternativeText ||
-                          `Imagen que representa lo relacionado a ${tituloH2}`
-                        } //viene desde la api directo
-                        fill
-                        sizes="(max-width: 640px)"
-                        className="object-contain absolute top-0 left-0"
-                      />
+                      {
+                        item.imagen ?
+                          <Image
+                            src={getStrapiMedia(item.imagen.url)}
+                            alt={
+                              item.imagen.alternativeText ||
+                              `Imagen que representa lo relacionado a ${tituloH2}`
+                            } //viene desde la api directo
+                            fill
+                            sizes="(max-width: 640px)"
+                            className="object-contain absolute top-0 left-0"
+                          />
+                          :
+                          ""
+                      }
+
                     </div>
                   </div>
 
@@ -151,16 +156,21 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
 
                     {/* 2. Contenedor de la imagen al centro */}
                     <div className="w-full max-w-[300px] h-[300px] relative overflow-hidden z-20 -m-20">
-                      <Image
-                        src={getStrapiMedia(item.imagen.url)}
-                        alt={
-                          item.imagen.alternativeText ||
-                          `Imagen que representa lo relacionado a ${tituloH2}`
-                        }
-                        fill
-                        sizes="(max-width: 640px)"
-                        className="object-contain absolute top-0 left-0"
-                      />
+                      {item.imagen ?
+                        <Image
+                          src={getStrapiMedia(item.imagen.url)}
+                          alt={
+                            item.imagen.alternativeText ||
+                            `Imagen que representa lo relacionado a ${tituloH2}`
+                          }
+                          fill
+                          sizes="(max-width: 640px)"
+                          className="object-contain absolute top-0 left-0"
+                        />
+                        :
+                        ""
+                      }
+
                     </div>
 
                     {/* 3. Segunda mitad del texto (ej. "CHE") y el subtítulo */}
@@ -205,7 +215,36 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
                 </div>
               ) : tipo === "centrado" ? (
                 <div
-                  className={`relative overflow-hidden z-2 flex swiper-centrado flex-col-reverse items-center w-full`}
+                  className={`relative overflow-hidden z-2 flex swiper-centrado flex-col-reverse items-center w-full h-full`}
+                >
+                  {item.imagen ? (
+                    <div
+                      className={`w-full relative overflow-hidden h-[243px]`}
+                    >
+                      <Image
+                        src={getStrapiMedia(item.imagen.url)}
+                        alt={
+                          item.imagen.alternativeText ||
+                          `Imagen que representa lo relacionado a ${tituloH2}`
+                        } //viene desde la api directo
+                        fill
+                        sizes="(max-width: 640px)"
+                        className="object-contain absolute top-0 left-0"
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  <div
+                    className={`w-full flex flex-col items-center text-center sm:bg-white p-8 flex-1 justify-between`}
+                  >
+                    <ReactMarkdown>{item.contenido}</ReactMarkdown>
+                  </div>
+                </div>
+              ) : tipo === "centrado_alternativo" ? (
+                <div
+                  className={`relative overflow-hidden z-2 flex swiper-centrado flex-col items-center w-full`}
                 >
                   {item.imagen ? (
                     <div
@@ -228,6 +267,35 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
 
                   <div
                     className={`w-full flex flex-col items-center text-center sm:bg-white p-8`}
+                  >
+                    <ReactMarkdown>{item.contenido}</ReactMarkdown>
+                  </div>
+                </div>
+              ) : tipo === "multislide" ? (
+                <div
+                  className={`multislide relative overflow-hidden z-2 flex swiper-centrado flex-col items-start w-full`}
+                >
+                  {item.imagen ? (
+                    <div
+                      className={`w-full relative overflow-hidden h-[243px]`}
+                    >
+                      <Image
+                        src={getStrapiMedia(item.imagen.url)}
+                        alt={
+                          item.imagen.alternativeText ||
+                          `Imagen que representa lo relacionado a ${tituloH2}`
+                        } //viene desde la api directo
+                        fill
+                        sizes="(max-width: 640px)"
+                        className="object-contain absolute top-0 left-0"
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  <div
+                    className={`w-full flex flex-col items-start sm:bg-white p-8`}
                   >
                     <ReactMarkdown>{item.contenido}</ReactMarkdown>
                   </div>

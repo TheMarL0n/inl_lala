@@ -223,22 +223,37 @@ const ContenidoDestacado = ({ contenido }) => {
       >
         {contenido.titulo_linea_1 || contenido.titulo_linea_2 ? (
           <h2>
-            <span
-              className={`${encabezado_h3} ${contenido.color_fondo === "azul" || contenido.color_fondo === null ? "bg-[#0B75B9] text-[#15428C]!" : "bg-[#15428C] text-[#0B75B9]!"} text-[46px]`}
-            >
-              {contenido.titulo_linea_1}
-            </span>
-            <br />
-            <span
-              className={`${contenido.color_fondo === "azul" || contenido.color_fondo === null ? "text-[#0B75B9]" : "text-[#15428C]"} text-[40px] sm:text-[100px]`}
-            >
-              {contenido.titulo_linea_2}
-            </span>
+            {contenido.titulo_linea_1
+              ?
+              <>
+                <span
+                  className={`${encabezado_h3} ${contenido.color_fondo === "azul" || contenido.color_fondo === null ? "bg-[#0B75B9] text-[#15428C]!" : "bg-[#15428C] text-[#0B75B9]!"} text-[46px]`}
+                >
+                  {contenido.titulo_linea_1}
+                </span>
+                <br />
+              </>
+              :
+              ""
+            }
+
+            {
+              contenido.titulo_linea_2
+                ?
+                <span
+                  className={`${contenido.color_fondo === "azul" || contenido.color_fondo === null ? "text-[#0B75B9]" : "text-[#15428C]"} text-[40px] sm:text-[100px]`}
+                >
+                  {contenido.titulo_linea_2}
+                </span>
+                :
+                ""
+            }
+
           </h2>
         ) : (
           ""
         )}
-        <div className="sm:max-w-113">
+        <div className={`sm:max-w-113 ${contenido.tipo === "oscuro" ? "cuerpo-oscuro" : ""}`}>
           <ReactMarkdown>{contenido.html}</ReactMarkdown>
         </div>
       </div>

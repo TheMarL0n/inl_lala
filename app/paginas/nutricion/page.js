@@ -19,13 +19,13 @@ async function NutricionContent() {
   const [responseContenido, responseNutricion, responseCategorias] =
     await Promise.all([
       fetchAPI(`/paginas?populate[0]=imagen_principal`),
-      //fetchAPI(`/dudas?populate[0]=imagen_principal&populate[1]=categoria`),
-      //fetchAPI(`/categoria-nutricion?populate[0]=imagen_principal`),
+      fetchAPI(`/nutriciones?populate[0]=imagen_principal&populate[1]=categoria`),
+      fetchAPI(`/categoria-nutriciones?populate[0]=imagen_principal`),
     ]);
 
   const contenidoFromStrapi = responseContenido?.data || [];
-  //const allNutricionFromStrapi = responseNutricion?.data || [];
-  //const catNutricionFromStrapi = responseCategorias?.data || [];
+  const allNutricionFromStrapi = responseNutricion?.data || [];
+  const catNutricionFromStrapi = responseCategorias?.data || [];
   const data = contenidoFromStrapi.find(
     (pagina) => pagina.slug === "nutricion",
   );
@@ -39,7 +39,9 @@ async function NutricionContent() {
         titulo_descripcion={data.titulo_descripcion}
         descripcion={data.descripcion}
       />
-      <CategoriasNutricion />
+      <CategoriasNutricion
+        nutricion={allNutricionFromStrapi}
+        categorias_nutricion={catNutricionFromStrapi} />
       <Footer />
     </>
   );

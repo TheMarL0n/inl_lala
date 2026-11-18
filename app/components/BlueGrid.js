@@ -648,10 +648,10 @@ const BlueGrid = ({
               <div
                 key={idx}
                 className={`
-                  ${fondosOscuros[item.color_fondo] || fondosOscuros.azul} 
+                  ${fondosOscuros[item.color_fondo] || "bg-transparent"} 
                   ${tieneImagen ? "grid grid-cols-2 items-end" : ""} 
                   ${esAnchoDoble ? "col-span-2 sm:col-span-2 bg-transparent" : "col-span-1"} 
-                  min-h-[226px] text-white relative overflow-hidden flex flex-col justify-center items-start 
+                  min-h-[226px] ${fondosOscuros !== "" ? "text-[#15428C]" : "text-white"}  relative overflow-hidden flex flex-col justify-center items-start 
                   ${item.imagen ? "" : "p-4"}
                 `}
               >
