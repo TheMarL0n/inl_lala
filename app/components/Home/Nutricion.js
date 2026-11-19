@@ -23,11 +23,10 @@ const Nutricion = () => {
     <section ref={containerRef} className="py-20 px-4 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="max-w-6xl">
-          {/* Título principal con un pequeño retraso */}
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }} // Se activa cuando el elemento está más adentrado en la pantalla
+            viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             <span
@@ -45,7 +44,6 @@ const Nutricion = () => {
         </div>
 
         <div className="max-w-6xl flex mt-18 gap-4 sm:gap-12 items-center sm:items-end">
-          {/* Imagen con desplazamiento parallax */}
           <motion.div 
             style={{ y: imageY }}
             initial={{ opacity: 0 }}

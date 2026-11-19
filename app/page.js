@@ -42,6 +42,7 @@ export default async function Home() {
       <HomeJumbotron />
       <Nutricion />
       <Dudas />
+      <br/><br/>
       <Aprende />
       <Preguntas />
       <MitosSwiper contenido={allMitosFromStrapi} />

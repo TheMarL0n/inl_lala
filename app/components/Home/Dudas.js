@@ -1,44 +1,66 @@
-"use client"
-import { useState } from "react"
-import { categorias_dudas, dudas } from "@/app/utils/Copies"
-import { encabezado_h3, parrafo_normal, WhiteButton } from "@/app/utils/CSS_clases"
-import Image from 'next/image'
-import CustomLink from "../Auxiliares/CustomLinks"
+"use client";
+import { useState, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { categorias_dudas, dudas } from "@/app/utils/Copies";
+import { encabezado_h3, parrafo_normal, WhiteButton } from "@/app/utils/CSS_clases";
+import Image from "next/image";
+import CustomLink from "../Auxiliares/CustomLinks";
 
 const Dudas = () => {
-    const [criterio, setCriterio] = useState("")
-    const [busquedaActiva, setBusquedaActiva] = useState(false)
+    const [criterio, setCriterio] = useState("");
+    const [busquedaActiva, setBusquedaActiva] = useState(false);
+    const sectionRef = useRef(null);
 
-    // Manejar el envío del formulario de búsqueda
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start start", "end end"],
+    });
+
+    // De 100vw (todo el ancho) a 50vw (mitad de pantalla) al hacer scroll
+    const imageWidth = useTransform(scrollYProgress, [0, 0.25], ["100%", "50%"]);
+
     const handleSearch = (e) => {
-        e.preventDefault()
-        setBusquedaActiva(true)
-    }
+        e.preventDefault();
+        setBusquedaActiva(true);
+    };
 
-    // Filtrar las dudas que coincidan con el criterio (en pregunta o respuesta)
-    const resultadosDudas = criterio.trim() === "" ? [] : dudas.filter(duda =>
-        duda.pregunta.toLowerCase().includes(criterio.toLowerCase()) ||
-        duda.respuesta.toLowerCase().includes(criterio.toLowerCase())
-    )
+    const resultadosDudas =
+        criterio.trim() === ""
+            ? []
+            : dudas.filter(
+                  (duda) =>
+                      duda.pregunta.toLowerCase().includes(criterio.toLowerCase()) ||
+                      duda.respuesta.toLowerCase().includes(criterio.toLowerCase())
+              );
 
     return (
-        <section className="sm:py-20 grid grid-cols-1 sm:grid-cols-2">
-            <div className="sm:sticky sm:top-0 h-fit">
-                <div className="relative w-full h-[500px] sm:h-screen"> {/* Ajusta la altura según tu diseño original */}
+        <section ref={sectionRef} className="relative bg-[#15428C] overflow-x-clip">
+            {/* Imagen sticky: arranca en 100vw y se reduce a 50vw en desktop */}
+            <div className="sm:sticky sm:top-0 h-[500px] sm:h-screen z-20 pointer-events-none overflow-x-clip">
+                <motion.div
+                    style={{ width: imageWidth }}
+                    suppressHydrationWarning
+                    className="relative w-full h-full overflow-hidden will-change-[width]"
+                >
                     <Image
                         src="/images/girl_eating.png"
                         alt="Joven disfrutando de una alimentación saludable y equilibrada"
                         fill
-                        sizes="(max-width: 640px) 100vw, 50vw"
+                        priority
+                        sizes="(max-width: 640px) 100vw, 100vw"
                         className="object-cover object-center"
                     />
-                </div>
+                </motion.div>
             </div>
-            <div className="bg-[#15428C] p-8">
+
+            {/* Contenido azul a la derecha en desktop (-mt-screen para emparejar con la altura sticky) */}
+            <div className="relative z-10 bg-[#15428C] p-8 sm:w-1/2 sm:ml-auto sm:-mt-screen">
                 <h2>
                     <span className={`${encabezado_h3} bg-[#0B75B9]`}>Resuelve tus</span>
                     <br />
-                    <span className="uppercase text-[120px] sm:text-[250px] sm:leading-55 text-[#0B75B9] font-[600]">Dudas</span>
+                    <span className="uppercase text-[120px] sm:text-[250px] sm:leading-55 text-[#0B75B9] font-[600]">
+                        Dudas
+                    </span>
                 </h2>
 
                 <p className={`${parrafo_normal} text-white max-w-113 mt-4 text-[25px]!`}>
@@ -52,66 +74,76 @@ const Dudas = () => {
                         name="criteria"
                         value={criterio}
                         onChange={(e) => {
-                            setCriterio(e.target.value)
-                            if (e.target.value === "") setBusquedaActiva(false)
+                            setCriterio(e.target.value);
+                            if (e.target.value === "") setBusquedaActiva(false);
                         }}
                         placeholder="¿Qué estás buscando?"
                         className="border-white border p-2 h-11.5 w-full sm:w-86.25 focus:outline-0 text-white text-[18px] placeholder:text-white placeholder:text-[23px] placeholder:italic"
                     />
-                    <button type="submit" className={WhiteButton}>Buscar</button>
+                    <button type="submit" className={WhiteButton}>
+                        Buscar
+                    </button>
                 </form>
 
                 {/* Resultados de la Búsqueda o Listado de Categorías por Defecto */}
                 <div className="space-y-8 mt-26 max-w-[580px]">
-                    {
-                        busquedaActiva && criterio.trim() !== "" ? (
-                            // Muestra los resultados si se realizó una búsqueda
-                            resultadosDudas.length > 0 ? (
-                                resultadosDudas.map((duda, idx) => {
-                                    // Buscamos la categoría a la que pertenece esta duda
-                                    const categoriaAsociada = categorias_dudas.find(cat => cat.id === duda.categoria_id)
+                    {busquedaActiva && criterio.trim() !== "" ? (
+                        resultadosDudas.length > 0 ? (
+                            resultadosDudas.map((duda, idx) => {
+                                const categoriaAsociada = categorias_dudas.find(
+                                    (cat) => cat.id === duda.categoria_id
+                                );
 
-                                    return (
-                                        <div key={idx} className="border-b border-white pb-2 gap-8 grid grid-cols-1 sm:grid-cols-4">
-                                            <p className={`${parrafo_normal} text-white sm:col-span-3`}>
-                                                <strong>{categoriaAsociada.titulo}</strong>
-                                                <br />
-                                                {duda.respuesta}
-                                            </p>
-                                            {/* Enlace para ir a la vista de categorías con su respectivo ID */}
-                                            <CustomLink
-                                                href={`/paginas/dudas?cat=${duda.categoria_id}`}
-                                                target="_blank"
-                                                className={`${WhiteButton}`}
-                                            >
-                                                Ver más
-                                            </CustomLink>
-                                        </div>
-                                    )
-                                })
-                            ) : (
-                                <p className="text-white text-lg italic">
-                                    No se encontraron dudas relacionadas con "{criterio}".
-                                </p>
-                            )
+                                return (
+                                    <div
+                                        key={idx}
+                                        className="border-b border-white pb-2 gap-8 grid grid-cols-1 sm:grid-cols-4"
+                                    >
+                                        <p className={`${parrafo_normal} text-white sm:col-span-3`}>
+                                            <strong>{categoriaAsociada?.titulo}</strong>
+                                            <br />
+                                            {duda.respuesta}
+                                        </p>
+                                        <CustomLink
+                                            href={`/paginas/dudas?cat=${duda.categoria_id}`}
+                                            target="_blank"
+                                            className={`${WhiteButton}`}
+                                        >
+                                            Ver más
+                                        </CustomLink>
+                                    </div>
+                                );
+                            })
                         ) : (
-                            // Muestra las categorías por defecto si no hay búsqueda activa
-                            categorias_dudas.map((item, idx) => (
-                                <div key={idx} className="border-b border-white pb-2 gap-8 grid grid-cols-1 sm:grid-cols-4">
-                                    <p className={`${parrafo_normal} text-white sm:col-span-3`}>
-                                        <strong>{item.titulo}</strong>
-                                        <br />
-                                        {item.subtitulo}
-                                    </p>
-                                    <CustomLink href={`/paginas/dudas?cat=${item.id}`} target="_blank" className={WhiteButton}>Ver más</CustomLink>
-                                </div>
-                            ))
+                            <p className="text-white text-lg italic">
+                                No se encontraron dudas relacionadas con "{criterio}".
+                            </p>
                         )
-                    }
+                    ) : (
+                        categorias_dudas.map((item, idx) => (
+                            <div
+                                key={idx}
+                                className="border-b border-white pb-2 gap-8 grid grid-cols-1 sm:grid-cols-4"
+                            >
+                                <p className={`${parrafo_normal} text-white sm:col-span-3`}>
+                                    <strong>{item.titulo}</strong>
+                                    <br />
+                                    {item.subtitulo}
+                                </p>
+                                <CustomLink
+                                    href={`/paginas/dudas?cat=${item.id}`}
+                                    target="_blank"
+                                    className={WhiteButton}
+                                >
+                                    Ver más
+                                </CustomLink>
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
         </section>
-    )
-}
+    );
+};
 
-export default Dudas
+export default Dudas;
