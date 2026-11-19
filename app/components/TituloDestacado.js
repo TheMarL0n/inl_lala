@@ -20,7 +20,7 @@ const TituloDestacado = ({ title_linea_1, title_linea_2, color_fondo_1, color_fo
     };
     return (
         <section className="text-destacado relative overflow-hidden my-20">
-            <div className={`relative ${background.url ? "h-screen sm:h-[600px] min-h-150 max-h-225 2xl:max-h-200": ""} flex flex-col sm:justify-center w-full`}>
+            <div className={`relative ${background.url ? "h-screen sm:h-[600px] min-h-150 max-h-225 2xl:max-h-200" : ""} flex flex-col sm:justify-center w-full`}>
                 {background.url ?
                     <Image
                         src={getStrapiMedia(background.url)}
@@ -37,9 +37,9 @@ const TituloDestacado = ({ title_linea_1, title_linea_2, color_fondo_1, color_fo
                     :
                     ""
                 }
-                <div className="w-full sm:w-7xl max-w-7xl px-4 sm:px-0 mx-auto mt-20 mb-10">
+                <div className={`w-full sm:w-7xl max-w-7xl px-4 sm:px-0 mx-auto ${background.url ? "mt-20 mb-10" : ""}`}>
                     {title_linea_1 || title_linea_2 ? (
-                        <h1 className="block">
+                        <h2 className="block mb-2">
                             {title_linea_1 ? (
                                 <span
                                     className={`${encabezado_h3} ${fondosOscuros[color_fondo_1] || fondosOscuros.celeste} block sm:text-[46px]! sm:leading-16!`}
@@ -58,12 +58,12 @@ const TituloDestacado = ({ title_linea_1, title_linea_2, color_fondo_1, color_fo
                             ) : (
                                 ""
                             )}
-                        </h1>
+                        </h2>
                     ) : (
                         ""
                     )}
 
-                    <div className="text-white! cuerpo w-full sm:max-w-xl">
+                    <div className={`${background.url ? "text-white! sm:max-w-xl" : "text-[#15428c]! sm:max-w-4xl mx-auto"} cuerpo w-full`}>
                         <ReactMarkdown>
                             {contenido}
                         </ReactMarkdown>

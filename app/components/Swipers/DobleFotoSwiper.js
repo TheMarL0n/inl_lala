@@ -202,7 +202,7 @@ const DobleFotoSwiper = ({ contenido, tipo }) => {
                     alt={`Ilustración representativa sobre el mito: ${item.titulo}`}
                     fill
                     sizes="(max-width: 640px) 100vw, 50vw"
-                    className="object-cover absolute top-0 left-0"
+                    className="object-cover absolute top-0 right-0"
                   />
                 ) : (
                   ""

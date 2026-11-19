@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 
@@ -16,47 +16,119 @@ const getStrapiMedia = (url) => {
 const FasesSeccion = ({ contenido = [] }) => {
   if (!contenido || contenido.length === 0) return null;
 
-  // 1. Agrupamos los elementos automáticamente por su propiedad "fases"
-  const fasesAgrupadas = contenido.reduce((acc, item) => {
-    const faseKey = item.fases || "general";
-    if (!acc[faseKey]) {
-      acc[faseKey] = [];
-    }
-    acc[faseKey].push(item);
-    return acc;
-  }, {});
+  // Determinamos si se debe agrupar por fases según el booleano del componente en Strapi
+  const debeAgrupar = Boolean(contenido[0]?.agrupar);
+
+  // Estado para el índice seleccionado cuando NO se agrupa (vista por títulos)
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // 1. Agrupamos los elementos por "fases" solo cuando corresponde
+  const fasesAgrupadas = useMemo(() => {
+    return contenido.reduce((acc, item) => {
+      const faseKey = item.fases || "general";
+      if (!acc[faseKey]) {
+        acc[faseKey] = [];
+      }
+      acc[faseKey].push(item);
+      return acc;
+    }, {});
+  }, [contenido]);
 
   const listaFases = Object.keys(fasesAgrupadas);
-  
-  // Estado para la fase activa (por defecto la primera)
+
+  // Estado para la fase activa cuando SÍ se agrupa
   const [faseActiva, setFaseActiva] = useState(listaFases[0]);
 
-  // Diccionario opcional para mostrar un texto más amigable en el menú (opcional)
+  // Diccionario opcional para mostrar un texto más amigable en el menú de fases
   const nombresFasesMap = {
     fase_1: "antes",
     fase_2: "durante",
     fase_3: "después",
   };
 
+  // VISTA CUANDO NO SE AGRUPA (agrupar === false) -> Estilo de la segunda imagen
+  if (!debeAgrupar) {
+    const itemActual = contenido[selectedIndex] || contenido[0];
+
+    return (
+      <section
+        className="vertical-swiper py-16 max-w-7xl mx-auto px-4"
+        aria-label="Sección de contenido por temas"
+      >
+        <div className="flex flex-col md:flex-row items-start gap-12">
+          {/* COLUMNA IZQUIERDA: Lista de títulos */}
+          <div className="w-full md:w-1/4 flex flex-col">
+            {contenido.map((item, idx) => {
+              const isSelected = selectedIndex === idx;
+
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setSelectedIndex(idx)}
+                  className={`cursor-pointer text-left py-4 uppercase text-sm md:text-base tracking-wide transition-colors duration-200 text-[#0B75B9] border-b border-[#164190]/60 ${
+                    isSelected ? "font-bold text-[#0B75B9]" : "font-normal hover:text-[#164190]"
+                  }`}
+                >
+                  {item.titulo}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* COLUMNA DERECHA: Detalle del elemento seleccionado */}
+          <div className="w-full md:w-3/4 flex flex-col items-start bg-white md:pl-6">
+            {itemActual?.titulo && (
+              <h4 className="font-bold text-[#164190] mb-6">
+                {itemActual.titulo}
+              </h4>
+            )}
+
+            {itemActual?.imagen && (
+              <div className="w-full relative h-64 mb-6 overflow-hidden">
+                <Image
+                  src={getStrapiMedia(itemActual.imagen.url)}
+                  alt={
+                    itemActual.imagen.alternativeText ||
+                    itemActual.titulo ||
+                    "Ilustración de la diapositiva"
+                  }
+                  fill
+                  sizes="(max-width: 768px) 100vw, 75vw"
+                  className="object-contain object-left"
+                />
+              </div>
+            )}
+
+            <div className="w-full flex flex-col items-start prose max-w-none text-[#164190]">
+              <ReactMarkdown>{itemActual?.contenido || ""}</ReactMarkdown>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // VISTA CUANDO SÍ SE AGRUPA (agrupar === true) -> Por fases
   return (
-    <section className="vertical-swiper py-16 max-w-7xl mx-auto px-4" aria-label="Sección por fases">
+    <section
+      className="vertical-swiper py-16 max-w-7xl mx-auto px-4"
+      aria-label="Sección por fases"
+    >
       <div className="flex flex-col md:flex-row items-center gap-12">
-        
         {/* COLUMNA IZQUIERDA: Menú de Fases */}
         <div className="w-full md:w-1/4 flex flex-col pb-6 md:pb-0 md:pr-8">
           {listaFases.map((fase) => {
             const isSelected = faseActiva === fase;
-            // Usamos el mapa para mostrar el texto bonito o formateamos el string de la fase
             const nombreVisual = nombresFasesMap[fase] || fase.replace("_", " ");
 
             return (
               <button
                 key={fase}
+                type="button"
                 onClick={() => setFaseActiva(fase)}
                 className={`cursor-pointer text-left py-4 text-2xl md:text-3xl transition-colors duration-200 text-[#0B75B9] border-b-2 ${
-                  isSelected
-                    ? "font-bold"
-                    : ""
+                  isSelected ? "font-bold" : ""
                 }`}
               >
                 {nombreVisual}
@@ -69,13 +141,15 @@ const FasesSeccion = ({ contenido = [] }) => {
         <div className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
           {fasesAgrupadas[faseActiva]?.map((item, idx) => (
             <div key={idx} className="flex flex-col items-start bg-white p-6">
-              
               {/* Imagen */}
               <div className="w-full relative h-64 mb-6 overflow-hidden">
                 {item.imagen && (
                   <Image
                     src={getStrapiMedia(item.imagen.url)}
-                    alt={item.imagen.alternativeText || "Ilustración de la diapositiva"}
+                    alt={
+                      item.imagen.alternativeText ||
+                      "Ilustración de la diapositiva"
+                    }
                     fill
                     sizes="(max-width: 640px) 100vw, 50vw"
                     className="object-contain"
@@ -84,14 +158,12 @@ const FasesSeccion = ({ contenido = [] }) => {
               </div>
 
               {/* Contenido en Markdown */}
-              <div className="w-full flex flex-col items-start">
+              <div className="w-full flex flex-col items-start prose max-w-none">
                 <ReactMarkdown>{item.contenido}</ReactMarkdown>
               </div>
-
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

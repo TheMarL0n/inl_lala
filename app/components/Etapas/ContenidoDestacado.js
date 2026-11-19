@@ -153,7 +153,7 @@ const ContenidoDestacado = ({ contenido }) => {
       >
         {/* IMAGEN IZQUIERDA: Fija (sticky) al hacer scroll */}
         <div className="sm:sticky sm:top-0 h-fit w-full">
-          <div className="relative w-full h-[500px] sm:h-screen">
+          <div className={`relative w-full ${contenido.imagen_izquierda ? "h-[500px] sm:h-screen" : "h-auto"}`}>
             {contenido.imagen_izquierda ? (
               <Image
                 src={getStrapiMedia(contenido.imagen_izquierda.url)}
@@ -170,21 +170,21 @@ const ContenidoDestacado = ({ contenido }) => {
 
         {/* TEXTO CENTRAL: Fluye de manera natural y hace scroll libremente */}
         <div
-          className={`w-full sm:col-span-2 flex flex-col items-start p-8 sm:min-h-[650px]`}
+          className={`w-full sm:col-span-2 flex flex-col items-start p-8 ${contenido.imagen_derecha || contenido.imagen_derecha ? "sm:min-h-[650px]" : "h-auto"}`}
         >
           <ReactMarkdown>{contenido.html}</ReactMarkdown>
         </div>
 
         {/* IMAGEN DERECHA: Fija (sticky) al hacer scroll */}
         <div className="sm:sticky sm:top-0 h-fit w-full">
-          <div className="relative w-full h-[500px] sm:h-screen">
+          <div className={`relative w-full ${contenido.imagen_derecha ? "h-[500px] sm:h-screen" : "h-auto"}`}>
             {contenido.imagen_derecha ? (
               <Image
                 src={getStrapiMedia(contenido.imagen_derecha.url)}
                 alt="Ilustración representativa derecha"
                 fill
                 sizes="(max-width: 640px) 100vw, 25vw"
-                className="object-cover object-top"
+                className="object-cover object-right"
               />
             ) : (
               ""

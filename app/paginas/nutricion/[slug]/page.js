@@ -133,10 +133,10 @@ async function NutricionContent({ slug }) {
           }
 
           if (item.__component === "contenido-principal.linea-del-tiempo") {
-            return <StoryLine 
-            key={idx} 
-            contenido={item.diapositiva || []} 
-            tipo={item.tipo || ""}
+            return <StoryLine
+              key={idx}
+              contenido={item.diapositiva || []}
+              tipo={item.tipo || ""}
             />
           }
 
@@ -152,13 +152,13 @@ async function NutricionContent({ slug }) {
             />
           }
 
-          {console.log(item)}
+          { console.log(item) }
           if (item.__component === "contenido-principal.tabla") {
             return <Tabla
               key={idx}
               primera_columna={item.primera_columna}
               segunda_columna={item.segunda_columna}
-              contenido ={item.diapositiva}
+              contenido={item.diapositiva}
             />
           }
 
@@ -168,7 +168,7 @@ async function NutricionContent({ slug }) {
               contenido={item.html}
               float={item.float}
               acordion={item.acordion}
-              ver_mas_enlace ={item.ver_mas_enlace}
+              ver_mas_enlace={item.ver_mas_enlace}
             />
           );
         })}

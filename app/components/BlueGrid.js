@@ -48,16 +48,6 @@ const BlueGrid = ({
     celeste: "bg-[#0B75B9]",
   };
 
-  //En caso de que el tipo sea tabla, extraer los indices
-  const filas = [];
-  for (let i = 0; i < contenido.length; i += 3) {
-    filas.push({
-      titulo: contenido[i], // El objeto del título
-      descripcion: contenido[i + 1], // El objeto del texto
-      imagenObj: contenido[i + 2], // El objeto de la imagen
-    });
-  }
-
   if (tipo === "masonry") {
     return (
       <section className="py-20 px-4 max-w-5xl mx-auto">
@@ -105,6 +95,15 @@ const BlueGrid = ({
   }
 
   if (tipo === "tabla") {
+    //En caso de que el tipo sea tabla, extraer los indices
+    const filas = [];
+    for (let i = 0; i < contenido.length; i += 3) {
+      filas.push({
+        titulo: contenido[i], // El objeto del título
+        descripcion: contenido[i + 1], // El objeto del texto
+        imagenObj: contenido[i + 2], // El objeto de la imagen
+      });
+    }
     return (
       <section className="py-20 px-4 max-w-7xl mx-auto">
         <div className="cuadricula_azul flex flex-col gap-6">
@@ -288,7 +287,7 @@ const BlueGrid = ({
       <section className="px-4 py-2">
         {/* Contenedor relativo para que el "vs." pueda posicionarse exactamente al centro */}
         <div className="max-w-5xl mx-auto relative">
-          
+
           <div
             className={`cuadricula_azul grid grid-cols-1 sm:grid-cols-2 gap-20`}
           >
@@ -297,9 +296,8 @@ const BlueGrid = ({
               return (
                 <div
                   key={idx}
-                  className={`${fondosOscuros[item.color_fondo] || fondosOscuros.blanco} ${tieneImagen ? "grid grid-cols-2 items-end" : ""} min-h-[226px] ${item.color_fondo === null ? "text-[#15428C]! border border-[#15428C]" : "text-white!"} relative overflow-hidden flex flex-col justify-center items-start ${
-                    item.imagen ? "" : "p-4"
-                  }`}
+                  className={`${fondosOscuros[item.color_fondo] || fondosOscuros.blanco} ${tieneImagen ? "grid grid-cols-2 items-end" : ""} min-h-[226px] ${item.color_fondo === null ? "text-[#15428C]! border border-[#15428C]" : "text-white!"} relative overflow-hidden flex flex-col justify-center items-start ${item.imagen ? "" : "p-4"
+                    }`}
                 >
                   {item.imagen ? (
                     <Image
@@ -634,61 +632,105 @@ const BlueGrid = ({
   }
 
   // Diseño regular original
+  const distribuirEnFilas = (items = [], maxCols = 5) => {
+    const total = items.length;
+    if (total === 0) return [];
+    if (total <= maxCols) return [items];
+
+    const numFilas = Math.ceil(total / maxCols);
+    const basePorFila = Math.floor(total / numFilas);
+    const sobrantes = total % numFilas;
+
+    const filas = [];
+    let cursor = 0;
+
+    for (let i = 0; i < numFilas; i++) {
+      const tamanoFila = Math.min(maxCols, basePorFila + (i < sobrantes ? 1 : 0));
+      filas.push(items.slice(cursor, cursor + tamanoFila));
+      cursor += tamanoFila;
+    }
+
+    return filas;
+  };
+
+  const gridColsSmMap = {
+    1: "sm:grid-cols-1",
+    2: "sm:grid-cols-2",
+    3: "sm:grid-cols-3",
+    4: "sm:grid-cols-4",
+    5: "sm:grid-cols-5",
+  };
+
+  const filas = distribuirEnFilas(contenido, 5);
+
   return (
     <section className="px-4">
-      <div
-        className={`cuadricula_azul max-w-5xl mx-auto grid grid-cols-2 ${tipo === "dos_columnas" ? "sm:grid-cols-2" : "sm:grid-cols-4"} gap-4`}
-      >
-        {
-          contenido.map((item, idx) => {
-            const tieneImagen = item.contenido && item.contenido.includes("![");
-            const esAnchoDoble = tieneH6Markdown(item.contenido); // Verificamos si tiene h6
+      <div className="cuadricula_azul max-w-5xl mx-auto flex flex-col gap-4">
+        {filas.map((filaItems, filaIdx) => {
+          const colsSmClass =
+            tipo === "dos_columnas"
+              ? "sm:grid-cols-2"
+              : gridColsSmMap[filaItems.length] || "sm:grid-cols-5";
 
-            return (
-              <div
-                key={idx}
-                className={`
-                  ${fondosOscuros[item.color_fondo] || "bg-transparent"} 
-                  ${tieneImagen ? "grid grid-cols-2 items-end" : ""} 
-                  ${esAnchoDoble ? "col-span-2 sm:col-span-2 bg-transparent" : "col-span-1"} 
-                  min-h-[226px] ${fondosOscuros !== "" ? "text-[#15428C]" : "text-white"}  relative overflow-hidden flex flex-col justify-center items-start 
-                  ${item.imagen ? "" : "p-4"}
-                `}
-              >
-                {item.imagen ? (
-                  <Image
-                    src={getStrapiMedia(item.imagen.url)}
-                    alt={item.alt || "Imagen de cuadrícula LALA"}
-                    fill
-                    sizes="(max-width: 640px) 50vw, 25vw"
-                    className="object-cover"
-                  />
-                ) : (
-                  <ReactMarkdown
-                    components={{
-                      img: ({ src, alt }) => {
-                        const containerClasses = "relative sm:absolute right-0 w-full sm:w-[220px] sm:h-[200px] sm:bottom-0 pointer-events-none block";
+          return (
+            <div
+              key={`fila-${filaIdx}`}
+              className={`grid grid-cols-2 ${colsSmClass} gap-4 items-stretch`}
+            >
+              {filaItems.map((item, idx) => {
+                const tieneImagen = item.contenido && item.contenido.includes("![");
+                const esAnchoDoble = tieneH6Markdown(item.contenido);
 
-                        return (
-                          <span className={containerClasses}>
-                            <Image
-                              src={src}
-                              alt={alt || 'Imagen del artículo'}
-                              fill
-                              sizes="(max-width: 1024px) 100vw, 500px"
-                              className="object-contain object-top"
-                              priority={false}
-                            />
-                          </span>
-                        );
-                      }
-                    }}>
-                    {item.contenido}
-                  </ReactMarkdown>
-                )}
-              </div>
-            )
-          })}
+                return (
+                  <div
+                    key={item.id ?? `${filaIdx}-${idx}`}
+                    className={`
+                    ${fondosOscuros[item.color_fondo] || "bg-transparent"} 
+                    ${tieneImagen ? "grid grid-cols-2 items-end" : ""} 
+                    ${esAnchoDoble ? "col-span-2 bg-transparent" : "col-span-1"} 
+                    h-full min-h-[226px] ${fondosOscuros !== "" ? "text-[#15428C]" : "text-white"} relative overflow-hidden flex flex-col justify-center items-start 
+                    ${item.imagen ? "" : "p-4"}
+                  `}
+                  >
+                    {item.imagen ? (
+                      <Image
+                        src={getStrapiMedia(item.imagen.url)}
+                        alt={item.alt || "Imagen de cuadrícula LALA"}
+                        fill
+                        sizes="(max-width: 640px) 50vw, 20vw"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <ReactMarkdown
+                        components={{
+                          img: ({ src, alt }) => {
+                            const containerClasses =
+                              "relative sm:absolute right-0 w-full sm:w-[220px] sm:h-[200px] sm:bottom-0 pointer-events-none block";
+
+                            return (
+                              <span className={containerClasses}>
+                                <Image
+                                  src={src}
+                                  alt={alt || "Imagen del artículo"}
+                                  fill
+                                  sizes="(max-width: 1024px) 100vw, 500px"
+                                  className="object-contain object-top"
+                                  priority={false}
+                                />
+                              </span>
+                            );
+                          },
+                        }}
+                      >
+                        {item.contenido}
+                      </ReactMarkdown>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
