@@ -1,23 +1,43 @@
+import { Suspense } from "react";
 import PagesJumbotron from "@/app/components/PagesJumbotron";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
-import { paginas } from "@/app/utils/Copies";
 import TemaDestacado from "@/app/components/Profesionales/TemaDestacado";
 import HerramientasMateriales from "@/app/components/Profesionales/HerramientasMateriales";
 import Aprende from "@/app/components/Home/Aprende";
 import AlianzasColaboraciones from "@/app/components/Profesionales/AlianzasColaboraciones";
 import FormContacto from "@/app/components/FormContacto";
 
+import { fetchAPI } from "@/app/lib/strapi";
+import Skeleton from "@/app/components/Skeleton";
+
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
-  title: "Para Profesionales",
-  description: "Lo último de la ciencia de la leche y lácteos, validado por autoridades científicas.",
+    title: "Para Profesionales",
+    description: "Lo último de la ciencia de la leche y lácteos, validado por autoridades científicas.",
 };
 
-export default function Profesionales() {
-    const data = paginas.find((pagina) => pagina.slug === "profesionales");
+// Componente separado que hace el fetch
+async function ProfesionalesContent() {
+    const [responseContenido, responseElementos, responseProfesionales,] = await Promise.all(
+        [
+            fetchAPI(`/paginas?populate[0]=imagen_principal&populate[1]=tema_destacado&populate[2]=imagen_footer&populate[3]=tema_destacado.imagen`),
+            fetchAPI(`/profesionales?populate[0]=imagen_principal&populate[1]=categoria`),
+            fetchAPI(`/categoria-profesionales?populate[0]=imagen_principal`)
+        ]
+    );
+
+    const contenidoFromStrapi = responseContenido?.data || [];
+    const allProfesionalesFromStrapi = responseProfesionales?.data || [];
+    const allElementosFromStrapi = responseElementos?.data || [];
+
+    const data = contenidoFromStrapi.find(
+        (pagina) => pagina.slug === "profesionales",
+    );
+
     return (
-        <main>
-            <Header />
+        <>
             <PagesJumbotron
                 titulo={data.titulo}
                 subtitulo={data.subtitulo}
@@ -26,17 +46,27 @@ export default function Profesionales() {
                 descripcion={data.descripcion}
             />
             <TemaDestacado
-                imagen_tema_destacado={data.imagen_tema_destacado}
-                titulo_tema_destacado={data.titulo_tema_destacado}
-                subtitulo_tema_destacado={data.subtitulo_tema_destacado}
-                enlace_tema_destacado={data.enlace_tema_destacado}
-                descripcion_tema_destacado={data.descripcion_tema_destacado}
+                imagen_tema_destacado={data.tema_destacado.imagen}
+                titulo_tema_destacado={data.tema_destacado.titulo}
+                subtitulo_tema_destacado={data.tema_destacado.subtitulo}
+                enlace_tema_destacado={data.tema_destacado.enlace}
+                descripcion_tema_destacado={data.tema_destacado.descripcion}
             />
-            <HerramientasMateriales />
+            <HerramientasMateriales elementos={allElementosFromStrapi} herramientas_materiales={allProfesionalesFromStrapi} />
             <Aprende fromPage={true} />
             <AlianzasColaboraciones />
             <FormContacto imagen_footer={data.imagen_footer} />
             <Footer />
+        </>);
+}
+
+export default function Profesionales() {
+    return (
+        <main>
+            <Header />
+            <Suspense fallback={<Skeleton />}>
+                <ProfesionalesContent />
+            </Suspense>
         </main>
     );
 }

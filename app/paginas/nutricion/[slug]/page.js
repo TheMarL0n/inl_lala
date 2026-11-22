@@ -151,8 +151,6 @@ async function NutricionContent({ slug }) {
               contenido={item.contenido}
             />
           }
-
-          { console.log(item) }
           if (item.__component === "contenido-principal.tabla") {
             return <Tabla
               key={idx}

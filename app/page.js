@@ -2,7 +2,8 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Aprende from "./components/Home/Aprende";
 import Dudas from "./components/Home/Dudas";
-import MitosSwiper from "./components/Home/MitosSwiper";
+import HomeMitosSwiper from "./components/Home/HomeMitosSwiper";
+import MitosSwiper from "./components/Home/HomeMitosSwiper";
 import Nutricion from "./components/Home/Nutricion";
 import Preguntas from "./components/Home/Preguntas";
 import Profesionales from "./components/Home/Profesionales";
@@ -45,7 +46,7 @@ export default async function Home() {
       <br/><br/>
       <Aprende />
       <Preguntas />
-      <MitosSwiper contenido={allMitosFromStrapi} />
+      <HomeMitosSwiper contenido={allMitosFromStrapi} />
       <Profesionales />
       <Footer />
     </main>

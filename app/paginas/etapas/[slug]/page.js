@@ -107,7 +107,6 @@ async function EtapaContent({ slug }) {
           }
 
           if (item.__component === "contenido-principal.navegacion-vertical") {
-            console.log(item)
             return (
               <VerticalSwiper key={idx} contenido={item.diapositiva || []} />
             );

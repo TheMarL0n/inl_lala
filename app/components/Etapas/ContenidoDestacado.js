@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { encabezado_h3 } from "@/app/utils/CSS_clases";
+import { encabezado_h3, stroke_text } from "@/app/utils/CSS_clases";
 import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
 
 // Si la URL viene de Strapi y no empieza con http, le agregamos el host
 const getStrapiMedia = (url) => {
@@ -25,6 +26,12 @@ const extraerRestoDeMarkdown = (markdownText) => {
   const textoSinH6 = markdownText.replace(/^######\s+.+$/m, "");
   return textoSinH6.trim();
 };
+
+//Checar si hay ams de un h6
+function tieneMasDeUnH6(markdown = "") {
+  const coincidencias = markdown.match(/^######\s+.+$/gm);
+  return (coincidencias?.length ?? 0) > 1;
+}
 
 const ContenidoDestacado = ({ contenido }) => {
   const fondosOscuros = {
@@ -147,6 +154,9 @@ const ContenidoDestacado = ({ contenido }) => {
   }
 
   if (contenido.tipo === "doble_foto") {
+    const masDeUnH6 = tieneMasDeUnH6(contenido.html);
+    const tituloH6 = extraerH6Markdown(contenido.html);
+    const restoMarkdown = extraerRestoDeMarkdown(contenido.html);
     return (
       <section
         className={`grid grid-cols-1 sm:grid-cols-4 mx-auto relative z-2 w-full items-start px-4 sm:px-0 py-10`}
@@ -172,7 +182,19 @@ const ContenidoDestacado = ({ contenido }) => {
         <div
           className={`w-full sm:col-span-2 flex flex-col items-start p-8 ${contenido.imagen_derecha || contenido.imagen_derecha ? "sm:min-h-[650px]" : "h-auto"}`}
         >
-          <ReactMarkdown>{contenido.html}</ReactMarkdown>
+          {masDeUnH6 ?
+            <Markdown>{contenido.html}</Markdown>
+            :
+            <>
+              <span
+                className={`${stroke_text} [-webkit-text-stroke-color:#15428C] text-center text-[120px]! sm:text-[210px]! leading-31 uppercase absolute z-9 left-20 top-20`}
+              >
+                {tituloH6}
+              </span>
+              <ReactMarkdown>{restoMarkdown}</ReactMarkdown>
+            </>
+          }
+
         </div>
 
         {/* IMAGEN DERECHA: Fija (sticky) al hacer scroll */}

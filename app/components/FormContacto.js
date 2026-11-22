@@ -2,12 +2,23 @@ import Image from "next/image"
 import { BlueButton, encabezado_h3 } from "../utils/CSS_clases"
 
 const FormContacto = ({ imagen_footer }) => {
+
+    // Si la URL viene de Strapi y no empieza con http, le agregamos el host
+    const getStrapiMedia = (url) => {
+        if (!url) return null;
+        if (url.startsWith("http") || url.startsWith("//")) {
+            return url;
+        }
+        const host = process.env.NEXT_PUBLIC_STRAPI_HOST;
+        return `${host}${url}`;
+    };
+
     return (
         <section className="relative min-h-screen flex flex-col sm:justify-center py-20 px-4 overflow-hidden">
             {/* Imagen de fondo optimizada con Next.js Image */}
             {imagen_footer && (
                 <Image
-                    src={imagen_footer}
+                    src={getStrapiMedia(imagen_footer.url)}
                     alt="Imagen de fondo de contacto"
                     fill
                     sizes="100vw"

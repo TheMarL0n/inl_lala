@@ -8,12 +8,23 @@ const TemaDestacado = ({
     descripcion_tema_destacado,
     enlace_tema_destacado,
 }) => {
+
+    // Si la URL viene de Strapi y no empieza con http, le agregamos el host
+    const getStrapiMedia = (url) => {
+        if (!url) return null;
+        if (url.startsWith("http") || url.startsWith("//")) {
+            return url;
+        }
+        const host = process.env.NEXT_PUBLIC_STRAPI_HOST;
+        return `${host}${url}`;
+    };
+
     return (
         <section className="mt-20 relative sm:min-h-screen flex flex-col sm:justify-center overflow-hidden">
             {/* Imagen de fondo optimizada con Next.js Image */}
             {imagen_tema_destacado && (
                 <Image
-                    src={imagen_tema_destacado}
+                    src={getStrapiMedia(imagen_tema_destacado.url)}
                     alt={titulo_tema_destacado || "Imagen de tema destacado"}
                     fill
                     sizes="100vw"

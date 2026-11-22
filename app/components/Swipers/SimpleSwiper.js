@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper/modules";
 import ReactMarkdown from "react-markdown";
-import { stroke_text } from "@/app/utils/CSS_clases";
+import { encabezado_h2, encabezado_h3, stroke_text } from "@/app/utils/CSS_clases";
 
 // Si la URL viene de Strapi y no empieza con http, le agregamos el host
 const getStrapiMedia = (url) => {
@@ -146,6 +146,7 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
                 </div>
               ) : tipo === "texto_gigante_centro" ? (
                 <div className="my-10">
+                  <h5 className={`${encabezado_h3} text-white! bg-[#15428C]`}>{tituloH3}</h5>
                   <div className="flex flex-col sm:flex-row items-center justify-center relative w-full">
                     {/* 1. Primera mitad del texto (ej. "LE") */}
                     <span
@@ -155,8 +156,9 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
                     </span>
 
                     {/* 2. Contenedor de la imagen al centro */}
-                    <div className="w-full max-w-[300px] h-[300px] relative overflow-hidden z-20 -m-20">
-                      {item.imagen ?
+
+                    {item.imagen ?
+                      <div className="w-full max-w-[300px] h-[300px] relative overflow-hidden z-20 -m-20">
                         <Image
                           src={getStrapiMedia(item.imagen.url)}
                           alt={
@@ -167,11 +169,10 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
                           sizes="(max-width: 640px)"
                           className="object-contain absolute top-0 left-0"
                         />
-                        :
-                        ""
-                      }
-
-                    </div>
+                      </div>
+                      :
+                      ""
+                    }
 
                     {/* 3. Segunda mitad del texto (ej. "CHE") y el subtítulo */}
                     <div className="flex flex-col space-y-2 z-10 text-center sm:text-left">
@@ -182,7 +183,7 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
                       </span>
                     </div>
                   </div>
-                  <h3 className="text-right font-bold text-[#164190]! text-[26px]! leading-[1.1]">
+                  <h3 className="text-right font-bold text-[#164190]! text-[26px]! leading-[1.1] ml-auto! max-w-xl capitalize!">
                     {subtitulo}
                   </h3>
                 </div>
