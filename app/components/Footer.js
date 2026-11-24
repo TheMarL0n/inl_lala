@@ -8,7 +8,7 @@ const Footer = ({ menuI_tems = [], socialesI_tems = [] }) => {
                 <div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 space-y-1">
                         {menuI_tems.map((item, idx) => (
-                            <CustomLink key={idx} href={item.url} className="text-white text-[16px] sm:text-[18px] font-medium">{item.nombre}</CustomLink>
+                            <CustomLink key={idx} href={`/paginas/${item.url}`} className="text-white text-[16px] sm:text-[18px] font-medium">{item.nombre}</CustomLink>
                         ))}
                     </div>
                     {
