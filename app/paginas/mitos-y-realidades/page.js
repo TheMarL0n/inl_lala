@@ -16,15 +16,19 @@ export const metadata = {
 
 // Componente separado que hace el fetch
 async function MitosContent() {
-  const [responseContenido, responseMitos,] = await Promise.all(
+  const [responseContenido, responseMitos, responseMenu, responseSociales] = await Promise.all(
     [
       fetchAPI(`/paginas?populate[0]=imagen_principal`),
-      fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`)
+      fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`),
+      fetchAPI(`/item-menus`),
+      fetchAPI(`/redes-sociales`),
     ]
   );
 
   const contenidoFromStrapi = responseContenido?.data || [];
   const allMitosFromStrapi = responseMitos?.data || [];
+  const menuItems = responseMenu?.data || [];
+  const socialesItems = responseSociales?.data || [];
 
   const data = contenidoFromStrapi.find(
     (pagina) => pagina.slug === "mitos_realidades",
@@ -32,6 +36,7 @@ async function MitosContent() {
 
   return (
     <>
+      <Header menuI_tems={menuItems} />
       <PagesJumbotron
         titulo={data.titulo}
         subtitulo={data.subtitulo}
@@ -40,14 +45,13 @@ async function MitosContent() {
         descripcion={data.descripcion}
       />
       <MitosGrid mitos={allMitosFromStrapi} />
-      <Footer />
+      <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </>);
 }
 
 export default function Mitos() {
   return (
     <main>
-      <Header />
       <Suspense fallback={<Skeleton />}>
         <MitosContent />
       </Suspense>

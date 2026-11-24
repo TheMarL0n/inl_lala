@@ -14,11 +14,13 @@ import Skeleton from "@/app/components/Skeleton";
 
 // Componente secundario que hace el fetch pesado
 async function MitoContent({ slug }) {
-  const [responseMito, responseTodos] = await Promise.all([
+  const [responseMito, responseTodos, responseMenu, responseSociales] = await Promise.all([
     fetchAPI(
       `/mitos-y-realidades?filters[slug][$eq]=${slug}&populate[0]=imagen_principal`,
     ),
     fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`),
+    fetchAPI(`/item-menus`),
+    fetchAPI(`/redes-sociales`),
   ]);
 
   const currentMitoData = responseMito?.data?.[0];
@@ -37,9 +39,12 @@ async function MitoContent({ slug }) {
   const title = currentMito.mito || "";
   const reality = currentMito.realidad || "";
   const main_image = currentMito.imagen_principal || "";
+  const menuItems = responseMenu?.data || [];
+  const socialesItems = responseSociales?.data || [];
 
   return (
     <>
+      <Header menuI_tems={menuItems} />
       <PagesSmallJumbotron background={main_image} />
       <article>
         <Breadcrumbs
@@ -64,6 +69,7 @@ async function MitoContent({ slug }) {
         parent_url={"mitos-y-realidades"}
         currentTheme={currentMito}
       />
+      <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </>
   );
 }
@@ -73,11 +79,9 @@ export default async function Mito_Realidad({ params }) {
 
   return (
     <main>
-      <Header />
       <Suspense fallback={<Skeleton />}>
         <MitoContent slug={resolvedParams.slug} />
-      </Suspense>      
-      <Footer />
+      </Suspense>
     </main>
   );
 }

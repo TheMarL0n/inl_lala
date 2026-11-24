@@ -20,14 +20,17 @@ export const metadata = {
 
 // Componente separado que hace el fetch
 async function ProfesionalesContent() {
-    const [responseContenido, responseElementos, responseProfesionales,] = await Promise.all(
+    const [responseContenido, responseElementos, responseProfesionales, responseMenu, responseSociales] = await Promise.all(
         [
             fetchAPI(`/paginas?populate[0]=imagen_principal&populate[1]=tema_destacado&populate[2]=imagen_footer&populate[3]=tema_destacado.imagen`),
             fetchAPI(`/profesionales?populate[0]=imagen_principal&populate[1]=categoria`),
-            fetchAPI(`/categoria-profesionales?populate[0]=imagen_principal`)
+            fetchAPI(`/categoria-profesionales?populate[0]=imagen_principal`),
+            fetchAPI(`/item-menus`),
+            fetchAPI(`/redes-sociales`),
         ]
     );
-
+    const menuItems = responseMenu?.data || [];
+    const socialesItems = responseSociales?.data || [];
     const contenidoFromStrapi = responseContenido?.data || [];
     const allProfesionalesFromStrapi = responseProfesionales?.data || [];
     const allElementosFromStrapi = responseElementos?.data || [];
@@ -38,6 +41,7 @@ async function ProfesionalesContent() {
 
     return (
         <>
+            <Header menuI_tems={menuItems} />
             <PagesJumbotron
                 titulo={data.titulo}
                 subtitulo={data.subtitulo}
@@ -56,14 +60,13 @@ async function ProfesionalesContent() {
             <Aprende fromPage={true} />
             <AlianzasColaboraciones />
             <FormContacto imagen_footer={data.imagen_footer} />
-            <Footer />
+            <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
         </>);
 }
 
 export default function Profesionales() {
     return (
         <main>
-            <Header />
             <Suspense fallback={<Skeleton />}>
                 <ProfesionalesContent />
             </Suspense>

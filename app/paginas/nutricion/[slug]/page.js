@@ -24,12 +24,14 @@ import Tabla from "@/app/components/Tabla";
 
 // Componente secundario que realiza los fetch pesados de la etapa y su contenido
 async function NutricionContent({ slug }) {
-  const [responseEtapa, responseTodas, responseCategorias] = await Promise.all([
+  const [responseEtapa, responseTodas, responseCategorias, responseMenu, responseSociales] = await Promise.all([
     fetchAPI(
       `/nutriciones?filters[slug][$eq]=${slug}&populate[0]=imagen_principal&populate[1]=contenido&populate[2]=contenido.diapositiva&populate[3]=contenido.diapositiva.imagen&populate[4]=contenido.diapositiva.imagen_izquierda&populate[5]=contenido.diapositiva.imagen_derecha&populate[6]=categoria&populate[7]=contenido.imagen_destacada&populate[8]=contenido.imagen_izquierda&populate[9]=contenido.imagen_derecha&populate[10]=contenido.imagen_principal`,
     ),
     fetchAPI(`/nutriciones?populate[0]=imagen_principal&populate[1]=categoria`),
     fetchAPI(`/categoria-nutriciones`),
+    fetchAPI(`/item-menus`),
+    fetchAPI(`/redes-sociales`),
   ]);
 
   const currentEtapaData = responseEtapa?.data?.[0];
@@ -54,6 +56,8 @@ async function NutricionContent({ slug }) {
   const referencias = currentEtapa?.Referencias || "";
   const contenido = currentEtapa?.contenido || [];
   const titulo_mitos = "Mitos frecuentes durante el embarazo y la lactancia...";
+  const menuItems = responseMenu?.data || [];
+  const socialesItems = responseSociales?.data || [];
 
   // Filtramos las etapas relacionadas
   const etapasRelacionadas = allEtapasFromStrapi.filter(
@@ -62,6 +66,7 @@ async function NutricionContent({ slug }) {
 
   return (
     <>
+      <Header menuI_tems={menuItems} />
       <PagesSmallJumbotron background={background} />
       <Breadcrumbs
         title={title}
@@ -183,6 +188,7 @@ async function NutricionContent({ slug }) {
         parent_url={"nutricion"}
         currentTheme={currentEtapa}
       />
+      <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </>
   );
 }
@@ -192,11 +198,9 @@ export default async function Nutricion_Pagina({ params }) {
 
   return (
     <main>
-      <Header />
       <Suspense fallback={<Skeleton />}>
         <NutricionContent slug={resolvedParams.slug} />
       </Suspense>
-      <Footer />
     </main>
   );
 }

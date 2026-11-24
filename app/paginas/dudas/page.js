@@ -21,28 +21,33 @@ async function DudasContent({ searchParams }) {
   const resolvedSearchParams = await searchParams;
   const query = resolvedSearchParams?.criteria?.toLowerCase() || "";
 
-  const [responseContenido, responseDudas, responseCategorias] =
+  const [responseContenido, responseDudas, responseCategorias, responseMenu, responseSociales] =
     await Promise.all([
       fetchAPI(`/paginas?populate[0]=imagen_principal&populate[1]=imagen_footer`),
       fetchAPI(`/dudas?populate[0]=imagen_principal&populate[1]=categoria`),
       fetchAPI(`/categoria-dudas?populate[0]=imagen_principal`),
+      fetchAPI(`/item-menus`),
+      fetchAPI(`/redes-sociales`),
     ]);
 
   const contenidoFromStrapi = responseContenido?.data || [];
   const allDudasFromStrapi = responseDudas?.data || [];
   const catDudasFromStrapi = responseCategorias?.data || [];
+  const menuItems = responseMenu?.data || [];
+  const socialesItems = responseSociales?.data || [];
   const data = contenidoFromStrapi.find((pagina) => pagina.slug === "dudas");
 
   // FILTRADO: Solo filtramos si hay texto en la consulta. Si no hay, devolvemos un arreglo vacío.
-  const dudasFiltradas = query 
+  const dudasFiltradas = query
     ? allDudasFromStrapi.filter((duda) => {
-        const tituloDuda = (duda.attributes?.titulo || duda.titulo || "").toLowerCase();
-        return tituloDuda.includes(query);
-      })
+      const tituloDuda = (duda.attributes?.titulo || duda.titulo || "").toLowerCase();
+      return tituloDuda.includes(query);
+    })
     : [];
 
   return (
     <>
+      <Header menuI_tems={menuItems} />
       <PagesJumbotron
         titulo={data.titulo}
         subtitulo={data.subtitulo}
@@ -58,7 +63,7 @@ async function DudasContent({ searchParams }) {
           <h2 className="text-2xl sm:text-3xl font-bold text-[#164190]">
             Resultados de búsqueda para: &quot;{resolvedSearchParams.criteria}&quot;
           </h2>
-          
+
           {dudasFiltradas.length > 0 ? (
             <CTAGenerico array={dudasFiltradas} parent={"dudas"} />
           ) : (
@@ -73,12 +78,12 @@ async function DudasContent({ searchParams }) {
 
       {/* CategoriasDudas se queda intacto mostrando siempre todo el contenido original */}
       <CategoriasDudas
-        dudas={allDudasFromStrapi} 
+        dudas={allDudasFromStrapi}
         categorias_dudas={catDudasFromStrapi}
       />
-      
+
       <FooterDudas imagen_footer={data.imagen_footer} />
-      <Footer />
+      <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </>
   );
 }
@@ -86,7 +91,6 @@ async function DudasContent({ searchParams }) {
 export default function Dudas({ searchParams }) {
   return (
     <main>
-      <Header />
       <Suspense fallback={<Skeleton />}>
         <DudasContent searchParams={searchParams} />
       </Suspense>

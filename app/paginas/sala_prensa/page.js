@@ -6,17 +6,32 @@ import FormContacto from "@/app/components/FormContacto";
 import NotasList from "@/app/components/Noticias/Notas";
 import RecursosList from "@/app/components/Noticias/Recursos";
 import EventosList from "@/app/components/Noticias/Eventos";
+import Skeleton from "@/app/components/Skeleton";
+import { Suspense } from "react";
+import { fetchAPI } from "@/app/lib/strapi";
 
 export const metadata = {
-  title: "Sala de Prensa",
-  description: "Comunicados, materiales institucionales, recursos visuales e información oficial del Instituto de Nutrición Lala.",
+    title: "Sala de Prensa",
+    description: "Comunicados, materiales institucionales, recursos visuales e información oficial del Instituto de Nutrición Lala.",
 };
 
-export default function SalaPrensa() {
-    const data = paginas.find((pagina) => pagina.slug === "sala_prensa");
+async function PrensaContent() {
+    const [responseContenido, responseMenu, responseSociales] = await Promise.all(
+        [
+            fetchAPI(`/paginas?populate[0]=imagen_principal&populate[1]=imagen_footer`),
+            fetchAPI(`/item-menus`),
+            fetchAPI(`/redes-sociales`),
+        ]
+    )
+
+    const contenidoFromStrapi = responseContenido?.data || [];
+    const menuItems = responseMenu?.data || [];
+    const socialesItems = responseSociales?.data || [];
+    const data = contenidoFromStrapi.find((pagina) => pagina.slug === "sala_prensa");
+
     return (
-        <main>
-            <Header />
+        <>
+            <Header menuI_tems={menuItems} />
             <PagesJumbotron
                 titulo={data.titulo}
                 subtitulo={data.subtitulo}
@@ -28,7 +43,20 @@ export default function SalaPrensa() {
             <RecursosList />
             <EventosList />
             <FormContacto imagen_footer={data.imagen_footer} />
-            <Footer />
+            <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
+        </>
+    )
+}
+
+
+
+export default function SalaPrensa() {
+    return (
+        <main>
+            <Suspense fallback={<Skeleton />}>
+                <PrensaContent />
+            </Suspense>
+
         </main>
     );
 }

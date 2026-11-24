@@ -146,7 +146,13 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
                 </div>
               ) : tipo === "texto_gigante_centro" ? (
                 <div className="my-10">
-                  <h5 className={`${encabezado_h3} text-white! bg-[#15428C]`}>{tituloH3}</h5>
+                  {
+                    tituloH3 ?
+                      <h5 className={`${encabezado_h3} text-white! bg-[#15428C]`}>{tituloH3}</h5>
+                      :
+                      ""
+                  }
+
                   <div className="flex flex-col sm:flex-row items-center justify-center relative w-full">
                     {/* 1. Primera mitad del texto (ej. "LE") */}
                     <span
@@ -192,7 +198,7 @@ const SimpleSwiper = ({ contenido, tipo, diapositivas }) => {
                   className={`swiper-destacado max-w-7xl mx-auto relative overflow-hidden z-2 w-full grid grid-cols-1 sm:grid-cols-2 min-h-[470px]`}
                 >
                   <div
-                    className={`w-full flex flex-col items- justify-end sm:bg-[#164190] p-8 pr-20`}
+                    className={`w-full flex flex-col items- justify-end sm:bg-[#164190] text-white! p-8 pr-20`}
                   >
                     <ReactMarkdown>{item.contenido}</ReactMarkdown>
                   </div>

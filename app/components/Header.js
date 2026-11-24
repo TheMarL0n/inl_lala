@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { menuI_tems } from '../utils/Copies'
 import {
     XMarkIcon,
 } from '@heroicons/react/24/outline'
@@ -10,7 +9,7 @@ import SearchForm from './SearchForm'
 import { motion, AnimatePresence } from 'framer-motion'
 import CustomLink from './Auxiliares/CustomLinks'
 
-export default function Header() {
+export default function Header({ menuI_tems = [] }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [showNavbar, setShowNavbar] = useState(true)
     const [lastScrollY, setLastScrollY] = useState(0)
@@ -122,10 +121,10 @@ export default function Header() {
                                             {menuI_tems.map((item, idx) => (
                                                 <CustomLink
                                                     key={idx}
-                                                    href={item.url}
+                                                    href={`/paginas/${item.url}`}
                                                     className="nav-item relative group block mx-auto w-fit rounded-lg px-3 py-2 uppercase text-[30px] leading-12 font-medium text-white duration-400"
                                                 >
-                                                    <span>{item.name}</span>
+                                                    <span>{item.nombre}</span>
                                                     <span className="absolute bottom-2 left-0 w-0 h-1 bg-white transition-all duration-300 group-hover:w-full"></span>
                                                 </CustomLink>
                                             ))}

@@ -80,6 +80,28 @@ export const videos_aprende = [
 
 export const paginas = [
   {
+    slug: "/",
+    titulo: "Lo que comes importa",
+    subtitulo: "entenderlo también",
+    imagen_sobre_inl: "",
+    titulo_sobre_inl_1: "La nutrición está presente",
+    titulo_sobre_inl_2: "en cada decisión que tomamos",
+    contenido_sobre_inl: "En el **Instituto de Nutrición Lala** creemos que entender la alimentación no debería ser complicado. Por eso reunimos información clara, confiable y basada en evidencia para ayudarte a comprender mejor a tu cuerpo y los alimentos y que puedas tomar mejores decisiones para tu alimentación.",
+    imagen_dudas: "",
+    titulo_dudas_1: "Resuelve tus",
+    titulo_dudas_2: "Dudas",
+    contenido_dudas: "Explora contenidos para aprender sobre nutrición, salud y alimentación desde una perspectiva científica, práctica y fácil de entender.",
+    titulo_videos: "Aprende en minutos",
+    imagen_nutricion: "",
+    titulo_nutricion_1: "Como mejor. vivo mejor.",
+    titulo_nutricion_2: "Hoy quiero aprender a:",
+    titulo_mitos_1: "Mitos y realidades",
+    titulo_mitos_2: "No todo lo que se dice es cierto",
+    imagen_profesionales: "",
+    titulo_profesionales: "Para profesionales",
+    contenido_profesionales: "Encuentra herramientas y lo más reciente en evidencia científica en temas de nutrición, salud, leche y productos lácteos, y fortalecer tu práctica profesional.",
+  },
+  {
     slug: "dudas",
     titulo: "Resuelve tus",
     subtitulo: "Dudas",

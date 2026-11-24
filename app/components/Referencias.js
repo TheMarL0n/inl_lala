@@ -27,7 +27,7 @@ const Referencias = ({ contenido }) => {
         <div
           className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0"}`}
         >
-          <div className="overflow-hidden">
+          <div className="overflow-hidden text-[#15428C]! ">
             <ReactMarkdown>
                 {contenido}
             </ReactMarkdown>

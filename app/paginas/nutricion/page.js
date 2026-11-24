@@ -16,11 +16,13 @@ export const metadata = {
 
 // Componente separado que hace el fetch
 async function NutricionContent() {
-  const [responseContenido, responseNutricion, responseCategorias] =
+  const [responseContenido, responseNutricion, responseCategorias, responseMenu, responseSociales] =
     await Promise.all([
       fetchAPI(`/paginas?populate[0]=imagen_principal`),
       fetchAPI(`/nutriciones?populate[0]=imagen_principal&populate[1]=categoria`),
       fetchAPI(`/categoria-nutriciones?populate[0]=imagen_principal`),
+      fetchAPI(`/item-menus`),
+      fetchAPI(`/redes-sociales`),
     ]);
 
   const contenidoFromStrapi = responseContenido?.data || [];
@@ -29,9 +31,12 @@ async function NutricionContent() {
   const data = contenidoFromStrapi.find(
     (pagina) => pagina.slug === "nutricion",
   );
+  const menuItems = responseMenu?.data || [];
+  const socialesItems = responseSociales?.data || [];
 
   return (
     <>
+      <Header menuI_tems={menuItems} />
       <PagesJumbotron
         titulo={data.titulo}
         subtitulo={data.subtitulo}
@@ -42,7 +47,7 @@ async function NutricionContent() {
       <CategoriasNutricion
         nutricion={allNutricionFromStrapi}
         categorias_nutricion={catNutricionFromStrapi} />
-      <Footer />
+      <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </>
   );
 }
@@ -50,7 +55,6 @@ async function NutricionContent() {
 export default function Nutricion() {
   return (
     <main>
-      <Header />
       <Suspense fallback={<Skeleton />}>
         <NutricionContent />
       </Suspense>

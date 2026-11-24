@@ -8,19 +8,25 @@ export default async function SearchPage({ searchParams }) {
   // 1. Llamamos a ambas APIs en paralelo de forma segura
   let mitos = [];
   let etapas = [];
+  let menuItems = [];
+  let socialesItems = [];
 
   try {
-    const [responseMitos, responseEtapas] = await Promise.all([
+    const [responseMitos, responseEtapas, responseMenu, responseSociales] = await Promise.all([
       fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`),
       fetchAPI(`/etapas?populate[0]=imagen_principal`),
+      fetchAPI(`/item-menus`),
+      fetchAPI(`/redes-sociales`),
     ]);
     mitos = responseMitos?.data || [];
     etapas = responseEtapas?.data || [];
+    menuItems = responseMenu?.data || [];
+   socialesItems = responseSociales?.data || [];
   } catch (error) {
     console.error("Error al cargar los datos de Strapi:", error);
-  }
+  } 
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_HOST;
+  const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_HOST;
 
   const formattedMitos = mitos.map((item) => {
     const imgUrl = item.imagen_principal?.url;
@@ -83,7 +89,7 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_HOST;
 
   return (
     <main>
-      <Header />
+      <Header menuI_tems={menuItems} />
       <div className="max-w-7xl mx-auto py-40 px-6">
         {/* Encabezado */}
         <div className="border-b border-gray-200 pb-6 mb-8">
@@ -169,7 +175,7 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_HOST;
           ))}
         </div>
       </div>
-      <Footer />
+      <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </main>
   );
 }

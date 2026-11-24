@@ -144,7 +144,8 @@ ul li {
   text-transform: uppercase;
 }
 
-.custom_article-etapas section .etapasSwiper .swiper-destacado p {
+.custom_article-etapas section .etapasSwiper .swiper-destacado p,
+.custom_article-etapas section .etapasSwiper .swiper-destacado ul {
   color: #ffffff !important;
   font-size: 24px;
   font-weight: normal;

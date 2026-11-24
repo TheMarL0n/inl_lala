@@ -24,12 +24,14 @@ import Tabla from "@/app/components/Tabla";
 
 // Componente secundario que realiza los fetch pesad y su contenido
 async function ProfesionalesContent({ slug }) {
-  const [responseProfesionales, responseTodas, responseCategorias] = await Promise.all([
+  const [responseProfesionales, responseTodas, responseCategorias, responseMenu, responseSociales] = await Promise.all([
     fetchAPI(
       `/profesionales?filters[slug][$eq]=${slug}&populate[0]=imagen_principal&populate[1]=contenido&populate[2]=contenido.diapositiva&populate[3]=contenido.diapositiva.imagen&populate[4]=contenido.diapositiva.imagen_izquierda&populate[5]=contenido.diapositiva.imagen_derecha&populate[6]=categoria&populate[7]=contenido.imagen_destacada&populate[8]=contenido.imagen_izquierda&populate[9]=contenido.imagen_derecha&populate[10]=contenido.imagen_principal`,
     ),
     fetchAPI(`/profesionales?populate[0]=imagen_principal&populate[1]=categoria`),
     fetchAPI(`/categoria-profesionales`),
+    fetchAPI(`/item-menus`),
+    fetchAPI(`/redes-sociales`),
   ]);
 
   const currentProfesionalesData = responseProfesionales?.data?.[0];
@@ -54,6 +56,8 @@ async function ProfesionalesContent({ slug }) {
   const referencias = currentProfesionales?.Referencias || "";
   const contenido = currentProfesionales?.contenido || [];
   const titulo_mitos = "Mitos frecuentes durante el embarazo y la lactancia...";
+  const menuItems = responseMenu?.data || [];
+  const socialesItems = responseSociales?.data || [];
 
   // Filtramos las etapas relacionadas
   const profesionalesRalacionados = allProfesionalesFromStrapi.filter(
@@ -62,6 +66,7 @@ async function ProfesionalesContent({ slug }) {
 
   return (
     <>
+      <Header menuI_tems={menuItems} />
       <PagesSmallJumbotron background={background} />
       <Breadcrumbs
         title={title}
@@ -183,6 +188,7 @@ async function ProfesionalesContent({ slug }) {
         parent_url={"profesionales"}
         currentTheme={currentProfesionales}
       />
+      <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </>
   );
 }
@@ -192,11 +198,9 @@ export default async function Profesionales_Pagina({ params }) {
 
   return (
     <main>
-      <Header />
       <Suspense fallback={<Skeleton />}>
         <ProfesionalesContent slug={resolvedParams.slug} />
       </Suspense>
-      <Footer />
     </main>
   );
 }

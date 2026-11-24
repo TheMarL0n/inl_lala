@@ -3,7 +3,6 @@ import Header from "./components/Header";
 import Aprende from "./components/Home/Aprende";
 import Dudas from "./components/Home/Dudas";
 import HomeMitosSwiper from "./components/Home/HomeMitosSwiper";
-import MitosSwiper from "./components/Home/HomeMitosSwiper";
 import Nutricion from "./components/Home/Nutricion";
 import Preguntas from "./components/Home/Preguntas";
 import Profesionales from "./components/Home/Profesionales";
@@ -11,11 +10,18 @@ import HomeJumbotron from "./components/HomeJumbotron";
 
 import { fetchAPI } from "@/app/lib/strapi";
 
-// 1. Ejecutamos ambas peticiones en paralelo para optimizar tiempos
-  const response = await fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`);
-  const allMitosFromStrapi = response?.data || [];
-
 export default async function Home() {
+  const [responseMitos, responseMenu, responseSociales] = await Promise.all(
+    [
+      fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`),
+      fetchAPI(`/item-menus`),
+      fetchAPI(`/redes-sociales`),
+    ]
+  )
+  const allMitosFromStrapi = responseMitos?.data || [];
+  const menuItems = responseMenu?.data || [];
+  const socialesItems = responseSociales?.data || [];
+  
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'MedicalOrganization',
@@ -33,22 +39,24 @@ export default async function Home() {
     ]
   };
 
+  const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
+
   return (
     <main>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd }}
       />
-      <Header />
+      <Header menuI_tems={menuItems} />
       <HomeJumbotron />
       <Nutricion />
       <Dudas />
-      <br/><br/>
+      <br /><br />
       <Aprende />
       <Preguntas />
       <HomeMitosSwiper contenido={allMitosFromStrapi} />
       <Profesionales />
-      <Footer />
+      <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </main>
   );
 }

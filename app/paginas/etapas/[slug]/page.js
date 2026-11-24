@@ -21,12 +21,14 @@ import Skeleton from "@/app/components/Skeleton";
 
 // Componente secundario que realiza los fetch pesados de la etapa y su contenido
 async function EtapaContent({ slug }) {
-  const [responseEtapa, responseTodas, responseCategorias] = await Promise.all([
+  const [responseEtapa, responseTodas, responseCategorias, responseMenu, responseSociales] = await Promise.all([
     fetchAPI(
       `/etapas?filters[slug][$eq]=${slug}&populate[0]=imagen_principal&populate[1]=contenido&populate[2]=contenido.diapositiva&populate[3]=contenido.diapositiva.imagen&populate[4]=contenido.diapositiva.imagen_izquierda&populate[5]=contenido.diapositiva.imagen_derecha&populate[6]=categoria&populate[7]=contenido.imagen_destacada&populate[8]=contenido.imagen_izquierda&populate[9]=contenido.imagen_derecha`,
     ),
     fetchAPI(`/etapas?populate[0]=imagen_principal&populate[1]=categoria`),
     fetchAPI(`/categorias-etapas`),
+    fetchAPI(`/item-menus`),
+    fetchAPI(`/redes-sociales`),
   ]);
 
   const currentEtapaData = responseEtapa?.data?.[0];
@@ -51,6 +53,8 @@ async function EtapaContent({ slug }) {
   const referencias = currentEtapa?.Referencias || "";
   const contenido = currentEtapa?.contenido || [];
   const titulo_mitos = "Mitos frecuentes durante el embarazo y la lactancia...";
+  const menuItems = responseMenu?.data || [];
+  const socialesItems = responseSociales?.data || [];
 
   // Filtramos las etapas relacionadas
   const etapasRelacionadas = allEtapasFromStrapi.filter(
@@ -59,6 +63,7 @@ async function EtapaContent({ slug }) {
 
   return (
     <>
+      <Header menuI_tems={menuItems} />
       <PagesSmallJumbotron background={background} />
       <Breadcrumbs
         title={title}
@@ -150,6 +155,7 @@ async function EtapaContent({ slug }) {
         parent_url={"etapas"}
         currentTheme={currentEtapa}
       />
+      <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </>
   );
 }
@@ -158,14 +164,10 @@ export default async function Etapa_Pagina({ params }) {
   const resolvedParams = await params;
   return (
     <main>
-      <Header />
-
       {/* El contenido complejo y pesado de Strapi fluye con Suspense */}
       <Suspense fallback={<Skeleton />}>
         <EtapaContent slug={resolvedParams.slug} />
       </Suspense>
-
-      <Footer />
     </main>
   );
 }
