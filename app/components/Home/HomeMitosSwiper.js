@@ -32,19 +32,20 @@ const HomeMitosSwiper = ({ titulo_1, titulo_2, contenido, alternative, currentSl
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start start", "end end"],
+    // Comienza (0) cuando el inicio de la sección llega a la mitad de la pantalla ("start center")
+    offset: ["start center", "end end"],
   });
 
-  // A partir de que el tope toca el tope de la pantalla (0), pasa de #15428C a #FFFFFF (0.55)
+  // A partir de que el tope toca la mitad de la pantalla (0), pasa de #15428C a #FFFFFF
   const bgColor = useTransform(
     scrollYProgress,
-    [0, 0.15, 1],
+    [0, 0.10, 1],
     prefersReducedMotion
       ? ["#FFFFFF", "#FFFFFF", "#FFFFFF"]
       : ["#15428C", "#FFFFFF", "#FFFFFF"]
   );
 
-  // Aparece casi a la par del cambio de fondo (arranca en 0.2, se asienta en 0.65 y se mantiene en 1)
+  // Aparece casi a la par del cambio de fondo
   const contentOpacity = useTransform(
     scrollYProgress,
     [0.1, 0.35, 1],

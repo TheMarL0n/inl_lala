@@ -51,6 +51,21 @@ const Preguntas = ({titulo_1, titulo_2}) => {
         offset: ["start 70%", "center 25%"],
     })
 
+    // Progreso de salida: comienza (0) cuando la parte inferior de Preguntas llega a la mitad de la pantalla ("end center")
+    const { scrollYProgress: exitProgress } = useScroll({
+        target: sectionRef,
+        offset: ["end center", "end start"],
+    })
+
+    // Mismo timing que en HomeMitosSwiper: de #15428C a #FFFFFF
+    const bgColor = useTransform(
+        exitProgress,
+        [0, 0.25, 1],
+        prefersReducedMotion
+            ? ["#FFFFFF", "#FFFFFF", "#FFFFFF"]
+            : ["#15428C", "#FFFFFF", "#FFFFFF"]
+    )
+
     // Mantiene el estado inicial un tramo más antes de reducir escala y posición
     const titleScale = useTransform(
         scrollYProgress,
@@ -93,9 +108,11 @@ const Preguntas = ({titulo_1, titulo_2}) => {
     )
 
     return (
-        <section
+        <motion.section
             ref={sectionRef}
-            className="bg-[#15428C] pt-20 px-4 space-y-20 sm:space-y-40 overflow-x-clip"
+            style={{ backgroundColor: bgColor }}
+            suppressHydrationWarning
+            className="pt-20 px-4 space-y-20 sm:space-y-40 overflow-x-clip"
         >
             <div className="max-w-7xl mx-auto gap-8 grid grid-cols-1 sm:grid-cols-2 items-start">
                 <div className="sm:sticky sm:top-20">
@@ -153,7 +170,7 @@ const Preguntas = ({titulo_1, titulo_2}) => {
                     Ver más
                 </CustomLink>
             </motion.div>
-        </section>
+        </motion.section>
     )
 }
 

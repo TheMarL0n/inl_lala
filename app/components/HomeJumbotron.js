@@ -163,7 +163,7 @@ const HomeJumbotron = ({titulo, subtitulo}) => {
                 {inicio}
               </span>
               <span className="text-[73px] sm:pr-16 sm:pl-28 px-3 leading-[80px] sm:text-[135px] sm:leading-[140px] ml-auto sm:ml-0 bg-[#15428C]">
-                {ultima}
+                {" "}{ultima}
               </span>
             </motion.h1>
           </div>
