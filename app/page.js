@@ -9,6 +9,8 @@ import Profesionales from "./components/Home/Profesionales";
 import HomeJumbotron from "./components/HomeJumbotron";
 import { fetchAPI } from "@/app/lib/strapi";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Instituto de Nutrición Lala | Nutrición basada en evidencia",
   description:
@@ -33,6 +35,13 @@ export const metadata = {
       },
     ],
   },
+  keywords: [
+    "Instituto de Nutrición Lala",
+    "nutrición",
+    "alimentación saludable",
+    "mitos y realidades de nutrición",
+    "salud y nutrición en México",
+  ],
   twitter: {
     card: "summary_large_image",
     title: "Instituto de Nutrición Lala",
@@ -45,16 +54,23 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const [responseMitos, responseMenu, responseSociales] = await Promise.all(
+  const [responseContenido, responseMitos, responseMenu, responseSociales, responseVideos] = await Promise.all(
     [
+      fetchAPI(`/paginas?populate[0]=imagen_principal&populate[1]=imagen_footer&populate[2]=imagen_sobre_inl&populate[3]=imagen_dudas&populate[4]=imagen_profesionales`),
       fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`),
       fetchAPI(`/item-menus`),
       fetchAPI(`/redes-sociales`),
+      fetchAPI(`/videos?populate[0]=miniatura&populate[1]=video`),
     ]
   )
+  const contenidoFromStrapi = responseContenido?.data || [];
   const allMitosFromStrapi = responseMitos?.data || [];
   const menuItems = responseMenu?.data || [];
   const socialesItems = responseSociales?.data || [];
+  const allVideos = responseVideos?.data || [];
+  const data = contenidoFromStrapi.find((pagina) => pagina.slug === "inicio");
+
+  console.log(data)
 
   const socialUrls = socialesItems
     .map((item) => {
@@ -102,14 +118,14 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: safeJsonLd }}
       />
       <Header menuI_tems={menuItems} />
-      <HomeJumbotron />
-      <Nutricion />
-      <Dudas />
+      <HomeJumbotron titulo={data.titulo} subtitulo={data.subtitulo} />
+      <Nutricion titulo_1={data.titulo_sobre_inl_1} titulo_2={data.titulo_sobre_inl_2} contenido={data.contenido_sobre_inl} imagen_destacada={data.imagen_sobre_inl} />
+      <Dudas titulo_1={data.titulo_dudas_1} titulo_2={data.titulo_dudas_2} contenido={data.contenido_dudas} imagen_destacada={data.imagen_dudas}/>
       <br /><br />
-      <Aprende />
-      <Preguntas />
-      <HomeMitosSwiper contenido={allMitosFromStrapi} />
-      <Profesionales />
+      <Aprende titulo_video={data.titulo_videos} videos_aprende={allVideos} />
+      <Preguntas titulo_1={data.titulo_nutricion_1} titulo_2={data.titulo_nutricion_2} />
+      <HomeMitosSwiper titulo_1={data.titulo_mitos_1} titulo_2={data.titulo_mitos_2} contenido={allMitosFromStrapi} />
+      <Profesionales titulo_profesionales={data.titulo_profesionales} contenido={data.contenido_profesionales} imagen_destacada={data.imagen_profesionales}/>
       <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </main>
   );

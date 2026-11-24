@@ -5,7 +5,20 @@ import Image from "next/image";
 import { encabezado_h3, parrafo_normal, WhiteButton } from "@/app/utils/CSS_clases";
 import CustomLink from "../Auxiliares/CustomLinks";
 
-const Profesionales = () => {
+// Si la URL viene de Strapi y no empieza con http, le agregamos el host
+const getStrapiMedia = (url) => {
+    if (!url) return null;
+    if (url.startsWith("http") || url.startsWith("//")) {
+        return url;
+    }
+    const host = process.env.NEXT_PUBLIC_STRAPI_HOST;
+    return `${host}${url}`;
+};
+
+const Profesionales = ({
+    titulo_profesionales,
+    contenido,
+    imagen_destacada }) => {
     const sectionRef = useRef(null);
     const prefersReducedMotion = useReducedMotion();
 
@@ -48,7 +61,7 @@ const Profesionales = () => {
                     className="relative h-72 sm:absolute sm:top-0 sm:left-0 sm:h-full overflow-hidden z-20 pointer-events-none will-change-[width]"
                 >
                     <Image
-                        src="/images/woman_doctor.png"
+                        src={getStrapiMedia(imagen_destacada.url)}
                         alt="Profesional de la salud revisando información científica y nutricional"
                         fill
                         sizes="(max-width: 640px) 100vw, 100vw"
@@ -63,10 +76,10 @@ const Profesionales = () => {
                     className="relative z-10 bg-[#15428C] px-8 py-16 space-y-8 flex flex-col justify-center sm:w-1/2 sm:ml-auto sm:h-full will-change-[transform,opacity]"
                 >
                     <h2 className={`${encabezado_h3} bg-[#0B75B9] w-fit`}>
-                        Para profesionales
+                        {titulo_profesionales}
                     </h2>
                     <p className={`${parrafo_normal} text-white max-w-113 mt-4`}>
-                        Encuentra herramientas y lo más reciente en evidencia científica en temas de nutrición, salud, leche y productos lácteos, y fortalecer tu práctica profesional.
+                        {contenido}
                     </p>
                     <CustomLink
                         href="/paginas/profesionales"

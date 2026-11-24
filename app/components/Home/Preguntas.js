@@ -42,7 +42,7 @@ const CategoriaItem = ({ item, idx, total, scrollYProgress, prefersReducedMotion
     )
 }
 
-const Preguntas = () => {
+const Preguntas = ({titulo_1, titulo_2}) => {
     const sectionRef = useRef(null)
     const prefersReducedMotion = useReducedMotion()
 
@@ -105,7 +105,7 @@ const Preguntas = () => {
                         className="mb-3"
                     >
                         <span className={`${encabezado_h3} bg-[#0B75B9]`}>
-                            Como mejor. vivo mejor.
+                            {titulo_1}
                         </span>
                     </motion.div>
 
@@ -122,12 +122,7 @@ const Preguntas = () => {
                         <span
                             className={`${stroke_text} [-webkit-text-stroke-color:white] text-[80px] sm:text-[100px] sm:leading-28 uppercase block`}
                         >
-                            Hoy quiero
-                        </span>
-                        <span
-                            className={`${stroke_text} [-webkit-text-stroke-color:white] text-[100px] sm:text-[120px] sm:leading-28 uppercase block`}
-                        >
-                            aprender a:
+                            {titulo_2}
                         </span>
                     </motion.h2>
                 </div>

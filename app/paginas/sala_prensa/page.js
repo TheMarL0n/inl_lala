@@ -49,8 +49,6 @@ async function PrensaContent() {
     )
 }
 
-
-
 export default function SalaPrensa() {
     return (
         <main>

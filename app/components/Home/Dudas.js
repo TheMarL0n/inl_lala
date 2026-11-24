@@ -6,7 +6,21 @@ import { encabezado_h3, parrafo_normal, WhiteButton } from "@/app/utils/CSS_clas
 import Image from "next/image";
 import CustomLink from "../Auxiliares/CustomLinks";
 
-const Dudas = () => {
+// Si la URL viene de Strapi y no empieza con http, le agregamos el host
+const getStrapiMedia = (url) => {
+  if (!url) return null;
+  if (url.startsWith("http") || url.startsWith("//")) {
+    return url;
+  }
+  const host = process.env.NEXT_PUBLIC_STRAPI_HOST;
+  return `${host}${url}`;
+};
+
+const Dudas = ({ 
+  titulo_1,
+  titulo_2,
+  contenido,
+  imagen_destacada }) => {
     const [criterio, setCriterio] = useState("");
     const [busquedaActiva, setBusquedaActiva] = useState(false);
     const sectionRef = useRef(null);
@@ -43,7 +57,7 @@ const Dudas = () => {
                     className="relative w-full h-full overflow-hidden will-change-[width]"
                 >
                     <Image
-                        src="/images/girl_eating.png"
+                        src={getStrapiMedia(imagen_destacada.url)}
                         alt="Joven disfrutando de una alimentación saludable y equilibrada"
                         fill
                         priority
@@ -56,15 +70,15 @@ const Dudas = () => {
             {/* Contenido azul a la derecha en desktop (-mt-screen para emparejar con la altura sticky) */}
             <div className="relative z-10 bg-[#15428C] p-8 sm:w-1/2 sm:ml-auto sm:-mt-screen">
                 <h2>
-                    <span className={`${encabezado_h3} bg-[#0B75B9]`}>Resuelve tus</span>
+                    <span className={`${encabezado_h3} bg-[#0B75B9]`}>{titulo_1}</span>
                     <br />
                     <span className="uppercase text-[120px] sm:text-[250px] sm:leading-55 text-[#0B75B9] font-[600]">
-                        Dudas
+                        {titulo_2}
                     </span>
                 </h2>
 
                 <p className={`${parrafo_normal} text-white max-w-113 mt-4 text-[25px]!`}>
-                    Explora contenidos para aprender sobre nutrición, salud y alimentación desde una perspectiva científica, práctica y fácil de entender.
+                    {contenido}
                 </p>
 
                 {/* Formulario de Buscador */}

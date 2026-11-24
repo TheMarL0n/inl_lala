@@ -3,7 +3,20 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
-const HomeJumbotron = () => {
+const splitTitulo = (texto = "") => {
+    if (typeof texto !== "string") return { inicio: "", ultima: "" };
+    const palabras = texto.trim().split(/\s+/).filter(Boolean);
+
+    if (palabras.length === 0) return { inicio: "", ultima: "" };
+    if (palabras.length === 1) return { inicio: "", ultima: palabras[0] };
+
+    return {
+        inicio: palabras.slice(0, -1).join(" "),
+        ultima: palabras.at(-1) || "",
+    };
+};
+
+const HomeJumbotron = ({titulo, subtitulo}) => {
   const [hasLoaderFinished, setHasLoaderFinished] = useState(false);
   const sectionRef = useRef(null);
 
@@ -42,6 +55,8 @@ const HomeJumbotron = () => {
 
   // Mobile
   const mobileScale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
+
+  const { inicio, ultima } = splitTitulo(titulo);
 
   return (
     <section
@@ -145,10 +160,10 @@ const HomeJumbotron = () => {
               className="text-white text-[43px] sm:text-[70px] font-black uppercase flex flex-col sm:flex-row items-start sm:justify-end"
             >
               <span className="bg-[#15428C] sm:pr-4 sm:pl-12 px-3">
-                Lo que comes
+                {inicio}
               </span>
               <span className="text-[73px] sm:pr-16 sm:pl-28 px-3 leading-[80px] sm:text-[135px] sm:leading-[140px] ml-auto sm:ml-0 bg-[#15428C]">
-                importa
+                {ultima}
               </span>
             </motion.h1>
           </div>
@@ -168,7 +183,7 @@ const HomeJumbotron = () => {
               transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="px-4 bg-[#009638] text-[36px] sm:text-[46px] text-white font-medium w-fit mr-auto ml-auto sm:mr-0"
             >
-              Entenderlo también
+              {subtitulo}
             </motion.h2>
           </div>
         </motion.div>

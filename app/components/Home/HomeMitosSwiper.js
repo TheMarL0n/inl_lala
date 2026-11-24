@@ -26,7 +26,7 @@ const getStrapiMedia = (url) => {
   return `${host}${url}`;
 };
 
-const HomeMitosSwiper = ({ contenido, alternative, currentSlug, titulo_mitos }) => {
+const HomeMitosSwiper = ({ titulo_1, titulo_2, contenido, alternative, currentSlug, titulo_mitos }) => {
   const sectionRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -84,10 +84,10 @@ const HomeMitosSwiper = ({ contenido, alternative, currentSlug, titulo_mitos }) 
             <div className="relative z-3 max-w-7xl mx-auto -mb-20 pt-4 px-4">
               <h2>
                 <span className={`${encabezado_h3} bg-[#0B75B9] hidden sm:block`}>
-                  mito o realidad
+                  {titulo_1}
                 </span>
                 <span className={`${encabezado_h3} bg-[#0B75B9] sm:ml-8 block`}>
-                  No todo lo que se dice es cierto
+                  {titulo_2}
                 </span>
               </h2>
             </div>

@@ -8,9 +8,23 @@ import {
   parrafo_normal,
 } from "@/app/utils/CSS_clases";
 
-const Nutricion = () => {
+// Si la URL viene de Strapi y no empieza con http, le agregamos el host
+const getStrapiMedia = (url) => {
+  if (!url) return null;
+  if (url.startsWith("http") || url.startsWith("//")) {
+    return url;
+  }
+  const host = process.env.NEXT_PUBLIC_STRAPI_HOST;
+  return `${host}${url}`;
+};
+
+const Nutricion = ({ 
+  titulo_1,
+  titulo_2,
+  contenido,
+  imagen_destacada }) => {
   const containerRef = useRef(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "center center"],
@@ -32,19 +46,19 @@ const Nutricion = () => {
             <span
               className={`${encabezado_h3} bg-[#FF0000] sm:ml-40 text-white inline-block px-2 py-1`}
             >
-              La nutrición está presente
+              {titulo_1}
             </span>
             <br />
             <span
               className={`${encabezado_h2} bg-[#164190] block ml-auto text-white px-9! py-1`}
             >
-              en cada decisión que tomamos
+              {titulo_2}
             </span>
           </motion.h2>
         </div>
 
         <div className="max-w-6xl flex mt-18 gap-4 sm:gap-12 items-center sm:items-end">
-          <motion.div 
+          <motion.div
             style={{ y: imageY }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -53,7 +67,7 @@ const Nutricion = () => {
             className="relative shrink-0 w-30 sm:w-94.25 aspect-square"
           >
             <Image
-              src="/images/home_bowl.png"
+              src={getStrapiMedia(imagen_destacada.url)}
               alt="Tazón saludable con ingredientes nutritivos del Instituto de Nutrición Lala"
               fill
               sizes="(max-width: 640px) 120px, 377px"
@@ -69,11 +83,7 @@ const Nutricion = () => {
             transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className={`${parrafo_normal} text-[#15428C] sm:mb-30 sm:text-[38px]! leading-[1.2]!`}
           >
-            En el <strong>Instituto de Nutrición Lala</strong> creemos que
-            entender la alimentación no debería ser complicado. Por eso reunimos
-            información clara, confiable y basada en evidencia para ayudarte a
-            comprender mejor a tu cuerpo y los alimentos y que puedas tomar
-            mejores decisiones para tu alimentación.
+            {contenido}
           </motion.p>
         </div>
       </div>

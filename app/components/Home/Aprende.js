@@ -8,11 +8,20 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { PlusSymbol } from "@/app/utils/SVG_Icons";
-import { videos_aprende } from "@/app/utils/Copies";
 
-const Aprende = ({ fromPage }) => {
+const Aprende = ({ titulo_video, fromPage, videos_aprende }) => {
     const [selectedVideo, setSelectedVideo] = useState(null);
     const prefersReducedMotion = useReducedMotion();
+
+    const getStrapiMedia = (url) => {
+        if (!url) return null;
+        if (url.startsWith("http") || url.startsWith("//")) {
+            return url;
+        }
+        const host = process.env.NEXT_PUBLIC_STRAPI_HOST;
+        return `${host}${url}`;
+
+    };
 
     // Cerrar modal con tecla Escape para mejorar accesibilidad con teclado
     useEffect(() => {
@@ -49,7 +58,7 @@ const Aprende = ({ fromPage }) => {
                         </h2>
                     ) : (
                         <h2 className={`${encabezado_h3} bg-[#0B75B9]`}>
-                            Aprende en minutos
+                            {titulo_video}
                         </h2>
                     )}
                 </motion.div>
@@ -126,8 +135,8 @@ const Aprende = ({ fromPage }) => {
                                     <div className="bg-[#15428C]/70 absolute z-2 h-full w-full left-0 top-0 opacity-0 sm:opacity-100 group-hover:opacity-0 transition-opacity duration-400 pointer-events-none" />
 
                                     <Image
-                                        src={item.background}
-                                        alt={`Miniatura del video: ${item.title}`}
+                                        src={getStrapiMedia(item.miniatura.url)}
+                                        alt={`Miniatura del video: ${item.titulo}`}
                                         fill
                                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                         className="absolute z-1 h-full w-full object-cover left-0 top-0 group-hover:scale-110 transition-transform duration-400"
@@ -138,9 +147,9 @@ const Aprende = ({ fromPage }) => {
                                     onClick={() => setSelectedVideo(item)}
                                     className="mx-2 text-[#15428C] text-[29px] text-center sm:text-left leading-7.5 mt-4 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-400 cursor-pointer"
                                 >
-                                    <strong className="font-black">{item.title}</strong>
+                                    <strong className="font-black">{item.titulo}</strong>
                                     <br />
-                                    {item.abstract}
+                                    {item.descripcion}
                                 </p>
                             </motion.div>
                         </SwiperSlide>
@@ -191,21 +200,38 @@ const Aprende = ({ fromPage }) => {
 
                             <div className="p-6 bg-gray-50 border-b">
                                 <h3 className="text-2xl font-bold text-[#15428C]">
-                                    {selectedVideo.title}
+                                    {selectedVideo.titulo}
                                 </h3>
                                 <p className="text-gray-600 text-sm mt-1">
-                                    {selectedVideo.abstract}
+                                    {selectedVideo.descripcion}
                                 </p>
                             </div>
 
                             <div className="relative w-full aspect-video bg-black">
-                                <iframe
-                                    src={`${selectedVideo.video}${selectedVideo.video.includes('?') ? '&' : '?'}autoplay=1`}
-                                    title={selectedVideo.title}
-                                    className="absolute top-0 left-0 w-full h-full border-0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                />
+                                {selectedVideo?.embebido ? (
+                                    <iframe
+                                        src={`${selectedVideo.url}${selectedVideo.url.includes("?") ? "&" : "?"}autoplay=1`}
+                                        title={selectedVideo.title || "Video"}
+                                        className="absolute top-0 left-0 w-full h-full border-0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                ) : (
+                                    selectedVideo?.video?.url && (
+                                        <video
+                                            key={selectedVideo.video.url}
+                                            src={getStrapiMedia(selectedVideo.video.url)}
+                                            controls
+                                            autoPlay
+                                            playsInline
+                                            preload="metadata"
+                                            className="absolute top-0 left-0 w-full h-full object-contain"
+                                        >
+                                            Tu navegador no soporta la reproducción de video.
+                                        </video>
+                                    )
+                                )}
+
                             </div>
                         </motion.div>
                     </motion.div>
