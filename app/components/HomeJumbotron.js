@@ -80,7 +80,7 @@ const HomeJumbotron = ({titulo, subtitulo}) => {
             alt="Fondo Instituto de Nutrición Lala"
             fill
             priority
-            sizes="100vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 600px"
             className="object-cover object-center"
           />
         </motion.div>

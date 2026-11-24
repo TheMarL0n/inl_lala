@@ -45,6 +45,9 @@ export default function InitialLoader() {
           alt="Instituto de Nutrición Lala" 
           width={140} 
           height={70}
+          loading="eager"
+          className="w-[80%] sm:w-56 h-auto"
+          style={{ height: "auto" }}
         />
         <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
       </motion.div>

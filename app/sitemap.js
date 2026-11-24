@@ -9,7 +9,7 @@ export default async function sitemap() {
     '/paginas/mitos-y-realidades',
     '/paginas/nutricion',
     '/paginas/profesionales',
-    '/paginas/sala_prensa',
+    '/paginas/sala-de-prensa',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

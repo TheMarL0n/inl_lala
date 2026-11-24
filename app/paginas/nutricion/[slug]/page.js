@@ -1,4 +1,4 @@
-// etapas/[slug]/page.js
+// nutricion/[slug]/page.js
 import { Suspense } from "react";
 import BlueGrid from "@/app/components/BlueGrid";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
@@ -22,17 +22,135 @@ import TituloDestacado from "@/app/components/TituloDestacado";
 import Skeleton from "@/app/components/Skeleton";
 import Tabla from "@/app/components/Tabla";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://institutolala.com.mx";
+
+const getStrapiMedia = (url) => {
+  if (!url) return null;
+  if (url.startsWith("http") || url.startsWith("//")) {
+    return url;
+  }
+  const host = process.env.NEXT_PUBLIC_STRAPI_HOST || "";
+  return `${host}${url}`;
+};
+
+const stripHtmlAndMarkdown = (text = "") =>
+  text
+    .replace(/<[^>]*>/g, " ")
+    .replace(/[#*_`>\[\]()-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const buildNutricionTitle = (item) => {
+  if (!item) return "";
+  const combined = `${item.titulo_linea_1 || ""} ${item.titulo_linea_2 || ""}`
+    .replace(/\s+/g, " ")
+    .trim();
+  return combined || item.titulo || "";
+};
+
+const extractSummaryText = (item) => {
+  if (item?.descripcion?.trim()) {
+    return item.descripcion.trim();
+  }
+  const bloques = Array.isArray(item?.contenido) ? item.contenido : [];
+  for (const bloque of bloques) {
+    const raw =
+      bloque?.html ||
+      bloque?.contenido ||
+      (Array.isArray(bloque?.diapositiva)
+        ? bloque.diapositiva.map((d) => d?.contenido || "").join(" ")
+        : "");
+    const limpio = stripHtmlAndMarkdown(raw);
+    if (limpio) {
+      return limpio.slice(0, 320);
+    }
+  }
+  return "";
+};
+
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const slug = resolvedParams?.slug;
+  const canonicalUrl = `${SITE_URL}/paginas/nutricion/${slug}`;
+
+  const responseItem = await fetchAPI(
+    `/nutriciones?filters[slug][$eq]=${encodeURIComponent(slug)}&populate[0]=imagen_principal&populate[1]=categoria`
+  );
+  const itemData = responseItem?.data?.[0];
+
+  if (!itemData) {
+    return {
+      title: "Tema no encontrado",
+      description:
+        "Información sobre alimentación, nutrición y productos lácteos en el Instituto de Nutrición Lala.",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = buildNutricionTitle(itemData) || "Come mejor, vive mejor";
+  const description =
+    extractSummaryText(itemData) ||
+    `Información sobre nutrición y lácteos publicada por el Instituto de Nutrición Lala: ${title}.`;
+  const ogImage = getStrapiMedia(itemData?.imagen_principal?.url);
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-snippet": -1,
+        "max-image-preview": "large",
+      },
+    },
+    openGraph: {
+      type: "article",
+      locale: "es_MX",
+      url: canonicalUrl,
+      siteName: "Instituto de Nutrición Lala",
+      title,
+      description,
+      ...(itemData?.publishedAt && { publishedTime: itemData.publishedAt }),
+      ...(itemData?.updatedAt && { modifiedTime: itemData.updatedAt }),
+      ...(itemData?.categoria?.titulo && { section: itemData.categoria.titulo }),
+      ...(ogImage && {
+        images: [
+          {
+            url: ogImage,
+            width: itemData?.imagen_principal?.width || 1200,
+            height: itemData?.imagen_principal?.height || 630,
+            alt: itemData?.imagen_principal?.alternativeText || title,
+          },
+        ],
+      }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(ogImage && { images: [ogImage] }),
+    },
+  };
+}
+
 // Componente secundario que realiza los fetch pesados de la etapa y su contenido
 async function NutricionContent({ slug }) {
-  const [responseEtapa, responseTodas, responseCategorias, responseMenu, responseSociales] = await Promise.all([
-    fetchAPI(
-      `/nutriciones?filters[slug][$eq]=${slug}&populate[0]=imagen_principal&populate[1]=contenido&populate[2]=contenido.diapositiva&populate[3]=contenido.diapositiva.imagen&populate[4]=contenido.diapositiva.imagen_izquierda&populate[5]=contenido.diapositiva.imagen_derecha&populate[6]=categoria&populate[7]=contenido.imagen_destacada&populate[8]=contenido.imagen_izquierda&populate[9]=contenido.imagen_derecha&populate[10]=contenido.imagen_principal`,
-    ),
-    fetchAPI(`/nutriciones?populate[0]=imagen_principal&populate[1]=categoria`),
-    fetchAPI(`/categoria-nutriciones`),
-    fetchAPI(`/item-menus`),
-    fetchAPI(`/redes-sociales`),
-  ]);
+  const [responseEtapa, responseTodas, responseCategorias, responseMenu, responseSociales] =
+    await Promise.all([
+      fetchAPI(
+        `/nutriciones?filters[slug][$eq]=${encodeURIComponent(slug)}&populate[0]=imagen_principal&populate[1]=contenido&populate[2]=contenido.diapositiva&populate[3]=contenido.diapositiva.imagen&populate[4]=contenido.diapositiva.imagen_izquierda&populate[5]=contenido.diapositiva.imagen_derecha&populate[6]=categoria&populate[7]=contenido.imagen_destacada&populate[8]=contenido.imagen_izquierda&populate[9]=contenido.imagen_derecha&populate[10]=contenido.imagen_principal`
+      ),
+      fetchAPI(`/nutriciones?populate[0]=imagen_principal&populate[1]=categoria`),
+      fetchAPI(`/categoria-nutriciones`),
+      fetchAPI(`/item-menus`),
+      fetchAPI(`/redes-sociales`),
+    ]);
 
   const currentEtapaData = responseEtapa?.data?.[0];
   if (!currentEtapaData) {
@@ -47,10 +165,7 @@ async function NutricionContent({ slug }) {
   const catEtapasFromStrapi = responseCategorias?.data || [];
   const background = currentEtapa?.imagen_principal || "";
   const cat_id = currentEtapa?.categoria?.id || "";
-  const title =
-    (currentEtapa?.titulo_linea_1 || "") +
-    " " +
-    (currentEtapa?.titulo_linea_2 || "");
+  const title = buildNutricionTitle(currentEtapa);
   const title_linea_1 = currentEtapa?.titulo_linea_1 || "";
   const title_linea_2 = currentEtapa?.titulo_linea_2 || "";
   const referencias = currentEtapa?.Referencias || "";
@@ -61,11 +176,96 @@ async function NutricionContent({ slug }) {
 
   // Filtramos las etapas relacionadas
   const etapasRelacionadas = allEtapasFromStrapi.filter(
-    (item) => item?.categoria?.id === cat_id && item.id !== currentEtapa?.id,
+    (item) => item?.categoria?.id === cat_id && item.id !== currentEtapa?.id
   );
+
+  const canonicalUrl = `${SITE_URL}/paginas/nutricion/${slug}`;
+  const parentUrl = `${SITE_URL}/paginas/nutricion`;
+  const summaryText = extractSummaryText(currentEtapa);
+  const imageUrl = getStrapiMedia(currentEtapa?.imagen_principal?.url);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${canonicalUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Inicio",
+            item: SITE_URL,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Come mejor. Vive mejor.",
+            item: parentUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: title || slug,
+            item: canonicalUrl,
+          },
+        ],
+      },
+      {
+        "@type": "Article",
+        "@id": `${canonicalUrl}#article`,
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": canonicalUrl,
+        },
+        headline: title || slug,
+        ...(summaryText && { description: summaryText }),
+        inLanguage: "es-MX",
+        ...(currentEtapa?.publishedAt && { datePublished: currentEtapa.publishedAt }),
+        ...(currentEtapa?.updatedAt && { dateModified: currentEtapa.updatedAt }),
+        ...(currentEtapa?.categoria?.titulo && {
+          articleSection: currentEtapa.categoria.titulo,
+          about: {
+            "@type": "Thing",
+            name: currentEtapa.categoria.titulo,
+          },
+        }),
+        ...(imageUrl && {
+          image: {
+            "@type": "ImageObject",
+            url: imageUrl,
+            ...(currentEtapa?.imagen_principal?.width && {
+              width: currentEtapa.imagen_principal.width,
+            }),
+            ...(currentEtapa?.imagen_principal?.height && {
+              height: currentEtapa.imagen_principal.height,
+            }),
+          },
+        }),
+        author: {
+          "@type": "Organization",
+          name: "Instituto de Nutrición Lala",
+          url: SITE_URL,
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "Instituto de Nutrición Lala",
+          url: SITE_URL,
+        },
+        breadcrumb: {
+          "@id": `${canonicalUrl}#breadcrumb`,
+        },
+      },
+    ],
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <Header menuI_tems={menuItems} />
       <PagesSmallJumbotron background={background} />
       <Breadcrumbs
@@ -138,31 +338,38 @@ async function NutricionContent({ slug }) {
           }
 
           if (item.__component === "contenido-principal.linea-del-tiempo") {
-            return <StoryLine
-              key={idx}
-              contenido={item.diapositiva || []}
-              tipo={item.tipo || ""}
-            />
+            return (
+              <StoryLine
+                key={idx}
+                contenido={item.diapositiva || []}
+                tipo={item.tipo || ""}
+              />
+            );
           }
 
           if (item.__component === "contenido-principal.titulo-destacado") {
-            return <TituloDestacado
-              key={idx}
-              title_linea_1={item.titulo_parte_1}
-              title_linea_2={item.titulo_parte_2}
-              color_fondo_1={item.color_titulo_parte_1}
-              color_fondo_2={item.color_titulo_parte_2}
-              background={item.imagen_principal ? item.imagen_principal : ""}
-              contenido={item.contenido}
-            />
+            return (
+              <TituloDestacado
+                key={idx}
+                title_linea_1={item.titulo_parte_1}
+                title_linea_2={item.titulo_parte_2}
+                color_fondo_1={item.color_titulo_parte_1}
+                color_fondo_2={item.color_titulo_parte_2}
+                background={item.imagen_principal ? item.imagen_principal : ""}
+                contenido={item.contenido}
+              />
+            );
           }
+
           if (item.__component === "contenido-principal.tabla") {
-            return <Tabla
-              key={idx}
-              primera_columna={item.primera_columna}
-              segunda_columna={item.segunda_columna}
-              contenido={item.diapositiva}
-            />
+            return (
+              <Tabla
+                key={idx}
+                primera_columna={item.primera_columna}
+                segunda_columna={item.segunda_columna}
+                contenido={item.diapositiva}
+              />
+            );
           }
 
           return (

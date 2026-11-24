@@ -1,4 +1,4 @@
-// etapas/[slug]/page.js
+// dudas/[slug]/page.js
 import { Suspense } from "react";
 import BlueGrid from "@/app/components/BlueGrid";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
@@ -21,17 +21,135 @@ import StoryLine from "@/app/components/StoryLine";
 import TituloDestacado from "@/app/components/TituloDestacado";
 import Skeleton from "@/app/components/Skeleton";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://institutolala.com.mx";
+
+const getStrapiMedia = (url) => {
+  if (!url) return null;
+  if (url.startsWith("http") || url.startsWith("//")) {
+    return url;
+  }
+  const host = process.env.NEXT_PUBLIC_STRAPI_HOST || "";
+  return `${host}${url}`;
+};
+
+const stripHtmlAndMarkdown = (text = "") =>
+  text
+    .replace(/<[^>]*>/g, " ")
+    .replace(/[#*_`>\[\]()-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const buildDudaTitle = (duda) => {
+  if (!duda) return "";
+  const combined = `${duda.titulo_linea_1 || ""} ${duda.titulo_linea_2 || ""}`
+    .replace(/\s+/g, " ")
+    .trim();
+  return combined || duda.titulo || "";
+};
+
+const extractAnswerText = (duda) => {
+  if (duda?.descripcion?.trim()) {
+    return duda.descripcion.trim();
+  }
+  const bloques = Array.isArray(duda?.contenido) ? duda.contenido : [];
+  for (const bloque of bloques) {
+    const raw =
+      bloque?.html ||
+      bloque?.contenido ||
+      (Array.isArray(bloque?.diapositiva)
+        ? bloque.diapositiva.map((d) => d?.contenido || "").join(" ")
+        : "");
+    const limpio = stripHtmlAndMarkdown(raw);
+    if (limpio) {
+      return limpio.slice(0, 320);
+    }
+  }
+  return "";
+};
+
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const slug = resolvedParams?.slug;
+  const canonicalUrl = `${SITE_URL}/paginas/dudas/${slug}`;
+
+  const responseDuda = await fetchAPI(
+    `/dudas?filters[slug][$eq]=${encodeURIComponent(slug)}&populate[0]=imagen_principal&populate[1]=categoria`
+  );
+  const dudaData = responseDuda?.data?.[0];
+
+  if (!dudaData) {
+    return {
+      title: "Duda no encontrada",
+      description:
+        "Consulta respuestas y evidencias sobre nutrición, leche y productos lácteos en el Instituto de Nutrición Lala.",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const title = buildDudaTitle(dudaData) || "Resuelve tus dudas";
+  const description =
+    dudaData?.descripcion?.trim() ||
+    `Información y respuesta respaldada por el Instituto de Nutrición Lala sobre ${title}.`;
+  const ogImage = getStrapiMedia(dudaData?.imagen_principal?.url);
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-snippet": -1,
+        "max-image-preview": "large",
+      },
+    },
+    openGraph: {
+      type: "article",
+      locale: "es_MX",
+      url: canonicalUrl,
+      siteName: "Instituto de Nutrición Lala",
+      title,
+      description,
+      ...(dudaData?.publishedAt && { publishedTime: dudaData.publishedAt }),
+      ...(dudaData?.updatedAt && { modifiedTime: dudaData.updatedAt }),
+      ...(dudaData?.categoria?.titulo && { section: dudaData.categoria.titulo }),
+      ...(ogImage && {
+        images: [
+          {
+            url: ogImage,
+            width: dudaData?.imagen_principal?.width || 1200,
+            height: dudaData?.imagen_principal?.height || 630,
+            alt: dudaData?.imagen_principal?.alternativeText || title,
+          },
+        ],
+      }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(ogImage && { images: [ogImage] }),
+    },
+  };
+}
+
 // Componente secundario que realiza los fetch pesados de la etapa y su contenido
 async function DudaContent({ slug }) {
-  const [responseEtapa, responseTodas, responseCategorias, responseMenu, responseSociales] = await Promise.all([
-    fetchAPI(
-      `/dudas?filters[slug][$eq]=${slug}&populate[0]=imagen_principal&populate[1]=contenido&populate[2]=contenido.diapositiva&populate[3]=contenido.diapositiva.imagen&populate[4]=contenido.diapositiva.imagen_izquierda&populate[5]=contenido.diapositiva.imagen_derecha&populate[6]=categoria&populate[7]=contenido.imagen_destacada&populate[8]=contenido.imagen_izquierda&populate[9]=contenido.imagen_derecha&populate[10]=contenido.imagen_principal`,
-    ),
-    fetchAPI(`/dudas?populate[0]=imagen_principal&populate[1]=categoria`),
-    fetchAPI(`/categoria-dudas`),
-    fetchAPI(`/item-menus`),
-    fetchAPI(`/redes-sociales`),
-  ]);
+  const [responseEtapa, responseTodas, responseCategorias, responseMenu, responseSociales] =
+    await Promise.all([
+      fetchAPI(
+        `/dudas?filters[slug][$eq]=${encodeURIComponent(slug)}&populate[0]=imagen_principal&populate[1]=contenido&populate[2]=contenido.diapositiva&populate[3]=contenido.diapositiva.imagen&populate[4]=contenido.diapositiva.imagen_izquierda&populate[5]=contenido.diapositiva.imagen_derecha&populate[6]=categoria&populate[7]=contenido.imagen_destacada&populate[8]=contenido.imagen_izquierda&populate[9]=contenido.imagen_derecha&populate[10]=contenido.imagen_principal`
+      ),
+      fetchAPI(`/dudas?populate[0]=imagen_principal&populate[1]=categoria`),
+      fetchAPI(`/categoria-dudas`),
+      fetchAPI(`/item-menus`),
+      fetchAPI(`/redes-sociales`),
+    ]);
 
   const currentEtapaData = responseEtapa?.data?.[0];
   if (!currentEtapaData) {
@@ -46,10 +164,7 @@ async function DudaContent({ slug }) {
   const catEtapasFromStrapi = responseCategorias?.data || [];
   const background = currentEtapa?.imagen_principal || "";
   const cat_id = currentEtapa?.categoria?.id || "";
-  const title =
-    (currentEtapa?.titulo_linea_1 || "") +
-    " " +
-    (currentEtapa?.titulo_linea_2 || "");
+  const title = buildDudaTitle(currentEtapa);
   const title_linea_1 = currentEtapa?.titulo_linea_1 || "";
   const title_linea_2 = currentEtapa?.titulo_linea_2 || "";
   const referencias = currentEtapa?.Referencias || "";
@@ -60,11 +175,122 @@ async function DudaContent({ slug }) {
 
   // Filtramos las etapas relacionadas
   const etapasRelacionadas = allEtapasFromStrapi.filter(
-    (item) => item?.categoria?.id === cat_id && item.id !== currentEtapa?.id,
+    (item) => item?.categoria?.id === cat_id && item.id !== currentEtapa?.id
   );
+
+  const canonicalUrl = `${SITE_URL}/paginas/dudas/${slug}`;
+  const parentUrl = `${SITE_URL}/paginas/dudas`;
+  const answerText = extractAnswerText(currentEtapa);
+  const imageUrl = getStrapiMedia(currentEtapa?.imagen_principal?.url);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${canonicalUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Inicio",
+            item: SITE_URL,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Resuelve tus dudas",
+            item: parentUrl,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: title || slug,
+            item: canonicalUrl,
+          },
+        ],
+      },
+      {
+        "@type": "Article",
+        "@id": `${canonicalUrl}#article`,
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": canonicalUrl,
+        },
+        headline: title || slug,
+        ...(currentEtapa?.descripcion && {
+          description: currentEtapa.descripcion.trim(),
+        }),
+        inLanguage: "es-MX",
+        ...(currentEtapa?.publishedAt && { datePublished: currentEtapa.publishedAt }),
+        ...(currentEtapa?.updatedAt && { dateModified: currentEtapa.updatedAt }),
+        ...(currentEtapa?.categoria?.titulo && {
+          articleSection: currentEtapa.categoria.titulo,
+          about: {
+            "@type": "Thing",
+            name: currentEtapa.categoria.titulo,
+          },
+        }),
+        ...(imageUrl && {
+          image: {
+            "@type": "ImageObject",
+            url: imageUrl,
+            ...(currentEtapa?.imagen_principal?.width && {
+              width: currentEtapa.imagen_principal.width,
+            }),
+            ...(currentEtapa?.imagen_principal?.height && {
+              height: currentEtapa.imagen_principal.height,
+            }),
+          },
+        }),
+        author: {
+          "@type": "Organization",
+          name: "Instituto de Nutrición Lala",
+          url: SITE_URL,
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "Instituto de Nutrición Lala",
+          url: SITE_URL,
+        },
+        breadcrumb: {
+          "@id": `${canonicalUrl}#breadcrumb`,
+        },
+      },
+      ...(title && answerText
+        ? [
+            {
+              "@type": "QAPage",
+              "@id": `${canonicalUrl}#qapage`,
+              mainEntity: {
+                "@type": "Question",
+                name: title,
+                text: title,
+                answerCount: 1,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: answerText,
+                  url: canonicalUrl,
+                  author: {
+                    "@type": "Organization",
+                    name: "Instituto de Nutrición Lala",
+                    url: SITE_URL,
+                  },
+                },
+              },
+            },
+          ]
+        : []),
+    ],
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <Header menuI_tems={menuItems} />
       <PagesSmallJumbotron background={background} />
       <Breadcrumbs
@@ -137,19 +363,21 @@ async function DudaContent({ slug }) {
           }
 
           if (item.__component === "contenido-principal.linea-del-tiempo") {
-            return <StoryLine key={idx} contenido={item.diapositiva || []} />
+            return <StoryLine key={idx} contenido={item.diapositiva || []} />;
           }
 
           if (item.__component === "contenido-principal.titulo-destacado") {
-            return <TituloDestacado
-              key={idx}
-              title_linea_1={item.titulo_parte_1}
-              title_linea_2={item.titulo_parte_2}
-              color_fondo_1={item.color_titulo_parte_1}
-              color_fondo_2={item.color_titulo_parte_2}
-              background={item.imagen_principal ? item.imagen_principal : ""}
-              contenido={item.contenido}
-            />
+            return (
+              <TituloDestacado
+                key={idx}
+                title_linea_1={item.titulo_parte_1}
+                title_linea_2={item.titulo_parte_2}
+                color_fondo_1={item.color_titulo_parte_1}
+                color_fondo_2={item.color_titulo_parte_2}
+                background={item.imagen_principal ? item.imagen_principal : ""}
+                contenido={item.contenido}
+              />
+            );
           }
 
           return (

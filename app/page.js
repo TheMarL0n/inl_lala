@@ -70,8 +70,6 @@ export default async function Home() {
   const allVideos = responseVideos?.data || [];
   const data = contenidoFromStrapi.find((pagina) => pagina.slug === "inicio");
 
-  console.log(data)
-
   const socialUrls = socialesItems
     .map((item) => {
       const attrs = item?.attributes ?? item;
