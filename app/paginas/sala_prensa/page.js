@@ -39,9 +39,9 @@ async function PrensaContent() {
                 titulo_descripcion={data.titulo_descripcion}
                 descripcion={data.descripcion}
             />
-            <NotasList />
+            {/* <NotasList />
             <RecursosList />
-            <EventosList />
+            <EventosList /> */}
             <FormContacto imagen_footer={data.imagen_footer} />
             <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
         </>
