@@ -1,14 +1,15 @@
+import { Suspense } from "react";
 import PagesJumbotron from "@/app/components/PagesJumbotron";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
-import { paginas } from "@/app/utils/Copies";
 import FormContacto from "@/app/components/FormContacto";
-import NotasList from "@/app/components/Noticias/Notas";
-import RecursosList from "@/app/components/Noticias/Recursos";
-import EventosList from "@/app/components/Noticias/Eventos";
-import Skeleton from "@/app/components/Skeleton";
-import { Suspense } from "react";
+// import NotasList from "@/app/components/Noticias/Notas";
+// import RecursosList from "@/app/components/Noticias/Recursos";
+// import EventosList from "@/app/components/Noticias/Eventos";
 import { fetchAPI } from "@/app/lib/strapi";
+import Skeleton from "@/app/components/Skeleton";
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
     title: "Sala de Prensa",
