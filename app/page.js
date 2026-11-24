@@ -120,12 +120,20 @@ export default async function Home() {
       <Header menuI_tems={menuItems} />
       <HomeJumbotron titulo={data.titulo} subtitulo={data.subtitulo} />
       <Nutricion titulo_1={data.titulo_sobre_inl_1} titulo_2={data.titulo_sobre_inl_2} contenido={data.contenido_sobre_inl} imagen_destacada={data.imagen_sobre_inl} />
-      <Dudas titulo_1={data.titulo_dudas_1} titulo_2={data.titulo_dudas_2} contenido={data.contenido_dudas} imagen_destacada={data.imagen_dudas}/>
+      <Dudas titulo_1={data.titulo_dudas_1} titulo_2={data.titulo_dudas_2} contenido={data.contenido_dudas} imagen_destacada={data.imagen_dudas} />
       <br /><br />
-      <Aprende titulo_video={data.titulo_videos} videos_aprende={allVideos} />
+
+      {
+        allVideos.length > 0 ?
+          <Aprende titulo_video={data.titulo_videos} videos_aprende={allVideos} />
+          :
+          ""
+      }
+
+
       <Preguntas titulo_1={data.titulo_nutricion_1} titulo_2={data.titulo_nutricion_2} />
       <HomeMitosSwiper titulo_1={data.titulo_mitos_1} titulo_2={data.titulo_mitos_2} contenido={allMitosFromStrapi} />
-      <Profesionales titulo_profesionales={data.titulo_profesionales} contenido={data.contenido_profesionales} imagen_destacada={data.imagen_profesionales}/>
+      <Profesionales titulo_profesionales={data.titulo_profesionales} contenido={data.contenido_profesionales} imagen_destacada={data.imagen_profesionales} />
       <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </main>
   );

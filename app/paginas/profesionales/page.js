@@ -25,7 +25,8 @@ async function ProfesionalesContent() {
         responseProfesionales,
         responseMenu,
         responseSociales,
-        responseVideos] = await Promise.all(
+        responseVideos,
+        responseColaboradores] = await Promise.all(
             [
                 fetchAPI(`/paginas?populate[0]=imagen_principal&populate[1]=tema_destacado&populate[2]=imagen_footer&populate[3]=tema_destacado.imagen`),
                 fetchAPI(`/profesionales?populate[0]=imagen_principal&populate[1]=categoria`),
@@ -33,6 +34,7 @@ async function ProfesionalesContent() {
                 fetchAPI(`/item-menus`),
                 fetchAPI(`/redes-sociales`),
                 fetchAPI(`/videos?populate[0]=miniatura&populate[1]=video`),
+                fetchAPI(`/colaboradores?populate[0]=logo`),
             ]
         );
     const menuItems = responseMenu?.data || [];
@@ -41,6 +43,7 @@ async function ProfesionalesContent() {
     const allProfesionalesFromStrapi = responseProfesionales?.data || [];
     const allElementosFromStrapi = responseElementos?.data || [];
     const allVideos = responseVideos?.data || [];
+    const allColaboradores = responseColaboradores?.data || [];
 
     const data = contenidoFromStrapi.find(
         (pagina) => pagina.slug === "profesionales",
@@ -64,8 +67,23 @@ async function ProfesionalesContent() {
                 descripcion_tema_destacado={data.tema_destacado.descripcion}
             />
             <HerramientasMateriales elementos={allElementosFromStrapi} herramientas_materiales={allProfesionalesFromStrapi} />
-            <Aprende fromPage={true} videos_aprende={allVideos} />
-            <AlianzasColaboraciones />
+
+            {
+                allVideos.length > 0 ?
+                    <Aprende fromPage={true} videos_aprende={allVideos} />
+                    :
+                    ""
+            }
+
+
+            {
+                allColaboradores.length > 0 ?
+                
+                    <AlianzasColaboraciones colaboradores={allColaboradores} />
+                    :
+                    ""
+            }
+
             <FormContacto imagen_footer={data.imagen_footer} />
             <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
         </>);
