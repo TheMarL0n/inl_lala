@@ -9,22 +9,29 @@ const getStrapiMedia = (url) => {
   if (url.startsWith("http") || url.startsWith("//")) {
     return url;
   }
-  const host = process.env.NEXT_PUBLIC_STRAPI_HOST;
+  const host = process.env.NEXT_PUBLIC_STRAPI_HOST || "";
   return `${host}${url}`;
 };
 
-const FasesSeccion = ({ contenido = [] }) => {
-  if (!contenido || contenido.length === 0) return null;
+const nombresFasesMap = {
+  fase_1: "antes",
+  fase_2: "durante",
+  fase_3: "después",
+};
 
-  // Determinamos si se debe agrupar por fases según el booleano del componente en Strapi
-  const debeAgrupar = Boolean(contenido[0]?.agrupar);
+const FasesSeccion = ({ contenido = [] }) => {
+  const items = useMemo(
+    () => (Array.isArray(contenido) ? contenido : []),
+    [contenido]
+  );
+  const debeAgrupar = Boolean(items[0]?.agrupar);
 
   // Estado para el índice seleccionado cuando NO se agrupa (vista por títulos)
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   // 1. Agrupamos los elementos por "fases" solo cuando corresponde
   const fasesAgrupadas = useMemo(() => {
-    return contenido.reduce((acc, item) => {
+    return items.reduce((acc, item) => {
       const faseKey = item.fases || "general";
       if (!acc[faseKey]) {
         acc[faseKey] = [];
@@ -32,23 +39,20 @@ const FasesSeccion = ({ contenido = [] }) => {
       acc[faseKey].push(item);
       return acc;
     }, {});
-  }, [contenido]);
+  }, [items]);
 
   const listaFases = Object.keys(fasesAgrupadas);
 
   // Estado para la fase activa cuando SÍ se agrupa
-  const [faseActiva, setFaseActiva] = useState(listaFases[0]);
+  const [faseActiva, setFaseActiva] = useState(() => listaFases[0] || "");
 
-  // Diccionario opcional para mostrar un texto más amigable en el menú de fases
-  const nombresFasesMap = {
-    fase_1: "antes",
-    fase_2: "durante",
-    fase_3: "después",
-  };
+  if (items.length === 0) return null;
 
-  // VISTA CUANDO NO SE AGRUPA (agrupar === false) -> Estilo de la segunda imagen
+  const faseActual = fasesAgrupadas[faseActiva] ? faseActiva : listaFases[0];
+
+  // VISTA CUANDO NO SE AGRUPA (agrupar === false) -> Vista por títulos
   if (!debeAgrupar) {
-    const itemActual = contenido[selectedIndex] || contenido[0];
+    const itemActual = items[selectedIndex] || items[0];
 
     return (
       <section
@@ -58,16 +62,18 @@ const FasesSeccion = ({ contenido = [] }) => {
         <div className="flex flex-col md:flex-row items-start gap-12">
           {/* COLUMNA IZQUIERDA: Lista de títulos */}
           <div className="w-full md:w-1/4 flex flex-col">
-            {contenido.map((item, idx) => {
+            {items.map((item, idx) => {
               const isSelected = selectedIndex === idx;
 
               return (
                 <button
-                  key={idx}
+                  key={item.id || idx}
                   type="button"
                   onClick={() => setSelectedIndex(idx)}
                   className={`cursor-pointer text-left py-4 uppercase text-sm md:text-base tracking-wide transition-colors duration-200 text-[#0B75B9] border-b border-[#164190]/60 ${
-                    isSelected ? "font-bold text-[#0B75B9]" : "font-normal hover:text-[#164190]"
+                    isSelected
+                      ? "font-bold text-[#0B75B9]"
+                      : "font-normal hover:text-[#164190]"
                   }`}
                 >
                   {item.titulo}
@@ -119,7 +125,7 @@ const FasesSeccion = ({ contenido = [] }) => {
         {/* COLUMNA IZQUIERDA: Menú de Fases */}
         <div className="w-full md:w-1/4 flex flex-col pb-6 md:pb-0 md:pr-8">
           {listaFases.map((fase) => {
-            const isSelected = faseActiva === fase;
+            const isSelected = faseActual === fase;
             const nombreVisual = nombresFasesMap[fase] || fase.replace("_", " ");
 
             return (
@@ -139,8 +145,11 @@ const FasesSeccion = ({ contenido = [] }) => {
 
         {/* COLUMNA DERECHA: Elementos asociados a la fase seleccionada */}
         <div className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
-          {fasesAgrupadas[faseActiva]?.map((item, idx) => (
-            <div key={idx} className="flex flex-col items-start bg-white p-6">
+          {fasesAgrupadas[faseActual]?.map((item, idx) => (
+            <div
+              key={item.id || idx}
+              className="flex flex-col items-start bg-white p-6"
+            >
               {/* Imagen */}
               <div className="w-full relative h-64 mb-6 overflow-hidden">
                 {item.imagen && (

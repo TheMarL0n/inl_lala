@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper/modules";
 import ReactMarkdown from "react-markdown";
-import { encabezado_h2, encabezado_h3, stroke_text } from "@/app/utils/CSS_clases";
+import { encabezado_h3, stroke_text } from "@/app/utils/CSS_clases";
 
 // Si la URL viene de Strapi y no empieza con http, le agregamos el host
 const getStrapiMedia = (url) => {
@@ -40,7 +40,8 @@ const extraerRestoDeMarkdown = (markdownText) => {
 
 const SimpleSwiper = ({ contenido = [], tipo, diapositivas }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [navReady, setNavReady] = useState(false);
+  const [prevEl, setPrevEl] = useState(null);
+  const [nextEl, setNextEl] = useState(null);
   const swiperRef = useRef(null);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -68,18 +69,16 @@ const SimpleSwiper = ({ contenido = [], tipo, diapositivas }) => {
                 className="flex flex-col items-center text-center cursor-pointer transition-opacity hover:opacity-85"
               >
                 <span
-                  className={`${stroke_text} ${
-                    isActive ? "text-[#15428C]!" : ""
-                  } [-webkit-text-stroke-color:#15428C] text-center text-[120px]! leading-31 uppercase transition-colors duration-300`}
+                  className={`${stroke_text} ${isActive ? "text-[#15428C]!" : ""
+                    } [-webkit-text-stroke-color:#15428C] text-center text-[120px]! leading-31 uppercase transition-colors duration-300`}
                 >
                   {idx + 1}.
                 </span>
 
                 {tituloH2 && (
                   <span
-                    className={`text-[20px] text-[#15428C] capitalize ${
-                      isActive ? "font-bold" : "font-normal"
-                    }`}
+                    className={`text-[20px] text-[#15428C] capitalize ${isActive ? "font-bold" : "font-normal"
+                      }`}
                   >
                     {tituloH2}
                   </span>
@@ -93,10 +92,7 @@ const SimpleSwiper = ({ contenido = [], tipo, diapositivas }) => {
       {/* Wrapper externo con padding lateral para dejar las flechas fuera del contenido */}
       <div className="relative max-w-6xl mx-auto px-10 sm:px-14">
         <button
-          ref={(node) => {
-            prevRef.current = node;
-            if (node && nextRef.current && !navReady) setNavReady(true);
-          }}
+          ref={setPrevEl}
           type="button"
           aria-label="Diapositiva anterior"
           className="flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 text-[#164190] hover:text-[#0B75B9] hover:-translate-x-0.5 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer absolute left-0 top-1/2 -translate-y-1/2 z-20"
@@ -118,9 +114,9 @@ const SimpleSwiper = ({ contenido = [], tipo, diapositivas }) => {
         <Swiper
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
-            if (prevRef.current && nextRef.current) {
-              swiper.params.navigation.prevEl = prevRef.current;
-              swiper.params.navigation.nextEl = nextRef.current;
+            if (prevEl && nextEl) {
+              swiper.params.navigation.prevEl = prevEl;
+              swiper.params.navigation.nextEl = nextEl;
               swiper.navigation.destroy();
               swiper.navigation.init();
               swiper.navigation.update();
@@ -130,11 +126,11 @@ const SimpleSwiper = ({ contenido = [], tipo, diapositivas }) => {
           spaceBetween={30}
           autoHeight={true}
           navigation={
-            navReady
+            prevEl && nextEl
               ? {
-                  prevEl: prevRef.current,
-                  nextEl: nextRef.current,
-                }
+                prevEl,
+                nextEl,
+              }
               : false
           }
           autoplay={{
@@ -143,9 +139,8 @@ const SimpleSwiper = ({ contenido = [], tipo, diapositivas }) => {
           }}
           onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
           modules={[Navigation, Autoplay]}
-          className={`etapasSwiper max-w-5xl mx-auto ${
-            tipo === "centrado" ? "carusel-imagen-abajo" : ""
-          }`}
+          className={`etapasSwiper max-w-5xl mx-auto ${tipo === "centrado" ? "carusel-imagen-abajo" : ""
+            }`}
         >
           {contenido.map((item, idx) => {
             const tituloH2 = extraerH2Markdown(item.contenido) || "";
@@ -349,11 +344,10 @@ const SimpleSwiper = ({ contenido = [], tipo, diapositivas }) => {
                     )}
 
                     <div
-                      className={`w-full ${
-                        mediaUrl || tipo === "con_indice"
-                          ? "sm:col-span-2 p-8"
-                          : "sm:col-span-3"
-                      } flex flex-col items-start sm:bg-white`}
+                      className={`w-full ${mediaUrl || tipo === "con_indice"
+                        ? "sm:col-span-2 p-8"
+                        : "sm:col-span-3"
+                        } flex flex-col items-start sm:bg-white`}
                     >
                       <ReactMarkdown>{item.contenido}</ReactMarkdown>
                     </div>
@@ -365,10 +359,7 @@ const SimpleSwiper = ({ contenido = [], tipo, diapositivas }) => {
         </Swiper>
 
         <button
-          ref={(node) => {
-            nextRef.current = node;
-            if (node && prevRef.current && !navReady) setNavReady(true);
-          }}
+          ref={setNextEl}
           type="button"
           aria-label="Siguiente diapositiva"
           className="flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 text-[#164190] hover:text-[#0B75B9] hover:translate-x-0.5 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer absolute right-0 top-1/2 -translate-y-1/2 z-20"

@@ -1,7 +1,7 @@
 // context/TransitionContext.js
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
 const TransitionContext = createContext();
@@ -10,12 +10,12 @@ export function TransitionProvider({ children }) {
   const [isExiting, setIsExiting] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
-  // Cada vez que cambia la ruta (pathname), sabemos que la nueva página ya cargó
-  // Así que podemos desactivar la cortina de salida (animación de entrada)
-  useEffect(() => {
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setIsExiting(false);
-  }, [pathname]);
+  }
 
   const navigate = (href) => {
     if (isExiting) return;

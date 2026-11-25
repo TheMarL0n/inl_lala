@@ -124,13 +124,14 @@ const Dudas = ({
                                             className={`${WhiteButton}`}
                                         >
                                             Ver más
+                                            <span className="sr-only">Saber más sobre los mitos que existen sobre los lácteos</span>
                                         </CustomLink>
                                     </div>
                                 );
                             })
                         ) : (
                             <p className="text-white text-lg italic">
-                                No se encontraron dudas relacionadas con "{criterio}".
+                                No se encontraron dudas relacionadas con &ldquo;{criterio}&ldquo;.
                             </p>
                         )
                     ) : (
@@ -150,6 +151,7 @@ const Dudas = ({
                                     className={WhiteButton}
                                 >
                                     Ver más
+                                    <span className="sr-only">{item.subtitulo}</span>
                                 </CustomLink>
                             </div>
                         ))

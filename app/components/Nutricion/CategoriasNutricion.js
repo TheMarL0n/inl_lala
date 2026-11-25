@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
@@ -63,24 +63,28 @@ const CategoriasNutricion = ({ nutricion, categorias_nutricion }) => {
   const searchParams = useSearchParams()
   const catUrl = searchParams.get("cat")
 
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(() => {
-    if (catUrl) {
-      const parsedCat = Number(catUrl)
-      const existe = categorias_nutricion.some(item => item.id === parsedCat)
-      if (existe) return parsedCat
-    }
-    return categorias_nutricion.length > 0 ? categorias_nutricion[0].id : null
-  })
+  const getCategoriaDesdeUrl = (catParam) => {
+    if (!catParam) return null
+    const parsedCat = Number(catParam)
+    const existe = categorias_nutricion.some(item => item.id === parsedCat)
+    return existe ? parsedCat : null
+  }
 
-  useEffect(() => {
-    if (catUrl) {
-      const parsedCat = Number(catUrl)
-      const existe = categorias_nutricion.some(item => item.id === parsedCat)
-      if (existe) {
-        setCategoriaSeleccionada(parsedCat)
-      }
+  const defaultCategoria =
+    categorias_nutricion.length > 0 ? categorias_nutricion[0].id : null
+
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(
+    () => getCategoriaDesdeUrl(catUrl) ?? defaultCategoria
+  )
+  const [prevCatUrl, setPrevCatUrl] = useState(catUrl)
+
+  if (catUrl !== prevCatUrl) {
+    setPrevCatUrl(catUrl)
+    const catDesdeUrl = getCategoriaDesdeUrl(catUrl)
+    if (catDesdeUrl !== null) {
+      setCategoriaSeleccionada(catDesdeUrl)
     }
-  }, [catUrl, categorias_nutricion])
+  }
 
   const handleCategoriaClick = (id) => {
     setCategoriaSeleccionada(id)

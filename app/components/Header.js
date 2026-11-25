@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import {
     XMarkIcon,
@@ -16,7 +17,7 @@ export default function Header({ menuI_tems = [] }) {
     const [isAtTop, setIsAtTop] = useState(true)
 
     // Efecto para bloquear/desbloquear el scroll del body cuando el menú esté abierto
-    useEffect(() => {        
+    useEffect(() => {
         // Limpieza por si el componente se desamonta con el menú abierto
         return () => {
             document.body.style.overflow = 'unset'
@@ -42,29 +43,28 @@ export default function Header({ menuI_tems = [] }) {
 
     return (
         <header
-            className={`fixed z-40 w-full transition-all duration-300 ${
-                showNavbar ? 'translate-y-0' : '-translate-y-full'
-            } ${
-                isAtTop
+            className={`fixed z-40 w-full transition-all duration-300 ${showNavbar ? 'translate-y-0' : '-translate-y-full'
+                } ${isAtTop
                     ? 'bg-transparent shadow-none'
                     : 'bg-white/70 backdrop-blur-md shadow-sm'
-            }`}
-        >
-            <nav 
-                aria-label="Global" 
-                className={`mx-auto flex max-w-7xl items-center justify-between transition-all duration-300 px-6 lg:px-8 ${
-                    isAtTop ? 'py-6' : 'py-3'
                 }`}
+        >
+            <nav
+                aria-label="Global"
+                className={`mx-auto flex max-w-7xl items-center justify-between transition-all duration-300 px-6 lg:px-8 ${isAtTop ? 'py-6' : 'py-3'
+                    }`}
             >
                 <div className="flex lg:flex-1">
                     <CustomLink href="/" className="ml-3 p-1.5">
                         <span className="sr-only">INL Lala</span>
-                        <img
-                            alt="logo"
+                        <Image
                             src="/logo.svg"
-                            className={`w-auto transition-all duration-300 ${
-                                isAtTop ? 'h-11.5 sm:h-20' : 'h-8 sm:h-12'
-                            }`}
+                            alt="logo"
+                            width={160}
+                            height={64}
+                            unoptimized
+                            className={`w-auto transition-all duration-300 ${isAtTop ? 'h-11.5 sm:h-20' : 'h-8 sm:h-12'
+                                }`}
                         />
                     </CustomLink>
                 </div>

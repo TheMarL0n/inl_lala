@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
@@ -83,22 +83,25 @@ const FormContacto = ({ imagen_footer }) => {
     telefono: "",
     empresa: "",
   });
+  const [handledSuccessKey, setHandledSuccessKey] = useState(null);
+
+  const successKey = state?.success ? (state.timestamp ?? state.success) : null;
+
+  if (successKey && successKey !== handledSuccessKey) {
+    setHandledSuccessKey(successKey);
+    setFormData({
+      nombre: "",
+      apellido: "",
+      telefono: "",
+      empresa: "",
+    });
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  useEffect(() => {
-    if (state?.success) {
-      setFormData({
-        nombre: "",
-        apellido: "",
-        telefono: "",
-        empresa: "",
-      });
-    }
-  }, [state?.success, state?.timestamp]);
 
   const getError = (field) => {
     const err = state?.errors?.[field];
@@ -170,7 +173,7 @@ const FormContacto = ({ imagen_footer }) => {
                 maxLength={100}
                 autoComplete="given-name"
                 placeholder="Nombre"
-                className="border-b border-b-white placeholder:text-white text-[30px] text-[#164190] bg-transparent outline-none"
+                className="border-b border-b-white placeholder:text-white text-[30px] text-white bg-transparent outline-none"
               />
               <AnimatePresence mode="wait">
                 {getError("nombre") && (
@@ -198,7 +201,7 @@ const FormContacto = ({ imagen_footer }) => {
                 maxLength={100}
                 autoComplete="family-name"
                 placeholder="Apellido"
-                className="border-b border-b-white placeholder:text-white text-[30px] text-[#164190] bg-transparent outline-none"
+                className="border-b border-b-white placeholder:text-white text-[30px] text-white bg-transparent outline-none"
               />
               <AnimatePresence mode="wait">
                 {getError("apellido") && (
@@ -226,7 +229,7 @@ const FormContacto = ({ imagen_footer }) => {
                 maxLength={25}
                 autoComplete="tel"
                 placeholder="Teléfono"
-                className="border-b border-b-white placeholder:text-white text-[30px] text-[#164190] bg-transparent outline-none"
+                className="border-b border-b-white placeholder:text-white text-[30px] text-white bg-transparent outline-none"
               />
               <AnimatePresence mode="wait">
                 {getError("telefono") && (
@@ -254,7 +257,7 @@ const FormContacto = ({ imagen_footer }) => {
                 maxLength={150}
                 autoComplete="organization"
                 placeholder="Empresa"
-                className="border-b border-b-white placeholder:text-white text-[30px] text-[#164190] bg-transparent outline-none"
+                className="border-b border-b-white placeholder:text-white text-[30px] text-white bg-transparent outline-none"
               />
               <AnimatePresence mode="wait">
                 {getError("empresa") && (

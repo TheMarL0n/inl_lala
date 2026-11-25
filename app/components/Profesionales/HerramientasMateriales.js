@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -73,24 +73,28 @@ const HerramientasMateriales = ({ elementos, herramientas_materiales }) => {
   const searchParams = useSearchParams();
   const catUrl = searchParams.get("cat");
 
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(() => {
-    if (catUrl) {
-      const parsedCat = Number(catUrl);
-      const existe = herramientas_materiales.some((item) => item.id === parsedCat);
-      if (existe) return parsedCat;
-    }
-    return herramientas_materiales.length > 0 ? herramientas_materiales[0].id : null;
-  });
+  const getCategoriaDesdeUrl = (catParam) => {
+    if (!catParam) return null;
+    const parsedCat = Number(catParam);
+    const existe = herramientas_materiales.some((item) => item.id === parsedCat);
+    return existe ? parsedCat : null;
+  };
 
-  useEffect(() => {
-    if (catUrl) {
-      const parsedCat = Number(catUrl);
-      const existe = herramientas_materiales.some((item) => item.id === parsedCat);
-      if (existe) {
-        setCategoriaSeleccionada(parsedCat);
-      }
+  const defaultCategoria =
+    herramientas_materiales.length > 0 ? herramientas_materiales[0].id : null;
+
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(
+    () => getCategoriaDesdeUrl(catUrl) ?? defaultCategoria
+  );
+  const [prevCatUrl, setPrevCatUrl] = useState(catUrl);
+
+  if (catUrl !== prevCatUrl) {
+    setPrevCatUrl(catUrl);
+    const catDesdeUrl = getCategoriaDesdeUrl(catUrl);
+    if (catDesdeUrl !== null) {
+      setCategoriaSeleccionada(catDesdeUrl);
     }
-  }, [catUrl, herramientas_materiales]);
+  }
 
   const handleCategoriaClick = (id) => {
     setCategoriaSeleccionada(id);

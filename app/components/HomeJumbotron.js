@@ -80,6 +80,7 @@ const HomeJumbotron = ({titulo, subtitulo}) => {
             alt="Fondo Instituto de Nutrición Lala"
             fill
             priority
+            fetchPriority="high"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 600px"
             className="object-cover object-center"
           />
@@ -109,6 +110,7 @@ const HomeJumbotron = ({titulo, subtitulo}) => {
               alt="Fondo Instituto de Nutrición Lala"
               fill
               priority
+              fetchPriority="high"
               sizes="100vw"
               className="object-cover object-center"
             />
@@ -139,6 +141,7 @@ const HomeJumbotron = ({titulo, subtitulo}) => {
               alt="Elementos gráficos auxiliares"
               fill
               priority
+              fetchPriority="high"
               sizes="100vw"
               className="object-cover object-center"
             />

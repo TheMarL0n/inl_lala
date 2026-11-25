@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -53,24 +53,27 @@ const CategoriasDudas = ({ dudas, categorias_dudas }) => {
   const searchParams = useSearchParams();
   const catUrl = searchParams.get("cat");
 
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(() => {
-    if (catUrl) {
-      const parsedCat = Number(catUrl);
-      const existe = categorias_dudas.some((item) => item.id === parsedCat);
-      if (existe) return parsedCat;
-    }
-    return categorias_dudas.length > 0 ? categorias_dudas[0].id : null;
-  });
+  const getCategoriaDesdeUrl = (catParam) => {
+    if (!catParam) return null;
+    const parsedCat = Number(catParam);
+    const existe = categorias_dudas.some((item) => item.id === parsedCat);
+    return existe ? parsedCat : null;
+  };
 
-  useEffect(() => {
-    if (catUrl) {
-      const parsedCat = Number(catUrl);
-      const existe = categorias_dudas.some((item) => item.id === parsedCat);
-      if (existe) {
-        setCategoriaSeleccionada(parsedCat);
-      }
+  const defaultCategoria = categorias_dudas.length > 0 ? categorias_dudas[0].id : null;
+
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(
+    () => getCategoriaDesdeUrl(catUrl) ?? defaultCategoria
+  );
+  const [prevCatUrl, setPrevCatUrl] = useState(catUrl);
+
+  if (catUrl !== prevCatUrl) {
+    setPrevCatUrl(catUrl);
+    const catDesdeUrl = getCategoriaDesdeUrl(catUrl);
+    if (catDesdeUrl !== null) {
+      setCategoriaSeleccionada(catDesdeUrl);
     }
-  }, [catUrl, categorias_dudas]);
+  }
 
   const handleCategoriaClick = (id) => {
     setCategoriaSeleccionada(id);
@@ -116,11 +119,10 @@ const CategoriasDudas = ({ dudas, categorias_dudas }) => {
             >
               <div className="relative min-h-60 sm:min-h-72 overflow-hidden">
                 <div
-                  className={`bg-[#15428C]/70 absolute z-2 h-full w-full object-cover left-0 top-0 duration-400 ${
-                    isActive
+                  className={`bg-[#15428C]/70 absolute z-2 h-full w-full object-cover left-0 top-0 duration-400 ${isActive
                       ? "opacity-0"
                       : "opacity-0 sm:opacity-100 group-hover:opacity-0"
-                  }`}
+                    }`}
                 ></div>
                 {item.imagen_principal ? (
                   <Image

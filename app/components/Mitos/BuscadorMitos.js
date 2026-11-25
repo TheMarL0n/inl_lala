@@ -124,6 +124,7 @@ const BuscadorMitos = ({ themes = [] }) => {
                         className={`${BlueButton} whitespace-nowrap w-fit ml-auto`}
                       >
                         Ver más
+                        <span className="sr-only">{item.mito}</span>
                       </Link>
                     </div>
                   );
@@ -132,7 +133,7 @@ const BuscadorMitos = ({ themes = [] }) => {
             ) : (
               <div className="text-center py-8 bg-gray-50 rounded-lg">
                 <p className="text-[#15428C] text-lg italic">
-                  No se encontraron resultados para "{criterio}". Intenta con
+                  No se encontraron resultados para &ldquo;{criterio}&ldquo;. Intenta con
                   otra palabra clave.
                 </p>
               </div>

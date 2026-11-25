@@ -168,6 +168,7 @@ const Preguntas = ({titulo_1, titulo_2}) => {
                 </p>
                 <CustomLink href="/paginas/nutricion" className={WhiteButton}>
                     Ver más
+                    <span className="sr-only">Encuentra información y recomendaciones sobre los lácteos y la nutrición.</span>
                 </CustomLink>
             </motion.div>
         </motion.section>

@@ -18,6 +18,7 @@ const PagesSmallJumbotron = ({ background, title }) => {
           alt={`Imagen que describe el tema de ${title}`}
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="absolute inset-0 object-cover object-center z-0"
         />

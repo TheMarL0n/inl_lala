@@ -61,16 +61,8 @@ export const metadata = {
     locale: "es_MX",
     type: "website",
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+  other: {
+    robots: "index, follow, max-image-preview:large",
   },
 };
 

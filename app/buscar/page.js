@@ -100,7 +100,7 @@ export default async function SearchPage({ searchParams }) {
             {criteria ? (
               <>
                 Mostrando resultados para:{" "}
-                <span className="text-[#15428C]">"{criteria}"</span>
+                <span className="text-[#15428C]">&ldquo;{criteria}&rdquo;</span>
               </>
             ) : (
               "Ingresa un término para buscar"

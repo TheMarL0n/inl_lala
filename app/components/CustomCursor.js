@@ -16,77 +16,88 @@ export default function CustomCursor() {
     const smoothY = useSpring(mouseY, springConfig);
 
     useEffect(() => {
-        const mediaQueryReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mediaQueryReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+    const applyReducedMotionState = () => {
         if (mediaQueryReduced.matches) {
+            document.body.classList.remove("has-custom-cursor");
+        }
+    };
+
+    applyReducedMotionState();
+
+    const handleChange = () => {
+        if (mediaQueryReduced.matches) {
+            document.body.classList.remove("has-custom-cursor");
+            setIsVisible(false);
+        }
+    };
+
+    const disableForTouch = () => {
+        document.body.classList.remove("has-custom-cursor");
+        setIsVisible(false);
+    };
+
+    const handleMouseMove = (e) => {
+        if (mediaQueryReduced.matches) return;
+
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+
+        const target = e.target instanceof Element ? e.target : null;
+
+        // En campos de texto dejamos el cursor nativo
+        const isTextField = target?.closest(
+            "input, textarea, select, [contenteditable='true']"
+        );
+        if (isTextField) {
             document.body.classList.remove("has-custom-cursor");
             setIsVisible(false);
             return;
         }
 
-        const disableForTouch = () => {
-            document.body.classList.remove("has-custom-cursor");
-            setIsVisible(false);
-        };
+        document.body.classList.add("has-custom-cursor");
+        setIsVisible(true);
 
-        const handleMouseMove = (e) => {
-            if (mediaQueryReduced.matches) return;
+        const customLabelEl = target?.closest("[data-cursor]");
+        const interactiveEl = target?.closest(
+            "a, button, [role='button'], [data-cursor-hover]"
+        );
 
-            mouseX.set(e.clientX);
-            mouseY.set(e.clientY);
+        if (customLabelEl) {
+            setCursorText(customLabelEl.getAttribute("data-cursor") || "");
+            setCursorVariant("pointer");
+        } else if (interactiveEl) {
+            setCursorText("");
+            setCursorVariant("pointer");
+        } else {
+            setCursorText("");
+            setCursorVariant("default");
+        }
+    };
 
-            const target = e.target instanceof Element ? e.target : null;
-
-            // En campos de texto dejamos el cursor nativo
-            const isTextField = target?.closest(
-                "input, textarea, select, [contenteditable='true']"
-            );
-            if (isTextField) {
-                document.body.classList.remove("has-custom-cursor");
-                setIsVisible(false);
-                return;
-            }
-
-            document.body.classList.add("has-custom-cursor");
+    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => {
+        if (!mediaQueryReduced.matches) {
             setIsVisible(true);
+        }
+    };
 
-            const customLabelEl = target?.closest("[data-cursor]");
-            const interactiveEl = target?.closest(
-                "a, button, [role='button'], [data-cursor-hover]"
-            );
+    mediaQueryReduced.addEventListener("change", handleChange);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("touchstart", disableForTouch, { passive: true });
+    document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mouseenter", handleMouseEnter);
 
-            if (customLabelEl) {
-                setCursorText(customLabelEl.getAttribute("data-cursor") || "");
-                setCursorVariant("pointer");
-            } else if (interactiveEl) {
-                setCursorText("");
-                setCursorVariant("pointer");
-            } else {
-                setCursorText("");
-                setCursorVariant("default");
-            }
-        };
-
-        const handleMouseLeave = () => setIsVisible(false);
-        const handleMouseEnter = () => {
-            if (!mediaQueryReduced.matches) {
-                setIsVisible(true);
-            }
-        };
-
-        window.addEventListener("mousemove", handleMouseMove, { passive: true });
-        window.addEventListener("touchstart", disableForTouch, { passive: true });
-        document.addEventListener("mouseleave", handleMouseLeave);
-        document.addEventListener("mouseenter", handleMouseEnter);
-
-        return () => {
-            document.body.classList.remove("has-custom-cursor");
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("touchstart", disableForTouch);
-            document.removeEventListener("mouseleave", handleMouseLeave);
-            document.removeEventListener("mouseenter", handleMouseEnter);
-        };
-    }, [mouseX, mouseY]);
+    return () => {
+        document.body.classList.remove("has-custom-cursor");
+        mediaQueryReduced.removeEventListener("change", handleChange);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("touchstart", disableForTouch);
+        document.removeEventListener("mouseleave", handleMouseLeave);
+        document.removeEventListener("mouseenter", handleMouseEnter);
+    };
+}, [mouseX, mouseY]);
 
     if (!isVisible) return null;
 
