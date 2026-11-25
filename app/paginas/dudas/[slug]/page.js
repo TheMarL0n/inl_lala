@@ -386,6 +386,7 @@ async function DudaContent({ slug }) {
               contenido={item.html}
               float={item.float}
               acordion={item.acordion}
+              ver_mas_enlace={item.ver_mas_enlace}
             />
           );
         })}
