@@ -1,15 +1,7 @@
 import Image from "next/image";
+import { getStrapiMedia } from "../lib/strapi-media";
 
 const PagesSmallJumbotron = ({ background, title }) => {
-  // Si la URL viene de Strapi y no empieza con http, le agregamos el host
-  const getStrapiMedia = (url) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("//")) {
-      return url;
-    }
-    return `${process.env.STRAPI_HOST}${url}`;
-  };
-
   return (
     <section className="relative">
       <div className="relative h-screen min-h-126 max-h-126 flex flex-col sm:justify-center overflow-hidden">

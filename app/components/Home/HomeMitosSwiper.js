@@ -15,16 +15,7 @@ import {
 import { Comillas } from "@/app/utils/SVG_Icons";
 import ReactMarkdown from "react-markdown";
 import CustomLink from "../Auxiliares/CustomLinks";
-
-// Si la URL viene de Strapi y no empieza con http, le agregamos el host
-const getStrapiMedia = (url) => {
-  if (!url) return null;
-  if (url.startsWith("http") || url.startsWith("//")) {
-    return url;
-  }
-  const host = process.env.STRAPI_HOST;
-  return `${host}${url}`;
-};
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 const HomeMitosSwiper = ({ titulo_1, titulo_2, contenido, alternative, currentSlug, titulo_mitos }) => {
   const sectionRef = useRef(null);
@@ -112,7 +103,7 @@ const HomeMitosSwiper = ({ titulo_1, titulo_2, contenido, alternative, currentSl
                   <div className="w-full sm:w-1/2 relative overflow-hidden h-96 sm:h-129">
                     <Image
                       src={getStrapiMedia(
-                        item.imagen?.url || item.imagen_principal?.url,
+                        item.imagen?.url || item.imagen_principal?.url
                       )}
                       alt={`Ilustración representativa sobre el mito: ${item.mito}`}
                       fill

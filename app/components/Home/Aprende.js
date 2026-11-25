@@ -8,22 +8,12 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { PlusSymbol } from "@/app/utils/SVG_Icons";
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 const Aprende = ({ titulo_video, fromPage, videos_aprende }) => {
     const [selectedVideo, setSelectedVideo] = useState(null);
     const prefersReducedMotion = useReducedMotion();
 
-    const getStrapiMedia = (url) => {
-        if (!url) return null;
-        if (url.startsWith("http") || url.startsWith("//")) {
-            return url;
-        }
-        const host = process.env.STRAPI_HOST;
-        return `${host}${url}`;
-
-    };
-
-    // Cerrar modal con tecla Escape para mejorar accesibilidad con teclado
     useEffect(() => {
         if (!selectedVideo) return;
         const handleKeyDown = (e) => {
@@ -135,7 +125,7 @@ const Aprende = ({ titulo_video, fromPage, videos_aprende }) => {
                                     <div className="bg-[#15428C]/70 absolute z-2 h-full w-full left-0 top-0 opacity-0 sm:opacity-100 group-hover:opacity-0 transition-opacity duration-400 pointer-events-none" />
 
                                     <Image
-                                        src={getStrapiMedia(item.miniatura.url)}
+                                        src={getStrapiMedia(item.miniatura?.url)}
                                         alt={`Miniatura del video: ${item.titulo}`}
                                         fill
                                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

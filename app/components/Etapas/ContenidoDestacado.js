@@ -2,16 +2,7 @@ import Image from "next/image";
 import { encabezado_h3, stroke_text } from "@/app/utils/CSS_clases";
 import ReactMarkdown from "react-markdown";
 import Markdown from "react-markdown";
-
-// Si la URL viene de Strapi y no empieza con http, le agregamos el host
-const getStrapiMedia = (url) => {
-  if (!url) return null;
-  if (url.startsWith("http") || url.startsWith("//")) {
-    return url;
-  }
-  const host = process.env.STRAPI_HOST;
-  return `${host}${url}`;
-};
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 // Función auxiliar para extraer el texto del primer H6 (##) en el Markdown
 const extraerH6Markdown = (markdownText) => {

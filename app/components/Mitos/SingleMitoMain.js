@@ -2,15 +2,7 @@ import Image from "next/image";
 import { parrafo_normal, stroke_text } from "@/app/utils/CSS_clases";
 import { Comillas } from "@/app/utils/SVG_Icons";
 import ReactMarkdown from "react-markdown";
-
-// Si la URL viene de Strapi y no empieza con http, le agregamos el host
-const getStrapiMedia = (url) => {
-  if (!url) return null;
-  if (url.startsWith("http") || url.startsWith("//")) {
-    return url;
-  }
-  return `${process.env.STRAPI_HOST}${url}`;
-};
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 const SingleMitoMain = ({ image, title, reality }) => {
   return (

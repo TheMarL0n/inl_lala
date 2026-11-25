@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { parrafo_normal } from "../utils/CSS_clases";
 import ReactMarkdown from "react-markdown";
+import { getStrapiMedia } from "../lib/strapi-media";
 
 const PagesJumbotron = ({
   titulo,
@@ -16,14 +17,6 @@ const PagesJumbotron = ({
 }) => {
   const bannerRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
-
-  const getStrapiMedia = (url) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("//")) {
-      return url;
-    }
-    return `${process.env.STRAPI_HOST}${url}`;
-  };
 
   const { scrollYProgress } = useScroll({
     target: bannerRef,

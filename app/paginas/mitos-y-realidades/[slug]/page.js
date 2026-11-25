@@ -11,17 +11,9 @@ import PagesSmallJumbotron from "@/app/components/PagesSmallJumbotron";
 import PaginasNavegacion from "@/app/components/PaginasNavegacion";
 import { fetchAPI } from "@/app/lib/strapi";
 import Skeleton from "@/app/components/Skeleton";
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://institutolala.com.mx";
-
-const getStrapiMedia = (url) => {
-  if (!url) return null;
-  if (url.startsWith("http") || url.startsWith("//")) {
-    return url;
-  }
-  const host = process.env.STRAPI_HOST || "";
-  return `${host}${url}`;
-};
 
 const stripHtmlAndMarkdown = (text = "") =>
   text

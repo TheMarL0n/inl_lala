@@ -14,24 +14,12 @@ import {
 import { Comillas } from "@/app/utils/SVG_Icons";
 import ReactMarkdown from "react-markdown";
 import CustomLink from "../Auxiliares/CustomLinks";
-
-const getStrapiMedia = (url) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("//")) {
-        return url;
-    }
-    const host = process.env.STRAPI_HOST;
-    return `${host}${url}`;
-
-};
-
-
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 const MitosSwiper = ({ contenido, alternative, currentSlug, titulo_mitos }) => {
 
     const filteredMitos = contenido.filter((item) => {
         if (!currentSlug) return true;
-        // Si el item no tiene slug, decidimos si incluirlo (por ejemplo, true para mostrarlo siempre)
         if (!item.slug) return true;
         return item.slug !== currentSlug;
     });

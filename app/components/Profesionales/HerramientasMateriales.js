@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { BlueButton, encabezado_h3, parrafo_normal } from "@/app/utils/CSS_clases";
 import CustomLink from "../Auxiliares/CustomLinks";
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 const easeSmooth = [0.22, 1, 0.36, 1];
 
@@ -107,14 +108,6 @@ const HerramientasMateriales = ({ elementos, herramientas_materiales }) => {
   const elementosFiltradas = categoriaSeleccionada
     ? elementos.filter((duda) => duda.categoria.id === categoriaSeleccionada)
     : elementos;
-
-  const getStrapiMedia = (url) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("//")) {
-      return url;
-    }
-    return `${process.env.STRAPI_HOST}${url}`;
-  };
 
   return (
     <section id="elementos_at_top" className="pb-20 px-4">

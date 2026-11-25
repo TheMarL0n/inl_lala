@@ -5,21 +5,13 @@ import Header from "@/app/components/Header";
 import MitosGrid from "@/app/components/Mitos/MitosGrid";
 import { fetchAPI } from "@/app/lib/strapi";
 import Skeleton from "@/app/components/Skeleton";
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 export const dynamic = "force-dynamic";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://institutolala.com.mx";
 const PAGE_PATH = "/paginas/mitos-y-realidades";
 const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
-
-const getStrapiMedia = (url) => {
-  if (!url) return null;
-  if (url.startsWith("http") || url.startsWith("//")) {
-    return url;
-  }
-  const host = process.env.STRAPI_HOST || "";
-  return `${host}${url}`;
-};
 
 const buildMitoQuestion = (mito) => {
   if (!mito) return "";

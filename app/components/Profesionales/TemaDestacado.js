@@ -3,6 +3,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { BlueButton, encabezado_h3, parrafo_normal } from "@/app/utils/CSS_clases";
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 const easeSmooth = [0.22, 1, 0.36, 1];
 
@@ -42,15 +43,6 @@ const TemaDestacado = ({
 
   // Desplazamiento vertical sutil ligado al scroll
   const yParallax = useTransform(scrollYProgress, [0, 1], ["-12%", "12%"]);
-
-  const getStrapiMedia = (url) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("//")) {
-      return url;
-    }
-    const host = process.env.STRAPI_HOST;
-    return `${host}${url}`;
-  };
 
   const mediaUrl = getStrapiMedia(imagen_tema_destacado?.url);
 

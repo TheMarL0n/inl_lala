@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { encabezado_h3 } from "@/app/utils/CSS_clases";
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 const easeSmooth = [0.22, 1, 0.36, 1];
 
@@ -44,15 +45,6 @@ const logoCardVariants = {
 };
 
 const AlianzasColaboraciones = ({ colaboradores }) => {
-  const getStrapiMedia = (url) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("//")) {
-      return url;
-    }
-    const host = process.env.STRAPI_HOST || "";
-    return `${host}${url}`;
-  };
-
   return (
     <section className="py-20 px-4">
       <div className="max-w-7xl mx-auto">

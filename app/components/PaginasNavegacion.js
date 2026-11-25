@@ -1,18 +1,8 @@
-import Link from "next/link"
 import Image from "next/image"
 import { BlueButton, encabezado_h2, parrafo_normal } from "@/app/utils/CSS_clases"
 import { ChevronDown } from "@/app/utils/SVG_Icons"
 import CustomLink from "./Auxiliares/CustomLinks"
-
-// Si la URL viene de Strapi y no empieza con http, le agregamos el host
-const getStrapiMedia = (url) => {
-  if (!url) return null;
-  if (url.startsWith("http") || url.startsWith("//")) {
-    return url;
-  }
-  const host = process.env.STRAPI_HOST;
-  return `${host}${url}`;
-};
+import { getStrapiMedia } from "../lib/strapi-media"
 
 const PaginasNavegacion = ({ themes, parent_url, currentTheme }) => {
     // 1. Encontramos el índice del artículo actual dentro del arreglo global

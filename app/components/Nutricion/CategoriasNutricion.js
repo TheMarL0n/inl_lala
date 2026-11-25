@@ -5,6 +5,7 @@ import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { BlueButton, parrafo_normal } from "@/app/utils/CSS_clases"
 import CustomLink from "../Auxiliares/CustomLinks"
+import { getStrapiMedia } from "@/app/lib/strapi-media"
 
 const easeSmooth = [0.22, 1, 0.36, 1]
 
@@ -97,14 +98,6 @@ const CategoriasNutricion = ({ nutricion, categorias_nutricion }) => {
   const nutricionFiltradas = categoriaSeleccionada
     ? nutricion.filter(nutri => nutri.categoria.id === categoriaSeleccionada)
     : nutricion
-
-  const getStrapiMedia = (url) => {
-    if (!url) return null
-    if (url.startsWith("http") || url.startsWith("//")) {
-      return url
-    }
-    return `${process.env.STRAPI_HOST}${url}`
-  }
 
   return (
     <section id="quiero_at_top" className="pb-20 px-4">

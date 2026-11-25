@@ -4,16 +4,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import Image from "next/image";
 import { encabezado_h3, parrafo_normal, WhiteButton } from "@/app/utils/CSS_clases";
 import CustomLink from "../Auxiliares/CustomLinks";
-
-// Si la URL viene de Strapi y no empieza con http, le agregamos el host
-const getStrapiMedia = (url) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("//")) {
-        return url;
-    }
-    const host = process.env.STRAPI_HOST;
-    return `${host}${url}`;
-};
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 const Profesionales = ({
     titulo_profesionales,
@@ -61,7 +52,7 @@ const Profesionales = ({
                     className="relative h-72 sm:absolute sm:top-0 sm:left-0 sm:h-full overflow-hidden z-20 pointer-events-none will-change-[width]"
                 >
                     <Image
-                        src={getStrapiMedia(imagen_destacada.url)}
+                        src={getStrapiMedia(imagen_destacada?.url)}
                         alt="Profesional de la salud revisando información científica y nutricional"
                         fill
                         sizes="(max-width: 640px) 100vw, 100vw"

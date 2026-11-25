@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { BlueButton, parrafo_normal } from "@/app/utils/CSS_clases";
 import CustomLink from "../Auxiliares/CustomLinks";
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 // Variantes de animación para mantener el JSX limpio
 const containerVariants = {
@@ -86,14 +87,6 @@ const CategoriasDudas = ({ dudas, categorias_dudas }) => {
   const dudasFiltradas = categoriaSeleccionada
     ? dudas.filter((duda) => duda.categoria.id === categoriaSeleccionada)
     : dudas;
-
-  const getStrapiMedia = (url) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("//")) {
-      return url;
-    }
-    return `${process.env.STRAPI_HOST}${url}`;
-  };
 
   return (
     <section id="dudas_at_top" className="pb-20 px-4">

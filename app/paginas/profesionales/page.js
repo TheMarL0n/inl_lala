@@ -10,21 +10,13 @@ import FormContacto from "@/app/components/FormContacto";
 
 import { fetchAPI } from "@/app/lib/strapi";
 import Skeleton from "@/app/components/Skeleton";
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 export const dynamic = "force-dynamic";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://institutolala.com.mx";
 const PAGE_PATH = "/paginas/profesionales";
 const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
-
-const getStrapiMedia = (url) => {
-  if (!url) return null;
-  if (url.startsWith("http") || url.startsWith("//")) {
-    return url;
-  }
-  const host = process.env.STRAPI_HOST || "";
-  return `${host}${url}`;
-};
 
 const buildItemTitle = (item) => {
   if (!item) return "";

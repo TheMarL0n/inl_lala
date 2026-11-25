@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { BlueButton, encabezado_h3 } from "../utils/CSS_clases";
 import { sendContacto } from "@/app/utils/actions"; // Ajusta al nombre/ruta de tu Server Action
+import { getStrapiMedia } from "../lib/strapi-media";
 
 const easeSmooth = [0.22, 1, 0.36, 1];
 
@@ -107,15 +108,6 @@ const FormContacto = ({ imagen_footer }) => {
     const err = state?.errors?.[field];
     if (!err) return "";
     return Array.isArray(err) ? err[0] : err;
-  };
-
-  const getStrapiMedia = (url) => {
-    if (!url) return null;
-    if (url.startsWith("http") || url.startsWith("//")) {
-      return url;
-    }
-    const host = process.env.STRAPI_HOST || "";
-    return `${host}${url}`;
   };
 
   const mediaSrc = imagen_footer?.url ? getStrapiMedia(imagen_footer.url) : null;

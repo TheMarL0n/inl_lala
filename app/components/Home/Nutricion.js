@@ -7,18 +7,9 @@ import {
   encabezado_h3,
   parrafo_normal,
 } from "@/app/utils/CSS_clases";
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
-// Si la URL viene de Strapi y no empieza con http, le agregamos el host
-const getStrapiMedia = (url) => {
-  if (!url) return null;
-  if (url.startsWith("http") || url.startsWith("//")) {
-    return url;
-  }
-  const host = process.env.STRAPI_HOST;
-  return `${host}${url}`;
-};
-
-const Nutricion = ({ 
+const Nutricion = ({
   titulo_1,
   titulo_2,
   contenido,
@@ -67,7 +58,7 @@ const Nutricion = ({
             className="relative shrink-0 w-30 sm:w-94.25 aspect-square"
           >
             <Image
-              src={getStrapiMedia(imagen_destacada.url)}
+              src={getStrapiMedia(imagen_destacada?.url)}
               alt="Tazón saludable con ingredientes nutritivos del Instituto de Nutrición Lala"
               fill
               sizes="(max-width: 640px) 120px, 377px"

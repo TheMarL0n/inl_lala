@@ -5,16 +5,7 @@ import { categorias_dudas, dudas } from "@/app/utils/Copies";
 import { encabezado_h3, parrafo_normal, WhiteButton } from "@/app/utils/CSS_clases";
 import Image from "next/image";
 import CustomLink from "../Auxiliares/CustomLinks";
-
-// Si la URL viene de Strapi y no empieza con http, le agregamos el host
-const getStrapiMedia = (url) => {
-  if (!url) return null;
-  if (url.startsWith("http") || url.startsWith("//")) {
-    return url;
-  }
-  const host = process.env.STRAPI_HOST;
-  return `${host}${url}`;
-};
+import { getStrapiMedia } from "@/app/lib/strapi-media";
 
 const Dudas = ({ 
   titulo_1,
@@ -57,7 +48,7 @@ const Dudas = ({
                     className="relative w-full h-full overflow-hidden will-change-[width]"
                 >
                     <Image
-                        src={getStrapiMedia(imagen_destacada.url)}
+                        src={getStrapiMedia(imagen_destacada?.url)}
                         alt="Joven disfrutando de una alimentación saludable y equilibrada"
                         fill
                         priority

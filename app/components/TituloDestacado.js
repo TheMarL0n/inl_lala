@@ -1,6 +1,7 @@
 import { encabezado_h3 } from "@/app/utils/CSS_clases";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
+import { getStrapiMedia } from "../lib/strapi-media";
 
 const TituloDestacado = ({ title_linea_1, title_linea_2, color_fondo_1, color_fondo_2, background, contenido }) => {
     const fondosOscuros = {
@@ -10,14 +11,6 @@ const TituloDestacado = ({ title_linea_1, title_linea_2, color_fondo_1, color_fo
         celeste: "bg-[#0B75B9]",
     };
 
-    // Si la URL viene de Strapi y no empieza con http, le agregamos el host
-    const getStrapiMedia = (url) => {
-        if (!url) return null;
-        if (url.startsWith("http") || url.startsWith("//")) {
-            return url;
-        }
-        return `${process.env.STRAPI_HOST}${url}`;
-    };
     return (
         <section className="text-destacado relative overflow-hidden my-20">
             <div className={`relative ${background.url ? "h-screen sm:h-[600px] min-h-150 max-h-225 2xl:max-h-200" : ""} flex flex-col sm:justify-center w-full`}>
