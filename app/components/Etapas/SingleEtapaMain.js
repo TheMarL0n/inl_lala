@@ -34,17 +34,16 @@ const SingleEtapaMain = ({ contenido, float, acordion, ver_mas_enlace }) => {
                         className="border-b border-[#164190] py-8 gap-4 grid grid-cols-3 sm:grid-cols-4 items-center"
                     >
                         <div className="col-span-2 sm:col-span-3">
-                            <h3>
-                                <CustomLink
-                                    href={`/paginas/${ver_mas_enlace}`}
-                                    className={`${parrafo_normal} text-[#164190] font-bold`}
-                                >
-                                    {tituloH2}
-                                </CustomLink>
-                            </h3>
-                            <p className={`${parrafo_normal} text-[#164190]`}>
+                            <CustomLink
+                                href={`/paginas/${ver_mas_enlace}`}
+                                className={`${parrafo_normal} text-[#164190] font-bold uppercase block mb-4`}
+                            >
+                                {tituloH2}
+                            </CustomLink>
+
+                            <ReactMarkdown>
                                 {restoContenido}
-                            </p>
+                            </ReactMarkdown>
                         </div>
                         <CustomLink
                             href={`/paginas/${ver_mas_enlace}`}

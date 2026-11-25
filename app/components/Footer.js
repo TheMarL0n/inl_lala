@@ -40,7 +40,7 @@ const Footer = ({ menuI_tems = [], socialesI_tems = [] }) => {
                                     className={`w-14 h-10 bg-[url(/images/socials.svg)] bg-no-repeat
                                         ${item.nombre === "youtube" ? "bg-position-[0px]" :
                                             item.nombre === "instagram" ? "bg-position-[-84px_center]" :
-                                                item.nombre === "facebook" ? "bg-position-[-167px_center]" :
+                                                item.nombre === "tiktok" ? "bg-position-[-167px_center]" :
                                                     item.nombre === "linkedin" ? "bg-position-[-242px_center]" : ""
                                         }`}
                                 />
