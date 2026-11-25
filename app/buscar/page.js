@@ -26,7 +26,7 @@ export default async function SearchPage({ searchParams }) {
     console.error("Error al cargar los datos de Strapi:", error);
   } 
 
-  const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_HOST;
+  const STRAPI_URL = process.env.STRAPI_HOST;
 
   const formattedMitos = mitos.map((item) => {
     const imgUrl = item.imagen_principal?.url;

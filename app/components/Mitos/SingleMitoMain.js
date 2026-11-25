@@ -9,7 +9,7 @@ const getStrapiMedia = (url) => {
   if (url.startsWith("http") || url.startsWith("//")) {
     return url;
   }
-  return `${process.env.NEXT_PUBLIC_STRAPI_HOST}${url}`;
+  return `${process.env.STRAPI_HOST}${url}`;
 };
 
 const SingleMitoMain = ({ image, title, reality }) => {

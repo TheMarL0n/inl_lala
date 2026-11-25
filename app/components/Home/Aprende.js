@@ -18,7 +18,7 @@ const Aprende = ({ titulo_video, fromPage, videos_aprende }) => {
         if (url.startsWith("http") || url.startsWith("//")) {
             return url;
         }
-        const host = process.env.NEXT_PUBLIC_STRAPI_HOST;
+        const host = process.env.STRAPI_HOST;
         return `${host}${url}`;
 
     };

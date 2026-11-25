@@ -16,7 +16,7 @@ const TituloDestacado = ({ title_linea_1, title_linea_2, color_fondo_1, color_fo
         if (url.startsWith("http") || url.startsWith("//")) {
             return url;
         }
-        return `${process.env.NEXT_PUBLIC_STRAPI_HOST}${url}`;
+        return `${process.env.STRAPI_HOST}${url}`;
     };
     return (
         <section className="text-destacado relative overflow-hidden my-20">
