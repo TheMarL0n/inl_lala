@@ -26,7 +26,21 @@ const SingleEtapaMain = ({ contenido, float, acordion, ver_mas_enlace }) => {
     const tituloH2 = extraerH2Markdown(contenido);
     const restoContenido = extraerRestoDeMarkdown(contenido);
 
+    const resolverEnlaceVerMas = (enlace) => {
+        const limpio = enlace.trim();
+        const esEnlaceExterno = /^https?:\/\//i.test(limpio);
+
+        if (esEnlaceExterno) {
+            return limpio;
+        }
+
+        const rutaRelativa = limpio.replace(/^\/+/, "");
+        return `/paginas/${rutaRelativa}`;
+    };
+
     if (ver_mas_enlace && ver_mas_enlace.trim() !== "") {
+        const hrefFinal = resolverEnlaceVerMas(ver_mas_enlace);
+
         return (
             <section className="px-4 py-10 relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4">
@@ -35,7 +49,7 @@ const SingleEtapaMain = ({ contenido, float, acordion, ver_mas_enlace }) => {
                     >
                         <div className="col-span-2 sm:col-span-3">
                             <CustomLink
-                                href={`/paginas/${ver_mas_enlace}`}
+                                href={hrefFinal}
                                 className={`${parrafo_normal} text-[#164190] font-bold uppercase block mb-4`}
                             >
                                 {tituloH2}
@@ -46,7 +60,7 @@ const SingleEtapaMain = ({ contenido, float, acordion, ver_mas_enlace }) => {
                             </ReactMarkdown>
                         </div>
                         <CustomLink
-                            href={`/paginas/${ver_mas_enlace}`}
+                            href={hrefFinal}
                             className={`${BlueButton} w-fit ml-auto`}
                         >
                             Ver más
@@ -55,7 +69,7 @@ const SingleEtapaMain = ({ contenido, float, acordion, ver_mas_enlace }) => {
                     </div>
                 </div>
             </section>
-        )
+        );
     }
 
     if (acordion) {
