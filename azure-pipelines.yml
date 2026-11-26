@@ -18,32 +18,31 @@ stages:
       - job: BuildJob
         displayName: 'Install & Build'
         steps:
-          - task: NodeTool@0
+          - task: UseNode@1
             inputs:
-              versionSpec: $(nodeVersion)
+              version: $(nodeVersion)
             displayName: 'Usar Node.js $(nodeVersion)'
 
           - script: |
               npm ci
               npm run build
-            displayName: 'Instalar dependencias y compilar'
+              cp -r public .next/standalone/public
+              mkdir -p .next/standalone/.next
+              cp -r .next/static .next/standalone/.next/static
+            displayName: 'Instalar, compilar y preparar standalone'
             env:
               STRAPI_URL: $(STRAPI_URL)
               STRAPI_HOST: $(STRAPI_HOST)
               STRAPI_API_TOKEN: $(STRAPI_API_TOKEN)
 
           - task: ArchiveFiles@2
-            displayName: 'Empaquetar artefacto para App Service'
+            displayName: 'Empaquetar artefacto standalone'
             inputs:
-              rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+              rootFolderOrFile: '$(System.DefaultWorkingDirectory)/.next/standalone'
               includeRootFolder: false
               archiveType: 'zip'
               archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
               replaceExistingArchive: true
-              excludePaths: |
-                .git/**
-                .next/cache/**
-                README.md
 
           - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
             artifact: drop
@@ -70,4 +69,4 @@ stages:
                     appType: 'webAppLinux'
                     appName: '$(webAppName)'
                     package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
-                    startUpCommand: 'npm run start'
+                    startUpCommand: 'node server.js'

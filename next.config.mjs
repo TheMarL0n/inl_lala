@@ -18,6 +18,7 @@ const cspReportOnly = [
 ].join("; ");
 
 const nextConfig = {
+  output: "standalone",
   images: {
     remotePatterns: [
       ...(isDev
