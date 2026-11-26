@@ -89,7 +89,7 @@ export default async function SearchPage({ searchParams }) {
 
   return (
     <main>
-      <Header menuI_tems={menuItems} />
+      <Header menuI_tems={menuItems} socialesI_tems={socialesItems}/>
       <div className="max-w-7xl mx-auto py-40 px-6">
         {/* Encabezado */}
         <div className="border-b border-gray-200 pb-6 mb-8">

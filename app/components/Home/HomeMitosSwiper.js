@@ -85,96 +85,99 @@ const HomeMitosSwiper = ({ titulo_1, titulo_2, contenido, alternative, currentSl
             </div>
           )}
 
-          <Swiper
-            slidesPerView={1}
-            spaceBetween={30}
-            navigation={true}
-            autoplay={{
-              delay: 4500,
-              disableOnInteraction: false,
-            }}
-            modules={[Navigation, Autoplay]}
-            className="mitosSwiper"
-          >
-            {filteredMitos.map((item, idx) => (
-              <SwiperSlide key={idx}>
-                <article className="relative overflow-hidden z-2 flex flex-col sm:flex-row w-full">
-                  {/* Contenedor de la imagen optimizada */}
-                  <div className="w-full sm:w-1/2 relative overflow-hidden h-96 sm:h-129">
-                    <Image
-                      src={getStrapiMedia(
-                        item.imagen?.url || item.imagen_principal?.url
-                      )}
-                      alt={`Ilustración representativa sobre el mito: ${item.mito}`}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                      className="object-cover absolute top-0 left-0"
-                    />
-                  </div>
+          <div className="max-w-7xl mx-auto">
+            <Swiper
+              slidesPerView={1}
+              spaceBetween={30}
+              navigation={true}
+              // autoplay={{
+              //   delay: 4500,
+              //   disableOnInteraction: false,
+              // }}
+              modules={[Navigation, Autoplay]}
+              className="mitosSwiper"
+            >
+              {filteredMitos.map((item, idx) => (
+                <SwiperSlide key={idx}>
+                  <article className="relative overflow-hidden z-2 flex flex-col sm:flex-row w-full">
+                    {/* Contenedor de la imagen optimizada */}
+                    <div className="w-full sm:w-1/2 relative overflow-hidden h-96 sm:h-129">
+                      <Image
+                        src={getStrapiMedia(
+                          item.imagen?.url || item.imagen_principal?.url
+                        )}
+                        alt={`Ilustración representativa sobre el mito: ${item.mito}`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                        className="object-cover absolute top-0 left-0"
+                      />
+                    </div>
 
-                  <div className="w-full sm:w-1/2 flex flex-col items-start sm:bg-white p-8 sm:-ml-30 sm:mt-40 z-3">
-                    <div className="space-y-4 max-w-125">
-                      <div>
-                        <span>
-                          <Comillas className="rotate-180 sm:-mt-12 sm:-ml-12" />
-                        </span>
-                        {titulo_mitos ? (
-                          <p className="text-[#15428C] font-black text-[32px] leading-[32px] mb-4!">
-                            {titulo_mitos}
+                    <div className="w-full sm:w-1/2 flex flex-col items-start sm:bg-white p-8 sm:-ml-30 sm:mt-40 z-3">
+                      <div className="space-y-4">
+                        <div>
+                          <span>
+                            <Comillas className="rotate-180 sm:-mt-12 sm:-ml-12" />
+                          </span>
+                          {titulo_mitos ? (
+                            <p className="text-[#15428C] font-black text-[32px] leading-[32px] mb-4!">
+                              {titulo_mitos}
+                            </p>
+                          ) : (
+                            ""
+                          )}
+                          {alternative ? (
+                            <p className="text-[#15428C] font-black text-[30px]">
+                              mito
+                            </p>
+                          ) : (
+                            ""
+                          )}
+                          <h2
+                            className={`text-[#15428C] ${alternative ? "text-[35px] leading-8 sm:text-[45px] sm:leading-10 font-bold" : "text-[50px] leading-12 sm:text-[60px] sm:leading-14 font-black"}`}
+                          >
+                            {item.mito}
+                          </h2>
+                          {alternative ? (
+                            ""
+                          ) : (
+                            <span>
+                              <Comillas className="ml-auto block sm:-mt-6" />
+                            </span>
+                          )}
+                        </div>
+                        {alternative ? (
+                          <p className="text-[#15428C] font-black text-[30px] m-0">
+                            realidad
                           </p>
                         ) : (
-                          ""
+                          <h4 className={`${encabezado_h4} bg-[#009638]`}>
+                            Lo que dice la ciencia
+                          </h4>
                         )}
+                        <div className={`${parrafo_normal} text-[#15428C]`}>
+                          <ReactMarkdown>{item.realidad}</ReactMarkdown>
+                        </div>
                         {alternative ? (
-                          <p className="text-[#15428C] font-black text-[30px]">
-                            mito
-                          </p>
-                        ) : (
-                          ""
-                        )}
-                        <h2
-                          className={`text-[#15428C] ${alternative ? "text-[35px] leading-8 sm:text-[45px] sm:leading-10 font-bold" : "text-[50px] leading-12 sm:text-[60px] sm:leading-14 font-black"}`}
-                        >
-                          {item.mito}
-                        </h2>
-                        {alternative ? (
-                          ""
-                        ) : (
                           <span>
                             <Comillas className="ml-auto block sm:-mt-6" />
                           </span>
+                        ) : (
+                          <CustomLink
+                            href={`/paginas/mitos-y-realidades/${item.slug}`}
+                            className={`${BlueButton} mb-12 sm:mb-0 sm:mt-12 w-fit`}
+                          >
+                            Descubre por qué
+                          </CustomLink>
                         )}
                       </div>
-                      {alternative ? (
-                        <p className="text-[#15428C] font-black text-[30px] m-0">
-                          realidad
-                        </p>
-                      ) : (
-                        <h4 className={`${encabezado_h4} bg-[#009638]`}>
-                          Lo que dice la ciencia
-                        </h4>
-                      )}
-                      <div className={`${parrafo_normal} text-[#15428C]`}>
-                        <ReactMarkdown>{item.realidad}</ReactMarkdown>
-                      </div>
-                      {alternative ? (
-                        <span>
-                          <Comillas className="ml-auto block sm:-mt-6" />
-                        </span>
-                      ) : (
-                        <CustomLink
-                          href={`/paginas/mitos-y-realidades/${item.slug}`}
-                          className={`${BlueButton} mb-12 sm:mb-0 sm:mt-12 w-fit`}
-                        >
-                          Descubre por qué
-                        </CustomLink>
-                      )}
                     </div>
-                  </div>
-                </article>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                  </article>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
         </motion.div>
       </div>
     </motion.section>

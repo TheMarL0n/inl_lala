@@ -115,7 +115,7 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd }}
       />
-      <Header menuI_tems={menuItems} />
+      <Header menuI_tems={menuItems} socialesI_tems={socialesItems}/>
       <HomeJumbotron titulo={data.titulo} subtitulo={data.subtitulo} />
       <Nutricion titulo_1={data.titulo_sobre_inl_1} titulo_2={data.titulo_sobre_inl_2} contenido={data.contenido_sobre_inl} imagen_destacada={data.imagen_sobre_inl} />
       <Dudas titulo_1={data.titulo_dudas_1} titulo_2={data.titulo_dudas_2} contenido={data.contenido_dudas} imagen_destacada={data.imagen_dudas} />

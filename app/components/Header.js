@@ -9,8 +9,9 @@ import { MenuBarIcon } from '../utils/SVG_Icons'
 import SearchForm from './SearchForm'
 import { motion, AnimatePresence } from 'framer-motion'
 import CustomLink from './Auxiliares/CustomLinks'
+import Sociales from './Sociales'
 
-export default function Header({ menuI_tems = [] }) {
+export default function Header({ menuI_tems = [], socialesI_tems = [] }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [showNavbar, setShowNavbar] = useState(true)
     const [lastScrollY, setLastScrollY] = useState(0)
@@ -109,27 +110,32 @@ export default function Header({ menuI_tems = [] }) {
                                     <button
                                         type="button"
                                         onClick={() => setMobileMenuOpen(false)}
-                                        className="-m-2.5 rounded-md p-2.5 text-white mx-auto cursor-pointer"
+                                        className="-m-2.5 rounded-md p-2.5 text-white ml-auto cursor-pointer"
                                     >
                                         <span className="sr-only">Close menu</span>
                                         <XMarkIcon aria-hidden="true" className="size-16" />
                                     </button>
                                 </div>
-                                <div className="mt-6 flow-root flex-grow flex items-center justify-center">
-                                    <div className="-my-6 divide-y divide-gray-500/15 w-full">
-                                        <div className="py-6 text-center space-y-4">
-                                            {menuI_tems.map((item, idx) => (
-                                                <CustomLink
-                                                    key={idx}
-                                                    href={`/paginas/${item.url}`}
-                                                    className="nav-item relative group block mx-auto w-fit rounded-lg px-3 py-2 uppercase text-[30px] leading-12 font-medium text-white duration-400"
-                                                >
-                                                    <span>{item.nombre}</span>
-                                                    <span className="absolute bottom-2 left-0 w-0 h-1 bg-white transition-all duration-300 group-hover:w-full"></span>
-                                                </CustomLink>
-                                            ))}
-                                        </div>
+                                <div className="mt-6 flow-root grow items-center justify-center">
+                                    <div className="py-6 text-left flex flex-col space-y-4">
+                                        {menuI_tems.map((item, idx) => (
+                                            <CustomLink
+                                                key={idx}
+                                                href={`/paginas/${item.url}`}
+                                                className="nav-item relative group block w-fit rounded-lg px-3 py-2 uppercase text-[40px] leading-1.1 font-medium text-white duration-400"
+                                            >
+                                                <span className='relative z-2'>{item.nombre}</span>
+                                                <span className="absolute bottom-1 left-0 w-0 h-full bg-[#0B75B9] transition-all duration-300 group-hover:w-full"></span>
+                                            </CustomLink>
+                                        ))}
                                     </div>
+                                    {socialesI_tems.length > 0 ? (
+                                        <div className='w-fit ml-auto'>
+                                            <Sociales socialesI_tems={socialesI_tems} />
+                                        </div>
+                                    ) : (
+                                        ""
+                                    )}
                                 </div>
                             </motion.div>
                         </div>

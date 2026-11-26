@@ -283,7 +283,7 @@ async function DudaContent({ slug }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <Header menuI_tems={menuItems} />
+      <Header menuI_tems={menuItems} socialesI_tems={socialesItems}/>
       <PagesSmallJumbotron background={background} />
       <Breadcrumbs
         title={title}

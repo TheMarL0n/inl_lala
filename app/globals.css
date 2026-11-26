@@ -23,6 +23,7 @@ ul li {
 .mitosSwiper .swiper-button-next {
   color: #15428c !important;
   opacity: 1 !important;
+  margin-top: 3rem !important;
 }
 
 .swiper-button-prev {

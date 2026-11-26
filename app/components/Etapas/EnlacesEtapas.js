@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react"
+import CustomLink from "../Auxiliares/CustomLinks"
 
 const EnlacesEtapas = ({cat_id, categorias_etapas}) => {
     
@@ -14,13 +15,13 @@ const EnlacesEtapas = ({cat_id, categorias_etapas}) => {
                             const isActive = categoriaSeleccionada === item.id
 
                             return (
-                                <div
+                                <CustomLink
                                     key={idx}
-                                    onClick={() => setCategoriaSeleccionada(item.id)}
+                                    href={`./?cat=${item.id}`}
                                     className="relative space-y-4 group"
                                 >                                    
                                         <h3 className={`px-6 py-1 uppercase text-[18px] leading-5 sm:text-[23px] sm:leading-[1.1] font-[600] text-center transition-all ${isActive ? "text-white bg-[#0B75B9] border border-[#0B75B9]" : "text-[#15428C] bg-white border border-[#15428C]"}`}>{item.titulo}</h3>    
-                                </div>
+                                </CustomLink>
                             )
                         })
                     }
