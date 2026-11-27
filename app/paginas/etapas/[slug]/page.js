@@ -331,6 +331,7 @@ async function EtapaContent({ slug }) {
               key={idx}
               contenido={item.html}
               float={item.float}
+              ver_mas_enlace={item.ver_mas_enlace}
             />
           );
         })}
