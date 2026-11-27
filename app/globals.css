@@ -242,7 +242,8 @@ ul li {
 }
 
 .custom_article-etapas section.contenido_destacado p,
-.custom_article-etapas section.contenido_destacado .cuerpo-oscuro h2
+.custom_article-etapas section.contenido_destacado .cuerpo-oscuro h2,
+.custom_article-etapas section.contenido_destacado .cuerpo-oscuro ul li
  {
   color: #ffffff;
 }
