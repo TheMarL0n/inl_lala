@@ -90,7 +90,8 @@ const SomosSwiper = ({ contenido = [], tipo }) => {
                 {
                   tipo === "destacado" ? (
                     <div className="swiper-destacado max-w-7xl mx-auto relative overflow-hidden z-2 w-full grid grid-cols-1 sm:grid-cols-2 min-h-[360px]">
-                      <div className="w-full flex flex-col justify-end sm:bg-[#164190] text-white! p-8 pr-20">
+                      <div className="w-full flex flex-col justify-center sm:bg-[#164190] text-white! p-8 pr-20">
+                        <h2 className={`text-white uppercase! text-[35px] font-bold!`}>{item.titulo}</h2>
                         <ReactMarkdown>{item.contenido}</ReactMarkdown>
                       </div>
 

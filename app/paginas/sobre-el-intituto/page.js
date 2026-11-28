@@ -18,24 +18,21 @@ import FormContacto from "@/app/components/FormContacto";
 export const dynamic = "force-dynamic";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://institutolala.com.mx";
-const PAGE_PATH = "/paginas/dudas";
+// ⚠️ Ajusta esta ruta al path real de la página en Next.js
+const PAGE_PATH = "/paginas/sobre-el-instituto"; 
 const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
+const SLUG_STRAPI = "sobre-el-intituto";
 
-
-export async function generateMetadata({ searchParams }) {
-  const resolvedSearchParams = await searchParams;
-  const hasFilter = Boolean(resolvedSearchParams?.criteria || resolvedSearchParams?.cat);
-
+export async function generateMetadata() {
   const responseContenido = await fetchAPI(
-    `/paginas?populate[0]=imagen_principal&populate[1]=imagen_footer`
+    `/paginas?filters[slug][$eq]=${SLUG_STRAPI}&populate[0]=imagen_principal`
   );
-  const contenidoFromStrapi = responseContenido?.data || [];
-  const data = contenidoFromStrapi.find((pagina) => pagina.slug === "sobre-el-intituto");
+  const data = responseContenido?.data?.[0];
 
-  const title = data?.titulo || "Sobre el instituto";
+  const title = data?.titulo || "Sobre el Instituto | Instituto de Nutrición Lala";
   const description =
     data?.descripcion ||
-    "En el Instituto de Nutrición Lala creemos en el poder del conocimiento científico para contribuir a la salud de las personas.";
+    "En el Instituto de Nutrición Lala creemos en el poder del conocimiento científico para contribuir a la salud y nutrición de las personas.";
   const ogImage = getStrapiMedia(data?.imagen_principal?.url);
 
   return {
@@ -44,18 +41,16 @@ export async function generateMetadata({ searchParams }) {
     alternates: {
       canonical: CANONICAL_URL,
     },
-    robots: hasFilter
-      ? { index: false, follow: true }
-      : {
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
         index: true,
         follow: true,
-        googleBot: {
-          index: true,
-          follow: true,
-          "max-snippet": -1,
-          "max-image-preview": "large",
-        },
+        "max-snippet": -1,
+        "max-image-preview": "large",
       },
+    },
     openGraph: {
       type: "website",
       locale: "es_MX",
@@ -92,7 +87,9 @@ async function SobreContent() {
     responsePilares,
     responseEspacios,
   ] = await Promise.all([
-    fetchAPI(`/paginas?populate[0]=imagen_principal&populate[1]=imagen_footer&populate[2]=pagina_somos&populate[3]=pagina_somos.introduccion_imagen_principal&populate[4]=pagina_somos.evolucion_imagen_principal&populate[5]=pagina_somos.pilares_imagen_principal&populate[6]=pagina_somos.colaboracion_imagen_principal`),
+    fetchAPI(
+      `/paginas?filters[slug][$eq]=${SLUG_STRAPI}&populate[0]=imagen_principal&populate[1]=imagen_footer&populate[2]=pagina_somos&populate[3]=pagina_somos.introduccion_imagen_principal&populate[4]=pagina_somos.evolucion_imagen_principal&populate[5]=pagina_somos.pilares_imagen_principal&populate[6]=pagina_somos.colaboracion_imagen_principal`
+    ),
     fetchAPI(`/miembros?populate[0]=imagen_principal`),
     fetchAPI(`/item-menus`),
     fetchAPI(`/redes-sociales`),
@@ -100,14 +97,20 @@ async function SobreContent() {
     fetchAPI(`/espacios-de-impacto?populate[0]=imagen_principal`),
   ]);
 
-  const contenidoFromStrapi = responseContenido?.data || [];
+  const data = responseContenido?.data?.[0];
+  const somos = data?.pagina_somos;
   const menuMiembros = responseMiembros?.data || [];
   const menuItems = responseMenu?.data || [];
   const socialesItems = responseSociales?.data || [];
   const pilaresItems = responsePilares?.data || [];
   const espaciosItems = responseEspacios?.data || [];
-  const data = contenidoFromStrapi.find((pagina) => pagina.slug === "sobre-el-intituto");
 
+  const pageTitle = data?.titulo || "Sobre el instituto";
+  const pageDescription =
+    data?.descripcion ||
+    "En el Instituto de Nutrición Lala creemos en el poder del conocimiento científico para contribuir a la salud de las personas.";
+
+  // Schema optimizado para GEO (AboutPage + ResearchOrganization + Equipo)
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -124,19 +127,17 @@ async function SobreContent() {
           {
             "@type": "ListItem",
             position: 2,
-            name: data?.titulo || "Sobre el instituto",
+            name: pageTitle,
             item: CANONICAL_URL,
           },
         ],
       },
       {
-        "@type": "CollectionPage",
+        "@type": "AboutPage",
         "@id": `${CANONICAL_URL}#webpage`,
         url: CANONICAL_URL,
-        name: data?.titulo || "Sobre el instituto",
-        description:
-          data?.descripcion ||
-          "En el Instituto de Nutrición Lala creemos en el poder del conocimiento científico para contribuir a la salud de las personas.",
+        name: pageTitle,
+        description: pageDescription,
         inLanguage: "es-MX",
         isPartOf: {
           "@type": "WebSite",
@@ -144,18 +145,33 @@ async function SobreContent() {
           name: "Instituto de Nutrición Lala",
           url: SITE_URL,
         },
-        publisher: {
-          "@type": "Organization",
-          name: "Instituto de Nutrición Lala",
-          url: SITE_URL,
-        },
         breadcrumb: {
           "@id": `${CANONICAL_URL}#breadcrumb`,
         },
-        about: {
-          "@type": "Thing",
-          name: "En el Instituto de Nutrición Lala creemos en el poder del conocimiento científico para contribuir a la salud de las personas.",
+        mainEntity: {
+          "@id": `${SITE_URL}#organization`,
         },
+      },
+      {
+        "@type": ["Organization", "ResearchOrganization"],
+        "@id": `${SITE_URL}#organization`,
+        name: "Instituto de Nutrición Lala",
+        url: SITE_URL,
+        description: somos?.proposito_descripcion || pageDescription,
+        knowsAbout: [
+          "Nutrición",
+          "Ciencia de los alimentos",
+          "Salud pública",
+          "Investigación científica en nutrición",
+          "Alimentación saludable",
+        ],
+        ...(menuMiembros.length > 0 && {
+          member: menuMiembros.map((miembro) => ({
+            "@type": "Person",
+            name: miembro.nombre || miembro.titulo,
+            ...(miembro.puesto && { jobTitle: miembro.puesto }),
+          })),
+        }),
       },
     ],
   };
@@ -168,106 +184,81 @@ async function SobreContent() {
       />
 
       <Header menuI_tems={menuItems} socialesI_tems={socialesItems} />
-      <PagesJumbotron
-        titulo={data?.titulo}
-        subtitulo={data?.subtitulo}
-        background={data?.imagen_principal}
-        titulo_descripcion={data?.titulo_descripcion}
-        descripcion={data?.descripcion}
-      />
-      <div className="custom_article-etapas">
-        {
-          data?.pagina_somos.introduccion_titulo_1 ?
+      <main>
+        <PagesJumbotron
+          titulo={data?.titulo}
+          subtitulo={data?.subtitulo}
+          background={data?.imagen_principal}
+          titulo_descripcion={data?.titulo_descripcion}
+          descripcion={data?.descripcion}
+        />
+        <div className="custom_article-etapas">
+          {somos?.introduccion_titulo_1 && (
             <SeccionIntroductoria
-              titulo_1={data?.pagina_somos.introduccion_titulo_1}
-              titulo_2={data?.pagina_somos.introduccion_titulo_2}
-              descripcion={data?.pagina_somos.introduccion_descripcion}
-              imagen_principal={data?.pagina_somos.introduccion_imagen_principal}
+              titulo_1={somos.introduccion_titulo_1}
+              titulo_2={somos.introduccion_titulo_2}
+              descripcion={somos.introduccion_descripcion}
+              imagen_principal={somos.introduccion_imagen_principal}
             />
-            :
-            ""
-        }
+          )}
 
-        {
-          data?.pagina_somos.proposito_titulo_1 ?
+          {somos?.proposito_titulo_1 && (
             <SeccionProposito
-              titulo_1={data?.pagina_somos.proposito_titulo_1}
-              titulo_2={data?.pagina_somos.proposito_titulo_2}
-              descripcion={data?.pagina_somos.proposito_descripcion}
+              titulo_1={somos.proposito_titulo_1}
+              titulo_2={somos.proposito_titulo_2}
+              descripcion={somos.proposito_descripcion}
             />
-            :
-            ""
-        }
+          )}
 
-        {
-          data?.pagina_somos.evolucion_titulo_1 ?
+          {somos?.evolucion_titulo_1 && (
             <SeccionEvolucion
-              titulo_1={data?.pagina_somos.evolucion_titulo_1}
-              titulo_2={data?.pagina_somos.evolucion_titulo_2}
-              descripcion={data?.pagina_somos.evolucion_descripcion}
-              imagen_principal={data?.pagina_somos.evolucion_imagen_principal}
+              titulo_1={somos.evolucion_titulo_1}
+              titulo_2={somos.evolucion_titulo_2}
+              descripcion={somos.evolucion_descripcion}
+              imagen_principal={somos.evolucion_imagen_principal}
             />
-            :
-            ""
-        }
+          )}
 
-        {
-          menuMiembros ?
-            <SeccionEquipo contenido={menuMiembros} />
-            :
-            ""
-        }
+          {menuMiembros.length > 0 && <SeccionEquipo contenido={menuMiembros} />}
 
-        {
-          data?.pagina_somos.pilares_titulo_1 ?
+          {somos?.pilares_titulo_1 && (
             <SeccionPilares
-              titulo_1={data?.pagina_somos.pilares_titulo_1}
-              titulo_2={data?.pagina_somos.pilares_titulo_2}
-              descripcion={data?.pagina_somos.pilares_descripcion}
-              imagen_principal={data?.pagina_somos.pilares_imagen_principal}
+              titulo_1={somos.pilares_titulo_1}
+              titulo_2={somos.pilares_titulo_2}
+              descripcion={somos.pilares_descripcion}
+              imagen_principal={somos.pilares_imagen_principal}
             />
-            :
-            ""
-        }
+          )}
 
-        {
-          pilaresItems.length > 0 ?
-            <SomosSwiper contenido={pilaresItems} />
-            :
-            ""
-        }
+          {pilaresItems.length > 0 && <SomosSwiper contenido={pilaresItems} />}
 
-        {
-          data?.pagina_somos.colaboracion_titulo_1 ?
+          {somos?.colaboracion_titulo_1 && (
             <SeccionColaboracion
-              titulo_1={data?.pagina_somos.colaboracion_titulo_1}
-              titulo_2={data?.pagina_somos.colaboracion_titulo_2}
-              descripcion={data?.pagina_somos.colaboracion_descripcion}
-              imagen_principal={data?.pagina_somos.colaboracion_imagen_principal} />
-            :
-            ""
-        }
+              titulo_1={somos.colaboracion_titulo_1}
+              titulo_2={somos.colaboracion_titulo_2}
+              descripcion={somos.colaboracion_descripcion}
+              imagen_principal={somos.colaboracion_imagen_principal}
+            />
+          )}
 
-        {
-          espaciosItems ?
-            <SeccionEspacios contenido={espaciosItems} />
-            :
-            ""
-        }
+          {espaciosItems.length > 0 && <SeccionEspacios contenido={espaciosItems} />}
 
-        <FormContacto imagen_footer={data?.imagen_footer} contenido={data?.contenido_contacto} titulo_linea_1={"vinculación y"} />
-      </div>
+          <FormContacto
+            imagen_footer={data?.imagen_footer}
+            contenido={data?.contenido_contacto}
+            titulo_linea_1={"vinculación y"}
+          />
+        </div>
+      </main>
       <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </>
   );
 }
 
-export default function Dudas() {
+export default function SobreElInstituto() {
   return (
-    <main>
-      <Suspense fallback={<Skeleton />}>
-        <SobreContent />
-      </Suspense>
-    </main>
+    <Suspense fallback={<Skeleton />}>
+      <SobreContent />
+    </Suspense>
   );
 }

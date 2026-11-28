@@ -172,7 +172,7 @@ const FormContacto = ({ imagen_footer, contenido, titulo_linea_1 }) => {
             contenido ?
               <div className="text-white!">
                 <ReactMarkdown>
-                  {contenido.descripcion}
+                  {contenido}
                 </ReactMarkdown>
               </div>
               :
