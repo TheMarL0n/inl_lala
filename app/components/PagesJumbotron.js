@@ -145,21 +145,22 @@ const PagesJumbotron = ({
         </div>
       </div>
 
-      <motion.div
-        initial={prefersReducedMotion ? false : { opacity: 0, y: 32 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        suppressHydrationWarning
-        className="page_descripcion max-w-4xl mx-4 sm:mx-auto bg-white -mt-30 p-4 sm:p-20 relative z-20 min-h-37.5 will-change-[transform,opacity]"
-      >
-        <div className="text-[#15428C] text-center font-medium sm:text-[40px] sm:leading-11 text-[26px]">
-          {titulo_descripcion ? (
-            <ReactMarkdown>{titulo_descripcion}</ReactMarkdown>
-          ) : (
-            ""
-          )}
-        </div>
-      </motion.div>
+      {
+        titulo_descripcion ?
+          (<motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            suppressHydrationWarning
+            className="page_descripcion max-w-4xl mx-4 sm:mx-auto bg-white -mt-30 p-4 sm:p-20 relative z-20 min-h-37.5 will-change-[transform,opacity]"
+          >
+            <div className="text-[#15428C] text-center font-medium sm:text-[40px] sm:leading-11 text-[26px]">
+              <ReactMarkdown>{titulo_descripcion}</ReactMarkdown>
+            </div>
+          </motion.div>)
+          :
+          ""
+      }
 
       {descripcion ? (
         <motion.div

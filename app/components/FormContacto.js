@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { BlueButton, encabezado_h3 } from "../utils/CSS_clases";
 import { sendContacto } from "@/app/utils/actions"; // Ajusta al nombre/ruta de tu Server Action
 import { getStrapiMedia } from "../lib/strapi-media";
+import ReactMarkdown from "react-markdown";
 
 const easeSmooth = [0.22, 1, 0.36, 1];
 
@@ -67,7 +68,7 @@ const initialState = {
   },
 };
 
-const FormContacto = ({ imagen_footer }) => {
+const FormContacto = ({ imagen_footer, contenido, titulo_linea_1 }) => {
   const sectionRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -115,7 +116,7 @@ const FormContacto = ({ imagen_footer }) => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex flex-col sm:justify-center py-20 px-4 overflow-hidden"
+      className="section-contacto relative min-h-screen flex flex-col sm:justify-center py-20 px-4 overflow-hidden"
     >
       {/* Imagen de fondo con efecto parallax */}
       {mediaSrc && (
@@ -140,9 +141,22 @@ const FormContacto = ({ imagen_footer }) => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          className={`${encabezado_h3} bg-[#164190] sm:text-[70px]! sm:leading-18!`}
         >
-          Contacto
+          {
+            titulo_linea_1 ?
+              (
+                <>
+                  <span
+                    className={`${encabezado_h3} text-white bg-[#164190] text-[46px]`}>{titulo_linea_1}</span>
+                  <br />
+                </>
+              )
+              :
+              ""
+          }
+          <span
+            className={`${encabezado_h3} ml-20 text-white bg-[#164190] text-[70px]!`}
+          >Contacto</span>
         </motion.h2>
 
         <motion.form
@@ -154,6 +168,18 @@ const FormContacto = ({ imagen_footer }) => {
           viewport={{ once: true, amount: 0.2 }}
           className="w-full mt-20 sm:w-1/2 sm:ml-auto space-y-6 bg-[#164190]/90 py-12 px-6"
         >
+          {
+            contenido ?
+              <div className="text-white!">
+                <ReactMarkdown>
+                  {contenido.descripcion}
+                </ReactMarkdown>
+              </div>
+              :
+              ""
+          }
+
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <motion.div variants={fieldVariants} className="flex flex-col">
               <input

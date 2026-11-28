@@ -56,7 +56,7 @@ export const metadata = {
 export default async function Home() {
   const [responseContenido, responseMitos, responseMenu, responseSociales, responseVideos] = await Promise.all(
     [
-      fetchAPI(`/paginas?populate[0]=imagen_principal&populate[1]=imagen_footer&populate[2]=imagen_sobre_inl&populate[3]=imagen_dudas&populate[4]=imagen_profesionales`),
+      fetchAPI(`/paginas?populate[0]=imagen_principal&populate[1]=imagen_footer&populate[2]=pagina_inicio&populate[3]=pagina_inicio.imagen_sobre_inl&populate[4]=pagina_inicio.imagen_dudas&populate[5]=pagina_inicio.imagen_profesionales`),
       fetchAPI(`/mitos-y-realidades?populate[0]=imagen_principal`),
       fetchAPI(`/item-menus`),
       fetchAPI(`/redes-sociales`),
@@ -117,21 +117,21 @@ export default async function Home() {
       />
       <Header menuI_tems={menuItems} socialesI_tems={socialesItems}/>
       <HomeJumbotron titulo={data.titulo} subtitulo={data.subtitulo} />
-      <Nutricion titulo_1={data.titulo_sobre_inl_1} titulo_2={data.titulo_sobre_inl_2} contenido={data.contenido_sobre_inl} imagen_destacada={data.imagen_sobre_inl} />
-      <Dudas titulo_1={data.titulo_dudas_1} titulo_2={data.titulo_dudas_2} contenido={data.contenido_dudas} imagen_destacada={data.imagen_dudas} />
+      <Nutricion titulo_1={data.pagina_inicio.titulo_sobre_inl_1} titulo_2={data.pagina_inicio.titulo_sobre_inl_2} contenido={data.pagina_inicio.contenido_sobre_inl} imagen_destacada={data.pagina_inicio.imagen_sobre_inl} />
+      <Dudas titulo_1={data.pagina_inicio.titulo_dudas_1} titulo_2={data.pagina_inicio.titulo_dudas_2} contenido={data.pagina_inicio.contenido_dudas} imagen_destacada={data.pagina_inicio.imagen_dudas} />
       <br /><br />
 
       {
         allVideos.length > 0 ?
-          <Aprende titulo_video={data.titulo_videos} videos_aprende={allVideos} />
+          <Aprende titulo_video={data.pagina_inicio.titulo_videos} videos_aprende={allVideos} />
           :
           ""
       }
 
 
-      <Preguntas titulo_1={data.titulo_nutricion_1} titulo_2={data.titulo_nutricion_2} />
-      <HomeMitosSwiper titulo_1={data.titulo_mitos_1} titulo_2={data.titulo_mitos_2} contenido={allMitosFromStrapi} />
-      <Profesionales titulo_profesionales={data.titulo_profesionales} contenido={data.contenido_profesionales} imagen_destacada={data.imagen_profesionales} />
+      <Preguntas titulo_1={data.pagina_inicio.titulo_nutricion_1} titulo_2={data.pagina_inicio.titulo_nutricion_2} />
+      <HomeMitosSwiper titulo_1={data.pagina_inicio.titulo_mitos_1} titulo_2={data.pagina_inicio.titulo_mitos_2} contenido={allMitosFromStrapi} />
+      <Profesionales titulo_profesionales={data.pagina_inicio.titulo_profesionales} contenido={data.pagina_inicio.contenido_profesionales} imagen_destacada={data.pagina_inicio.imagen_profesionales} />
       <Footer menuI_tems={menuItems} socialesI_tems={socialesItems} />
     </main>
   );

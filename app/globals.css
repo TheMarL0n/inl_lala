@@ -86,6 +86,10 @@ ul li {
   margin: 0 0 2rem;
 }
 
+.custom_article-etapas section.section-contacto p{
+  color: inherit;
+}
+
 .custom_article-etapas section#storyline_at_top p {
   color: #ffffff;
 }
@@ -243,6 +247,7 @@ ul li {
 
 .custom_article-etapas section.contenido_destacado p,
 .custom_article-etapas section.contenido_destacado .cuerpo-oscuro h2,
+.custom_article-etapas section.contenido_destacado .cuerpo-oscuro h3,
 .custom_article-etapas section.contenido_destacado .cuerpo-oscuro ul li
  {
   color: #ffffff;

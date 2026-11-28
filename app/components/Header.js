@@ -117,8 +117,8 @@ export default function Header({ menuI_tems = [], socialesI_tems = [] }) {
                                     </button>
                                 </div>
                                 <div className="mt-6 flow-root grow items-center justify-center">
-                                    <div className="py-6 text-left flex flex-col space-y-4">
-                                        {menuI_tems.map((item, idx) => (
+                                    <div className="py-6 text-left flex flex-col space-y-2">
+                                        {menuI_tems.sort((a, b) => a.orden - b.orden).map((item, idx) => (
                                             <CustomLink
                                                 key={idx}
                                                 href={`/paginas/${item.url}`}

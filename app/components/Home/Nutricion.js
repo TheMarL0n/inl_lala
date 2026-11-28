@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import {
@@ -67,15 +68,15 @@ const Nutricion = ({
           </motion.div>
 
           {/* Párrafo con mayor retraso (delay) para que aparezca después del título y la bajada del tazón */}
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.7, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className={`${parrafo_normal} text-[#15428C] sm:mb-30 sm:text-[38px]! leading-[1.2]!`}
           >
-            {contenido}
-          </motion.p>
+            <ReactMarkdown>{contenido}</ReactMarkdown>
+          </motion.div>
         </div>
       </div>
     </section>
